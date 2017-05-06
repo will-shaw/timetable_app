@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="958b2f72-b1d4-43fd-84ca-def525428a39" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
+    <list default="true" id="958b2f72-b1d4-43fd-84ca-def525428a39" name="Default" comment="found relevant elements for time tables. closes #10">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -14,39 +14,63 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="ChangesViewManager" flattened_view="true" show_ignored="false" />
   <component name="CreatePatchCommitExecutor">
     <option name="PATCH_PATH" value="" />
   </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
+  <component name="FavoritesManager">
+    <favorites_list name="webscraper" />
+  </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="timetable_scraper.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="timetable_scraper.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/timetable_scraper.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="18">
-              <caret line="3" column="0" lean-forward="false" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
+            <state relative-caret-position="90">
+              <caret line="5" column="0" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
               <folding>
-                <element signature="n#!!doc" expanded="true" />
+                <element signature="e#844#865#0" expanded="false" />
+                <element signature="e#22966#46276#0" expanded="false" />
+                <marker date="1494077868307" expanded="true" signature="1512:1524" ph="..." />
+                <marker date="1494077868307" expanded="true" signature="3503:3515" ph="..." />
+                <marker date="1494077868307" expanded="true" signature="5494:5506" ph="..." />
+                <marker date="1494077868307" expanded="true" signature="7473:7485" ph="..." />
+                <marker date="1494077868307" expanded="true" signature="9506:9518" ph="..." />
+                <marker date="1494077868307" expanded="true" signature="11521:11533" ph="..." />
+                <marker date="1494077868307" expanded="true" signature="13526:13538" ph="..." />
+                <marker date="1494077868307" expanded="true" signature="15483:15495" ph="..." />
+                <marker date="1494077868307" expanded="true" signature="17466:17478" ph="..." />
+                <marker date="1494077868307" expanded="true" signature="19486:19498" ph="..." />
+                <marker date="1494077868307" expanded="true" signature="21524:21536" ph="..." />
+                <marker date="1494077868307" expanded="false" signature="22998:23021" ph="{...}" />
+                <marker date="1494077868307" expanded="false" signature="23027:23083" ph="{...}" />
+                <marker date="1494077868307" expanded="true" signature="24664:24676" ph="..." />
+                <marker date="1494077868307" expanded="false" signature="26010:28016" ph="{&quot;id&quot;: &quot;YTTB2&quot;...}" />
+                <marker date="1494077868307" expanded="true" signature="26670:26682" ph="..." />
+                <marker date="1494077868307" expanded="true" signature="28676:28688" ph="..." />
+                <marker date="1494077868307" expanded="false" signature="30013:32058" ph="{&quot;id&quot;: &quot;YTTB4&quot;...}" />
+                <marker date="1494077868307" expanded="true" signature="30670:30682" ph="..." />
+                <marker date="1494077868307" expanded="false" signature="32060:34088" ph="{&quot;id&quot;: &quot;YTTB5&quot;...}" />
+                <marker date="1494077868307" expanded="true" signature="32718:32730" ph="..." />
+                <marker date="1494077868307" expanded="true" signature="34748:34760" ph="..." />
+                <marker date="1494077868307" expanded="true" signature="36768:36780" ph="..." />
+                <marker date="1494077868307" expanded="false" signature="38082:40075" ph="{&quot;id&quot;: &quot;YTTB8&quot;...}" />
+                <marker date="1494077868307" expanded="true" signature="38740:38752" ph="..." />
+                <marker date="1494077868307" expanded="true" signature="40738:40750" ph="..." />
+                <marker date="1494077868307" expanded="false" signature="42114:44165" ph="{&quot;id&quot;: &quot;YTTB10&quot;...}" />
+                <marker date="1494077868307" expanded="true" signature="42773:42785" ph="..." />
+                <marker date="1494077868307" expanded="true" signature="44826:44838" ph="..." />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name=".gitignore" pinned="false" current-in-tab="true">
+      <file leaf-file-name=".gitignore" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/.gitignore">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="36">
-              <caret line="2" column="0" lean-forward="true" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="workspace.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="288">
-              <caret line="325" column="35" lean-forward="false" selection-start-line="325" selection-start-column="35" selection-end-line="325" selection-end-column="35" />
+              <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -67,9 +91,9 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/timetable_scraper.js" />
         <option value="$PROJECT_DIR$/.idea/workspace.xml" />
         <option value="$PROJECT_DIR$/.gitignore" />
+        <option value="$PROJECT_DIR$/timetable_scraper.js" />
       </list>
     </option>
   </component>
@@ -80,12 +104,20 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="270" />
-    <option name="y" value="80" />
-    <option name="width" value="1400" />
-    <option name="height" value="999" />
+    <option name="y" value="24" />
+    <option name="width" value="1920" />
+    <option name="height" value="1056" />
   </component>
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <OptionsSetting value="true" id="Add" />
+    <OptionsSetting value="true" id="Remove" />
+    <OptionsSetting value="true" id="Checkout" />
+    <OptionsSetting value="true" id="Update" />
+    <OptionsSetting value="true" id="Status" />
+    <OptionsSetting value="true" id="Edit" />
+    <ConfirmationsSetting value="0" id="Add" />
+    <ConfirmationsSetting value="0" id="Remove" />
+  </component>
   <component name="ProjectView">
     <navigator currentView="Scope" currentSubView="Project Files" proportions="" version="1">
       <flattenPackages />
@@ -108,6 +140,12 @@
               <option name="myItemId" value="webscraper" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webscraper" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="webscraper" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
@@ -115,6 +153,7 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scratches" />
       <pane id="Scope">
         <subPane subId="Project Files">
           <PATH>
@@ -143,13 +182,14 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="js.eslint.eslintPackage" value="" />
     <property name="add_unversioned_files" value="$PROJECT_DIR$/.idea/workspace.xml" />
+    <property name="HbShouldOpenHtmlAsHb" value="" />
+    <property name="js-jscs-nodeInterpreter" value="/usr/bin/node" />
   </component>
   <component name="RunManager">
     <configuration default="true" type="DartCommandLineRunConfigurationType" factoryName="Dart Command Line Application">
@@ -159,12 +199,6 @@
       <method />
     </configuration>
     <configuration default="true" type="JavaScriptTestRunnerKarma" factoryName="Karma">
-      <config-file value="" />
-      <node-interpreter value="project" />
-      <envs />
-      <method />
-    </configuration>
-    <configuration default="true" type="JavaScriptTestRunnerProtractor" factoryName="Protractor">
       <config-file value="" />
       <node-interpreter value="project" />
       <envs />
@@ -192,7 +226,7 @@
       <method />
     </configuration>
     <configuration default="true" type="js.build_tools.npm" factoryName="npm">
-      <command value="run" />
+      <command value="run-script" />
       <scripts />
       <node-interpreter value="project" />
       <envs />
@@ -225,6 +259,8 @@
       <workItem from="1493816403732" duration="81000" />
       <workItem from="1494068905358" duration="1123000" />
       <workItem from="1494070036638" duration="1552000" />
+      <workItem from="1494072056536" duration="20000" />
+      <workItem from="1494072079993" duration="5602000" />
     </task>
     <task id="LOCAL-00001" summary="added project settings files">
       <created>1494069400680</created>
@@ -240,32 +276,40 @@
       <option name="project" value="LOCAL" />
       <updated>1494070176801</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="found relevant elements for time tables. closes #10">
+      <created>1494078032197</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1494078032197</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="2756000" />
+    <option name="totallyTimeSpent" value="8378000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="270" y="80" width="1400" height="999" extended-state="0" />
+    <frame x="0" y="24" width="1920" height="1056" extended-state="6" />
     <editor active="false" />
     <layout>
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25417575" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2540854" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32972974" sideWeight="0.50285715" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32916668" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32916668" sideWeight="0.50285715" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32972974" sideWeight="0.49714285" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -295,7 +339,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="added project settings files" />
     <MESSAGE value="gitignore file added to not track specific files" />
-    <option name="LAST_COMMIT_MESSAGE" value="gitignore file added to not track specific files" />
+    <MESSAGE value="found relevant elements for time tables. closes #10" />
+    <option name="LAST_COMMIT_MESSAGE" value="found relevant elements for time tables. closes #10" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -304,10 +349,96 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/timetable_scraper.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="18">
-          <caret line="3" column="0" lean-forward="true" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="n#!!doc" expanded="true" />
+            <element signature="e#844#865#0" expanded="false" />
+            <element signature="e#22966#46276#0" expanded="false" />
+            <marker date="1494077868307" expanded="true" signature="1512:1524" ph="..." />
+            <marker date="1494077868307" expanded="true" signature="3503:3515" ph="..." />
+            <marker date="1494077868307" expanded="true" signature="5494:5506" ph="..." />
+            <marker date="1494077868307" expanded="true" signature="7473:7485" ph="..." />
+            <marker date="1494077868307" expanded="true" signature="9506:9518" ph="..." />
+            <marker date="1494077868307" expanded="true" signature="11521:11533" ph="..." />
+            <marker date="1494077868307" expanded="true" signature="13526:13538" ph="..." />
+            <marker date="1494077868307" expanded="true" signature="15483:15495" ph="..." />
+            <marker date="1494077868307" expanded="true" signature="17466:17478" ph="..." />
+            <marker date="1494077868307" expanded="true" signature="19486:19498" ph="..." />
+            <marker date="1494077868307" expanded="true" signature="21524:21536" ph="..." />
+            <marker date="1494077868307" expanded="false" signature="22998:23021" ph="{...}" />
+            <marker date="1494077868307" expanded="false" signature="23027:23083" ph="{...}" />
+            <marker date="1494077868307" expanded="true" signature="24664:24676" ph="..." />
+            <marker date="1494077868307" expanded="false" signature="26010:28016" ph="{&quot;id&quot;: &quot;YTTB2&quot;...}" />
+            <marker date="1494077868307" expanded="true" signature="26670:26682" ph="..." />
+            <marker date="1494077868307" expanded="true" signature="28676:28688" ph="..." />
+            <marker date="1494077868307" expanded="false" signature="30013:32058" ph="{&quot;id&quot;: &quot;YTTB4&quot;...}" />
+            <marker date="1494077868307" expanded="true" signature="30670:30682" ph="..." />
+            <marker date="1494077868307" expanded="false" signature="32060:34088" ph="{&quot;id&quot;: &quot;YTTB5&quot;...}" />
+            <marker date="1494077868307" expanded="true" signature="32718:32730" ph="..." />
+            <marker date="1494077868307" expanded="true" signature="34748:34760" ph="..." />
+            <marker date="1494077868307" expanded="true" signature="36768:36780" ph="..." />
+            <marker date="1494077868307" expanded="false" signature="38082:40075" ph="{&quot;id&quot;: &quot;YTTB8&quot;...}" />
+            <marker date="1494077868307" expanded="true" signature="38740:38752" ph="..." />
+            <marker date="1494077868307" expanded="true" signature="40738:40750" ph="..." />
+            <marker date="1494077868307" expanded="false" signature="42114:44165" ph="{&quot;id&quot;: &quot;YTTB10&quot;...}" />
+            <marker date="1494077868307" expanded="true" signature="42773:42785" ph="..." />
+            <marker date="1494077868307" expanded="true" signature="44826:44838" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="36">
+          <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="5850">
+          <caret line="325" column="35" selection-start-line="325" selection-start-column="35" selection-end-line="325" selection-end-column="35" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/timetable_scraper.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="54">
+          <caret line="3" column="0" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
+          <folding>
+            <element signature="e#844#865#0" expanded="false" />
+            <element signature="e#22966#46276#0" expanded="false" />
+            <marker date="1494077868307" expanded="true" signature="1512:1524" ph="..." />
+            <marker date="1494077868307" expanded="true" signature="3503:3515" ph="..." />
+            <marker date="1494077868307" expanded="true" signature="5494:5506" ph="..." />
+            <marker date="1494077868307" expanded="true" signature="7473:7485" ph="..." />
+            <marker date="1494077868307" expanded="true" signature="9506:9518" ph="..." />
+            <marker date="1494077868307" expanded="true" signature="11521:11533" ph="..." />
+            <marker date="1494077868307" expanded="true" signature="13526:13538" ph="..." />
+            <marker date="1494077868307" expanded="true" signature="15483:15495" ph="..." />
+            <marker date="1494077868307" expanded="true" signature="17466:17478" ph="..." />
+            <marker date="1494077868307" expanded="true" signature="19486:19498" ph="..." />
+            <marker date="1494077868307" expanded="true" signature="21524:21536" ph="..." />
+            <marker date="1494077868307" expanded="false" signature="22998:23021" ph="{...}" />
+            <marker date="1494077868307" expanded="false" signature="23027:23083" ph="{...}" />
+            <marker date="1494077868307" expanded="true" signature="24664:24676" ph="..." />
+            <marker date="1494077868307" expanded="false" signature="26010:28016" ph="{&quot;id&quot;: &quot;YTTB2&quot;...}" />
+            <marker date="1494077868307" expanded="true" signature="26670:26682" ph="..." />
+            <marker date="1494077868307" expanded="true" signature="28676:28688" ph="..." />
+            <marker date="1494077868307" expanded="false" signature="30013:32058" ph="{&quot;id&quot;: &quot;YTTB4&quot;...}" />
+            <marker date="1494077868307" expanded="true" signature="30670:30682" ph="..." />
+            <marker date="1494077868307" expanded="false" signature="32060:34088" ph="{&quot;id&quot;: &quot;YTTB5&quot;...}" />
+            <marker date="1494077868307" expanded="true" signature="32718:32730" ph="..." />
+            <marker date="1494077868307" expanded="true" signature="34748:34760" ph="..." />
+            <marker date="1494077868307" expanded="true" signature="36768:36780" ph="..." />
+            <marker date="1494077868307" expanded="false" signature="38082:40075" ph="{&quot;id&quot;: &quot;YTTB8&quot;...}" />
+            <marker date="1494077868307" expanded="true" signature="38740:38752" ph="..." />
+            <marker date="1494077868307" expanded="true" signature="40738:40750" ph="..." />
+            <marker date="1494077868307" expanded="false" signature="42114:44165" ph="{&quot;id&quot;: &quot;YTTB10&quot;...}" />
+            <marker date="1494077868307" expanded="true" signature="42773:42785" ph="..." />
+            <marker date="1494077868307" expanded="true" signature="44826:44838" ph="..." />
           </folding>
         </state>
       </provider>
@@ -315,7 +446,63 @@
     <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="5850">
+          <caret line="325" column="35" selection-start-line="325" selection-start-column="35" selection-end-line="325" selection-end-column="35" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/timetable_scraper.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="18">
+          <caret line="3" column="0" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
+          <folding>
+            <element signature="e#844#865#0" expanded="false" />
+            <element signature="e#22966#46276#0" expanded="false" />
+            <marker date="1494077868307" expanded="true" signature="1512:1524" ph="..." />
+            <marker date="1494077868307" expanded="true" signature="3503:3515" ph="..." />
+            <marker date="1494077868307" expanded="true" signature="5494:5506" ph="..." />
+            <marker date="1494077868307" expanded="true" signature="7473:7485" ph="..." />
+            <marker date="1494077868307" expanded="true" signature="9506:9518" ph="..." />
+            <marker date="1494077868307" expanded="true" signature="11521:11533" ph="..." />
+            <marker date="1494077868307" expanded="true" signature="13526:13538" ph="..." />
+            <marker date="1494077868307" expanded="true" signature="15483:15495" ph="..." />
+            <marker date="1494077868307" expanded="true" signature="17466:17478" ph="..." />
+            <marker date="1494077868307" expanded="true" signature="19486:19498" ph="..." />
+            <marker date="1494077868307" expanded="true" signature="21524:21536" ph="..." />
+            <marker date="1494077868307" expanded="false" signature="22998:23021" ph="{...}" />
+            <marker date="1494077868307" expanded="false" signature="23027:23083" ph="{...}" />
+            <marker date="1494077868307" expanded="true" signature="24664:24676" ph="..." />
+            <marker date="1494077868307" expanded="false" signature="26010:28016" ph="{&quot;id&quot;: &quot;YTTB2&quot;...}" />
+            <marker date="1494077868307" expanded="true" signature="26670:26682" ph="..." />
+            <marker date="1494077868307" expanded="true" signature="28676:28688" ph="..." />
+            <marker date="1494077868307" expanded="false" signature="30013:32058" ph="{&quot;id&quot;: &quot;YTTB4&quot;...}" />
+            <marker date="1494077868307" expanded="true" signature="30670:30682" ph="..." />
+            <marker date="1494077868307" expanded="false" signature="32060:34088" ph="{&quot;id&quot;: &quot;YTTB5&quot;...}" />
+            <marker date="1494077868307" expanded="true" signature="32718:32730" ph="..." />
+            <marker date="1494077868307" expanded="true" signature="34748:34760" ph="..." />
+            <marker date="1494077868307" expanded="true" signature="36768:36780" ph="..." />
+            <marker date="1494077868307" expanded="false" signature="38082:40075" ph="{&quot;id&quot;: &quot;YTTB8&quot;...}" />
+            <marker date="1494077868307" expanded="true" signature="38740:38752" ph="..." />
+            <marker date="1494077868307" expanded="true" signature="40738:40750" ph="..." />
+            <marker date="1494077868307" expanded="false" signature="42114:44165" ph="{&quot;id&quot;: &quot;YTTB10&quot;...}" />
+            <marker date="1494077868307" expanded="true" signature="42773:42785" ph="..." />
+            <marker date="1494077868307" expanded="true" signature="44826:44838" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -323,28 +510,48 @@
     <entry file="file://$PROJECT_DIR$/timetable_scraper.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="n#!!doc" expanded="true" />
+            <element signature="e#844#865#0" expanded="false" />
+            <element signature="e#22966#46276#0" expanded="false" />
+            <marker date="1494077868307" expanded="true" signature="1512:1524" ph="..." />
+            <marker date="1494077868307" expanded="true" signature="3503:3515" ph="..." />
+            <marker date="1494077868307" expanded="true" signature="5494:5506" ph="..." />
+            <marker date="1494077868307" expanded="true" signature="7473:7485" ph="..." />
+            <marker date="1494077868307" expanded="true" signature="9506:9518" ph="..." />
+            <marker date="1494077868307" expanded="true" signature="11521:11533" ph="..." />
+            <marker date="1494077868307" expanded="true" signature="13526:13538" ph="..." />
+            <marker date="1494077868307" expanded="true" signature="15483:15495" ph="..." />
+            <marker date="1494077868307" expanded="true" signature="17466:17478" ph="..." />
+            <marker date="1494077868307" expanded="true" signature="19486:19498" ph="..." />
+            <marker date="1494077868307" expanded="true" signature="21524:21536" ph="..." />
+            <marker date="1494077868307" expanded="false" signature="22998:23021" ph="{...}" />
+            <marker date="1494077868307" expanded="false" signature="23027:23083" ph="{...}" />
+            <marker date="1494077868307" expanded="true" signature="24664:24676" ph="..." />
+            <marker date="1494077868307" expanded="false" signature="26010:28016" ph="{&quot;id&quot;: &quot;YTTB2&quot;...}" />
+            <marker date="1494077868307" expanded="true" signature="26670:26682" ph="..." />
+            <marker date="1494077868307" expanded="true" signature="28676:28688" ph="..." />
+            <marker date="1494077868307" expanded="false" signature="30013:32058" ph="{&quot;id&quot;: &quot;YTTB4&quot;...}" />
+            <marker date="1494077868307" expanded="true" signature="30670:30682" ph="..." />
+            <marker date="1494077868307" expanded="false" signature="32060:34088" ph="{&quot;id&quot;: &quot;YTTB5&quot;...}" />
+            <marker date="1494077868307" expanded="true" signature="32718:32730" ph="..." />
+            <marker date="1494077868307" expanded="true" signature="34748:34760" ph="..." />
+            <marker date="1494077868307" expanded="true" signature="36768:36780" ph="..." />
+            <marker date="1494077868307" expanded="false" signature="38082:40075" ph="{&quot;id&quot;: &quot;YTTB8&quot;...}" />
+            <marker date="1494077868307" expanded="true" signature="38740:38752" ph="..." />
+            <marker date="1494077868307" expanded="true" signature="40738:40750" ph="..." />
+            <marker date="1494077868307" expanded="false" signature="42114:44165" ph="{&quot;id&quot;: &quot;YTTB10&quot;...}" />
+            <marker date="1494077868307" expanded="true" signature="42773:42785" ph="..." />
+            <marker date="1494077868307" expanded="true" signature="44826:44838" ph="..." />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" />
-    <entry file="file://$PROJECT_DIR$/timetable_scraper.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="18">
-          <caret line="3" column="0" lean-forward="false" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="288">
-          <caret line="325" column="35" lean-forward="false" selection-start-line="325" selection-start-column="35" selection-end-line="325" selection-end-column="35" />
+        <state relative-caret-position="867">
+          <caret line="539" column="35" selection-start-line="539" selection-start-column="35" selection-end-line="539" selection-end-column="35" />
           <folding />
         </state>
       </provider>
@@ -352,8 +559,48 @@
     <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="36">
-          <caret line="2" column="0" lean-forward="true" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
+          <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/timetable_scraper.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="5" column="0" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
+          <folding>
+            <element signature="e#844#865#0" expanded="false" />
+            <element signature="e#22966#46276#0" expanded="false" />
+            <marker date="1494077868307" expanded="true" signature="1512:1524" ph="..." />
+            <marker date="1494077868307" expanded="true" signature="3503:3515" ph="..." />
+            <marker date="1494077868307" expanded="true" signature="5494:5506" ph="..." />
+            <marker date="1494077868307" expanded="true" signature="7473:7485" ph="..." />
+            <marker date="1494077868307" expanded="true" signature="9506:9518" ph="..." />
+            <marker date="1494077868307" expanded="true" signature="11521:11533" ph="..." />
+            <marker date="1494077868307" expanded="true" signature="13526:13538" ph="..." />
+            <marker date="1494077868307" expanded="true" signature="15483:15495" ph="..." />
+            <marker date="1494077868307" expanded="true" signature="17466:17478" ph="..." />
+            <marker date="1494077868307" expanded="true" signature="19486:19498" ph="..." />
+            <marker date="1494077868307" expanded="true" signature="21524:21536" ph="..." />
+            <marker date="1494077868307" expanded="false" signature="22998:23021" ph="{...}" />
+            <marker date="1494077868307" expanded="false" signature="23027:23083" ph="{...}" />
+            <marker date="1494077868307" expanded="true" signature="24664:24676" ph="..." />
+            <marker date="1494077868307" expanded="false" signature="26010:28016" ph="{&quot;id&quot;: &quot;YTTB2&quot;...}" />
+            <marker date="1494077868307" expanded="true" signature="26670:26682" ph="..." />
+            <marker date="1494077868307" expanded="true" signature="28676:28688" ph="..." />
+            <marker date="1494077868307" expanded="false" signature="30013:32058" ph="{&quot;id&quot;: &quot;YTTB4&quot;...}" />
+            <marker date="1494077868307" expanded="true" signature="30670:30682" ph="..." />
+            <marker date="1494077868307" expanded="false" signature="32060:34088" ph="{&quot;id&quot;: &quot;YTTB5&quot;...}" />
+            <marker date="1494077868307" expanded="true" signature="32718:32730" ph="..." />
+            <marker date="1494077868307" expanded="true" signature="34748:34760" ph="..." />
+            <marker date="1494077868307" expanded="true" signature="36768:36780" ph="..." />
+            <marker date="1494077868307" expanded="false" signature="38082:40075" ph="{&quot;id&quot;: &quot;YTTB8&quot;...}" />
+            <marker date="1494077868307" expanded="true" signature="38740:38752" ph="..." />
+            <marker date="1494077868307" expanded="true" signature="40738:40750" ph="..." />
+            <marker date="1494077868307" expanded="false" signature="42114:44165" ph="{&quot;id&quot;: &quot;YTTB10&quot;...}" />
+            <marker date="1494077868307" expanded="true" signature="42773:42785" ph="..." />
+            <marker date="1494077868307" expanded="true" signature="44826:44838" ph="..." />
+          </folding>
         </state>
       </provider>
     </entry>
