@@ -9,6 +9,12 @@
         app:showAsAction="ifRoom"
         />
 
+    <item android:id="@+id/refresh"
+        android:title="Refresh"
+        android:icon="@drawable/ic_refresh"
+        app:showAsAction="ifRoom"
+        />
+
     <item android:id="@+id/more_vert"
         android:title="Settings"
         android:icon="@drawable/ic_more_vert"

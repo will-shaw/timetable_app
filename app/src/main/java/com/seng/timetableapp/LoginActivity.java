@@ -76,7 +76,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
                 if (id == R.id.login || id == EditorInfo.IME_NULL) {
-                    attemptLogin();
+                    switchToTimetable(); // TODO: Replace with proper login logic.
                     return true;
                 }
                 return false;
@@ -87,16 +87,20 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         mLoginButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (attemptLogin()) {
-                    Intent intent = new Intent(LoginActivity.this, TimetableActivity.class);
-                    intent.putExtra("username", ((AutoCompleteTextView) findViewById(R.id.txt_username)).getText());
-                    startActivity(intent);
-                }
+            switchToTimetable(); // TODO: Replace with proper login logic.
             }
         });
 
         mLoginFormView = findViewById(R.id.email_login_form);
         mProgressView = findViewById(R.id.login_progress);
+    }
+
+    private void switchToTimetable() {
+        if (attemptLogin()) {
+            Intent intent = new Intent(LoginActivity.this, TimetableActivity.class);
+            intent.putExtra("username", ((AutoCompleteTextView) findViewById(R.id.txt_username)).getText());
+            startActivity(intent);
+        }
     }
 
     private void populateAutoComplete() {

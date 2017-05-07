@@ -64,6 +64,11 @@ public class TimetableActivity extends AppCompatActivity {
                 Toast.makeText(this, "Search selected", Toast.LENGTH_SHORT)
                         .show();
                 break;
+            case R.id.refresh:
+                Toast.makeText(this, "Refresh selected", Toast.LENGTH_SHORT)
+                    .show();
+                break;
+
             default:
                 break;
         }
