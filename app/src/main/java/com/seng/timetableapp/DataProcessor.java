@@ -1,7 +1,11 @@
 package com.seng.timetableapp;
 
+import android.util.ArrayMap;
+
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by shaun on 5/8/2017.
@@ -157,7 +161,7 @@ public class DataProcessor {
      * @param s String to work on
      * @return An array of strings, each being a block as defined by cS and cE, null if mismatched.
      */
-    private Collection<String> getBlock(char cS, char cE, String s) {
+    private Collection<String> getBlocks(char cS, char cE, String s) {
         Collection<String> blocks = new ArrayList<>();
         String t = nextChar(cS, s);
         int nests = 0;
@@ -190,6 +194,52 @@ public class DataProcessor {
         //Anything not added will be extra characters outside of a block, so ignore them
         //and return the blocks we have found.
         return blocks;
+    }
+
+    /**
+     * Takes a block string and parses it into an event object.
+     * @param s The string block to parse.
+     * @return An event object.
+     */
+    public TTEvent parseEventString(String s) {
+        s = s.substring(1,s.length()-1); //Trim block characters.
+        String[] items = s.split(",");
+        //Go through items, remove unnecessary quotes.
+        for(int i = 0; i < items.length; i++) {
+            boolean skip = false;
+            StringBuilder sb = new StringBuilder();
+            for(int j = 0; j < items[i].length(); j++) {
+                if(skip) {
+                    skip = false;
+                } else {
+                    if(items[i].charAt(j) == '\\') {
+                        skip = true;
+                    } else if(items[i].charAt(j) != '"') {
+                        sb.append(items[i].charAt(j));
+                    }
+                }
+            }
+            items[i] = sb.toString();
+        }
+        //Split by colon and add each key value to a temporary map.
+        Map mBlockItems = new HashMap();
+        for(String c : items) {
+            StringBuilder keySB = new StringBuilder();
+            for(int i = 0; i < c.length(); i++) {
+                if(c.charAt(i) != ':') {
+                    keySB.append(c.charAt(i));
+                } else {
+                    break;
+                }
+            }
+            c = nextChar(':', c);
+            c = c.substring(1,c.length());
+            //Check if there is a leading space
+            if(c.charAt(0) == ' ') {
+                c = c.substring(1,c.length());
+            }
+            mBlockItems.put(keySB.toString(), c);
+        }
     }
 }
 
