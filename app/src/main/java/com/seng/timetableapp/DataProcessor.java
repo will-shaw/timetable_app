@@ -16,7 +16,7 @@ public class DataProcessor {
         boolean f = false;
         int i;
         for(i = 0; (i < s.length() && !f); i++) {
-            if(s.charAt(i).equals(c)) {
+            if(s.charAt(i) == (c)) {
                 f = true;
             }
         }
