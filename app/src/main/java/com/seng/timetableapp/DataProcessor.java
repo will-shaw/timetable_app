@@ -25,6 +25,43 @@ public class DataProcessor {
         }
         return s;
     }
+
+    /**
+     * Helper function to return a block defined by cS and cE (Such as a pair of brackets)
+     * @param cS Starting character of block
+     * @param cE Ending character of block
+     * @param s String to work on
+     * @return The substring starting with cS and ending with cE, or null if no block exists.
+     */
+    private String getBlock(char cS, char cE, String s) {
+        String t = nextChar(cS, s);
+        //Handle if input string was already entire block, or if it did not contain cS.
+        if(t.charAt(0) == (cS) && t.charAt(t.length()-1) == (cE)) {
+            return t;
+        } else if(t.equals(s)) {
+            return null;
+        }
+        //Actual function
+        int nests = 0;
+        int i;
+        for(i = 0; i < t.length(); i++) {
+            if(t.charAt(i) == cS) {
+                ++nests;
+            } else if(t.charAt(i) == cE) {
+                --nests;
+            }
+            //If nests is zero, we've finished the block and can return it.
+            if(nests == 0) {
+                return t.substring(0,i+1);
+            }
+            //If nests is negative, brackets arent set up properly.
+            if(nests < 0) {
+                return null;
+            }
+        }
+        //If it reaches the end of the loop something is mismatched.
+        return null;
+    }
 }
 
 // var eventdata = [{
