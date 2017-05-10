@@ -23,60 +23,7 @@
     <favorites_list name="webscraper" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="timetable_scraper.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/timetable_scraper.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="126">
-              <caret line="7" column="40" selection-start-line="7" selection-start-column="40" selection-end-line="7" selection-end-column="40" />
-              <folding>
-                <element signature="e#844#865#0" expanded="false" />
-                <element signature="e#22966#46276#0" expanded="false" />
-                <marker date="1494077868307" expanded="true" signature="1512:1524" ph="..." />
-                <marker date="1494077868307" expanded="true" signature="3503:3515" ph="..." />
-                <marker date="1494077868307" expanded="true" signature="5494:5506" ph="..." />
-                <marker date="1494077868307" expanded="true" signature="7473:7485" ph="..." />
-                <marker date="1494077868307" expanded="true" signature="9506:9518" ph="..." />
-                <marker date="1494077868307" expanded="true" signature="11521:11533" ph="..." />
-                <marker date="1494077868307" expanded="true" signature="13526:13538" ph="..." />
-                <marker date="1494077868307" expanded="true" signature="15483:15495" ph="..." />
-                <marker date="1494077868307" expanded="true" signature="17466:17478" ph="..." />
-                <marker date="1494077868307" expanded="true" signature="19486:19498" ph="..." />
-                <marker date="1494077868307" expanded="true" signature="21524:21536" ph="..." />
-                <marker date="1494077868307" expanded="false" signature="22998:23021" ph="{...}" />
-                <marker date="1494077868307" expanded="false" signature="23027:23083" ph="{...}" />
-                <marker date="1494077868307" expanded="true" signature="24664:24676" ph="..." />
-                <marker date="1494077868307" expanded="false" signature="26010:28016" ph="{&quot;id&quot;: &quot;YTTB2&quot;...}" />
-                <marker date="1494077868307" expanded="true" signature="26670:26682" ph="..." />
-                <marker date="1494077868307" expanded="true" signature="28676:28688" ph="..." />
-                <marker date="1494077868307" expanded="false" signature="30013:32058" ph="{&quot;id&quot;: &quot;YTTB4&quot;...}" />
-                <marker date="1494077868307" expanded="true" signature="30670:30682" ph="..." />
-                <marker date="1494077868307" expanded="false" signature="32060:34088" ph="{&quot;id&quot;: &quot;YTTB5&quot;...}" />
-                <marker date="1494077868307" expanded="true" signature="32718:32730" ph="..." />
-                <marker date="1494077868307" expanded="true" signature="34748:34760" ph="..." />
-                <marker date="1494077868307" expanded="true" signature="36768:36780" ph="..." />
-                <marker date="1494077868307" expanded="false" signature="38082:40075" ph="{&quot;id&quot;: &quot;YTTB8&quot;...}" />
-                <marker date="1494077868307" expanded="true" signature="38740:38752" ph="..." />
-                <marker date="1494077868307" expanded="true" signature="40738:40750" ph="..." />
-                <marker date="1494077868307" expanded="false" signature="42114:44165" ph="{&quot;id&quot;: &quot;YTTB10&quot;...}" />
-                <marker date="1494077868307" expanded="true" signature="42773:42785" ph="..." />
-                <marker date="1494077868307" expanded="true" signature="44826:44838" ph="..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name=".gitignore" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/.gitignore">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="36">
-              <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -91,9 +38,9 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/.idea/workspace.xml" />
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/timetable_scraper.js" />
+        <option value="$PROJECT_DIR$/.idea/workspace.xml" />
       </list>
     </option>
   </component>
@@ -134,24 +81,7 @@
     </navigator>
     <panes>
       <pane id="ProjectPane">
-        <subPane>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="webscraper" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="webscraper" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="webscraper" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
+        <subPane />
       </pane>
       <pane id="Scratches" />
       <pane id="Scope">
@@ -249,6 +179,9 @@
   <component name="ShelveChangesManager" show_recycled="false">
     <option name="remove_strategy" value="false" />
   </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="958b2f72-b1d4-43fd-84ca-def525428a39" name="Default" comment="" />
@@ -260,7 +193,7 @@
       <workItem from="1494068905358" duration="1123000" />
       <workItem from="1494070036638" duration="1552000" />
       <workItem from="1494072056536" duration="20000" />
-      <workItem from="1494072079993" duration="5682000" />
+      <workItem from="1494072079993" duration="5845000" />
     </task>
     <task id="LOCAL-00001" summary="added project settings files">
       <created>1494069400680</created>
@@ -294,13 +227,13 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="8458000" />
+    <option name="totallyTimeSpent" value="8621000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="24" width="1920" height="1056" extended-state="6" />
     <editor active="false" />
     <layout>
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2540854" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2540854" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32916668" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32916668" sideWeight="0.50285715" order="7" side_tool="true" content_ui="tabs" />
@@ -308,7 +241,7 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32972974" sideWeight="0.49714285" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32916668" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -338,6 +271,14 @@
           </value>
         </entry>
       </map>
+    </option>
+  </component>
+  <component name="Vcs.Log.UiProperties">
+    <option name="RECENTLY_FILTERED_USER_GROUPS">
+      <collection />
+    </option>
+    <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
+      <collection />
     </option>
   </component>
   <component name="VcsContentAnnotationSettings">
@@ -557,8 +498,16 @@
     <entry file="file://$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" />
     <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="867">
-          <caret line="539" column="35" selection-start-line="539" selection-start-column="35" selection-end-line="539" selection-end-column="35" />
+        <state relative-caret-position="195">
+          <caret line="296" column="0" selection-start-line="296" selection-start-column="0" selection-end-line="296" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="36">
+          <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -600,14 +549,6 @@
             <marker date="1494077868307" expanded="true" signature="42773:42785" ph="..." />
             <marker date="1494077868307" expanded="true" signature="44826:44838" ph="..." />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/.gitignore">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="36">
-          <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
