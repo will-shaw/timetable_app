@@ -127,11 +127,11 @@ public class DataProcessor {
       t.setFcol(jo.getString("fcol"));
       String info = jo.getString("info");
       //Begin parsing info
-      info = nextChar('\n', info)i.substring(1);
+      info = nextChar('\n', info).substring(1);
       t.setLectureName(seqUntilChar('<',info));
       info = nextChar('\"', info).substring(1); //Skip to start of url
       t.setGmapsUrl(seqUntilChar('\"', info));
-      info = nextChar('>').substring(1); //Skip to room code
+      info = nextChar('>', info).substring(1); //Skip to room code
       t.setRoomCode(seqUntilChar('<', info));
       info = mulNextChar('<', info, 13);
       info = nextChar('>', info).substring(1); //Skip to paper name
@@ -147,6 +147,23 @@ public class DataProcessor {
       t.setBuildingName(seqUntilChar('<', info));
       //End parsing
       return t;
+   }
+
+   public Collection<TTEvent> parseWebData(String eventData, String options) {
+      JSONObject jo = new JSONObject(options);
+      String beginDate = jo.getString("title");
+      beginDate = beginDate.substring(32); //Skip "Timetable for (Now showing dates "
+      beginDate = seqUntilChar(' ', beginDate);
+      SimpleDateFormat sdf = new SimpleDateFormat("d/m/Y");
+      Date date = sdf.parse(beginDate);
+      Collection<String> blocks = getBlocks('{', '}', eventData);
+      Collection<TTEvent> items = new ArrayList<>();
+      for(String s : blocks) {
+         TTEvent t = parseEventString(s);
+         t.setDate(date);
+         items.add(t);
+      }
+      return items;
    }
 }
 
