@@ -1,11 +1,11 @@
 package com.seng.timetableapp;
 
 import android.util.ArrayMap;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import org.json.JSONObject;
 
 /**
  * Created by shaun on 5/8/2017.
@@ -30,6 +30,27 @@ public class DataProcessor {
       }
       if(f) {
          return s.substring(i);
+      }
+      return s;
+   }
+   
+   /**
+    * Helper function to return substring up until first occurance of a character.
+    * @param c The character to grab until
+    * @param s The string to work on
+    * @return The substring starting going to the first c, or s if the character isn't found.
+    */
+   private String seqUntilChar(char c, String s) {
+      boolean f = false;
+      int i;
+      for(i = 0; i < s.length(); i++) {
+         if(s.charAt(i) == (c)) {
+            f = true;
+            break;
+         }
+      }
+      if(f) {
+         return s.substring(0,i);
       }
       return s;
    }
@@ -82,7 +103,15 @@ public class DataProcessor {
     * @return An event object.
     */
    public TTEvent parseEventString(String s) {
-      s = s.substring(1,s.length()-1); //Trim block characters.
+      JSONObject jo = new JSONObject(s);
+      TTEvent t = new TTEvent();
+      t.setId(jo.getString("id"));
+      t.setDay(jo.getString("day"));
+      t.setStart(Integer.parseInt(seqUntilChar(':',jo.getString("start"))));
+      t.setEnd(Integer.parseInt(seqUntilChar(':',jo.getString("end"))));
+      t.setBcol(jo.getString("bcol"));
+      t.setFcol(jo.getString("fcol"));
+      /*s = s.substring(1,s.length()-1); //Trim block characters.
       String[] items = s.split(",");
       //Go through items, remove unnecessary quotes.
       for(int i = 0; i < items.length; i++) {
@@ -119,7 +148,7 @@ public class DataProcessor {
             c = c.substring(1,c.length());
          }
          mBlockItems.put(keySB.toString(), c);
-      }
+      }*/
    }
 }
 
