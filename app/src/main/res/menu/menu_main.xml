@@ -3,21 +3,24 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     >
 
-    <item android:id="@+id/search"
-        android:title="Search"
-        android:icon="@drawable/ic_search"
-        app:showAsAction="ifRoom"
-        />
+    <item
+        android:id="@+id/more_vert"
+        android:icon="@drawable/ic_menu"
+        android:title="Settings"
+        android:orderInCategory="200"
+        app:showAsAction="always" />
 
     <item android:id="@+id/refresh"
         android:title="Refresh"
         android:icon="@drawable/ic_refresh"
+        android:orderInCategory="150"
         app:showAsAction="ifRoom"
         />
 
-    <item android:id="@+id/more_vert"
-        android:title="Settings"
-        android:icon="@drawable/ic_more_vert"
+    <item android:id="@+id/search"
+        android:title="Search"
+        android:icon="@drawable/ic_search"
+        android:orderInCategory="100"
         app:showAsAction="ifRoom"
         />
 

@@ -1,10 +1,13 @@
+package domain;
+
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * Universal Event Class
  *    So that all parts of code have a consistent standard for data io.
  */
-public class TTEvent {
+public class TTEvent implements Serializable {
    private String id;
    private Date date;
    private int day;

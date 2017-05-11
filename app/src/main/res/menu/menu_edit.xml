@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/save"
+        android:icon="@drawable/ic_done"
+        android:title="@string/mn_label_save"
+        android:orderInCategory="200"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/discard"
+        android:icon="@drawable/ic_close"
+        android:title="@string/mn_label_discard"
+        android:orderInCategory="100"
+        app:showAsAction="ifRoom" />
+
+</menu>
