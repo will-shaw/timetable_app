@@ -33,6 +33,20 @@ public class DataProcessor {
       }
       return s;
    }
+
+   /**
+    * Helper function to perform nextChar multiple times
+    * @param c The character to trim to
+    * @param s The string to trim
+    * @param n the number of times to run
+    * @return The trimmed string
+    */
+   private String mulNextChar(char c, String s, int n) {
+      for(int i = 0; i < n; i++) {
+         s = nextChar(c, s);
+      }
+      return s;
+   }
    
    /**
     * Helper function to return substring up until first occurance of a character.
@@ -111,44 +125,28 @@ public class DataProcessor {
       t.setEnd(Integer.parseInt(seqUntilChar(':',jo.getString("end"))));
       t.setBcol(jo.getString("bcol"));
       t.setFcol(jo.getString("fcol"));
-      /*s = s.substring(1,s.length()-1); //Trim block characters.
-      String[] items = s.split(",");
-      //Go through items, remove unnecessary quotes.
-      for(int i = 0; i < items.length; i++) {
-         boolean skip = false;
-         StringBuilder sb = new StringBuilder();
-         for(int j = 0; j < items[i].length(); j++) {
-            if(skip) {
-               skip = false;
-            } else {
-               if(items[i].charAt(j) == '\\') {
-                  skip = true;
-               } else if(items[i].charAt(j) != '"') {
-                  sb.append(items[i].charAt(j));
-               }
-            }
-         }
-         items[i] = sb.toString();
-      }
-      //Split by colon and add each key value to a temporary map.
-      Map mBlockItems = new HashMap();
-      for(String c : items) {
-         StringBuilder keySB = new StringBuilder();
-         for(int i = 0; i < c.length(); i++) {
-            if(c.charAt(i) != ':') {
-               keySB.append(c.charAt(i));
-            } else {
-               break;
-            }
-         }
-         c = nextChar(':', c);
-         c = c.substring(1,c.length());
-         //Check if there is a leading space
-         if(c.charAt(0) == ' ') {
-            c = c.substring(1,c.length());
-         }
-         mBlockItems.put(keySB.toString(), c);
-      }*/
+      String info = jo.getString("info");
+      //Begin parsing info
+      info = nextChar('\n', info)i.substring(1);
+      t.setLectureName(seqUntilChar('<',info));
+      info = nextChar('\"', info).substring(1); //Skip to start of url
+      t.setGmapsUrl(seqUntilChar('\"', info));
+      info = nextChar('>').substring(1); //Skip to room code
+      t.setRoomCode(seqUntilChar('<', info));
+      info = mulNextChar('<', info, 13);
+      info = nextChar('>', info).substring(1); //Skip to paper name
+      t.setPaperName(seqUntilChar('<', info));
+      info = mulNextChar('<', info, 10);
+      info = nextChar('>', info).substring(1); //Skip to start of stream
+      t.setStream(seqUntilChar('<', info));
+      info = mulNextChar('<', info, 10);
+      info = nextChar('>', info).substring(1); //Skip to start of room name
+      t.setRoomName(seqUntilChar('<', info));
+      info = mulNextChar('<', info, 10);
+      info = nextChar('>', info).substring(1); //Skip to start of room name
+      t.setBuildingName(seqUntilChar('<', info));
+      //End parsing
+      return t;
    }
 }
 
