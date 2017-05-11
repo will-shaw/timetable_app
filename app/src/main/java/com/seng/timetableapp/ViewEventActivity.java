@@ -67,7 +67,7 @@ public class ViewEventActivity extends AppCompatActivity implements OnMapReadyCa
         TextView pLocation = (TextView) findViewById(R.id.viewLocation);
 
         pCode.setText(ttEvent.getId());
-        pTimeDate.setText(ttEvent.getDate().toString());
+        pTimeDate.setText(ttEvent.getDate().toString().substring(0, 11));
         pName.setText(ttEvent.getPaperName());
         pRoomCode.setText(ttEvent.getRoomCode());
         pColour.setBackgroundColor(Color.RED); // TODO: Remove static assignment.
