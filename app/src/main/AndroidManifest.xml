@@ -11,21 +11,39 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:targetSdkVersion="25"
         android:supportsRtl="true"
+        android:targetSdkVersion="25"
         android:theme="@style/AppTheme">
-    <activity
-        android:name=".LoginActivity"
-        android:label="@string/app_name"
-        android:theme="@style/Theme.Design.Light.NoActionBar">
+        <activity
+            android:name=".LoginActivity"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.Design.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".TimetableActivity"
+        <activity
+            android:name=".TimetableActivity"
             android:label="@string/timetable_label"
+            android:theme="@style/Theme.Design.Light"></activity>
+        <activity
+            android:name=".ViewEventActivity"
+            android:label="@string/title_activity_view_event"
+            android:parentActivityName=".TimetableActivity"
             android:theme="@style/Theme.Design.Light">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.seng.timetableapp.TimetableActivity" />
+        </activity>
+        <activity
+            android:name=".EditEventActivity"
+            android:label="@string/title_activity_edit_event"
+            android:parentActivityName=".ViewEventActivity"
+            android:theme="@style/Theme.Design.Light">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.seng.timetableapp.ViewEventActivity" />
         </activity>
     </application>
 

@@ -21,5 +21,13 @@
     <string name="tt_label_tomorrow">Tomorrow</string>
     <string name="tt_date_today">Today\'s Date</string>
     <string name="tt_date_tomorrow">Tomorrow\'s Date</string>
+    <string name="title_activity_view_event">View</string>
+
+    <!-- Menu Related -->
+    <string name="mn_label_edit">Edit</string>
+    <string name="mn_label_save">Save</string>
+    <string name="mn_label_discard">Discard</string>
+    <string name="mn_label_refresh">Refresh</string>
+    <string name="title_activity_edit_event">Edit</string>
 
 </resources>
