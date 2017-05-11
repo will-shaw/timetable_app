@@ -15,4 +15,11 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing username
         completions."
     </string>
+
+    <!-- Timetable Related -->
+    <string name="tt_label_today">Today</string>
+    <string name="tt_label_tomorrow">Tomorrow</string>
+    <string name="tt_date_today">Today\'s Date</string>
+    <string name="tt_date_tomorrow">Tomorrow\'s Date</string>
+
 </resources>
