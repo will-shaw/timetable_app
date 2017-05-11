@@ -22,6 +22,8 @@ public class TTEvent {
    private String buildingName;
    private String stream;
    
+   public TTEvent() {}
+
    public Date getDate() {
       return date;
    }
