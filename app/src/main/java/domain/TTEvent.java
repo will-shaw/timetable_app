@@ -4,154 +4,168 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * Universal Event Class
+ * Universal Event Class - Rich Domain Class
  *    So that all parts of code have a consistent standard for data io.
  */
 public class TTEvent implements Serializable {
-   private String id;
-   private Date date;
-   private int day;
-   private int start;
-   private int end;
-   private String bcol;
-   private String fcol;
-   private String lectureName;
-   private String gmapsUrl;
-   private double lat;
-   private double lon;
-   private String roomCode;
-   private String paperName;
-   private String roomName;
-   private String buildingName;
-   private String stream;
-   
-   public TTEvent() {}
+    private String id;
+    private Date date;
+    private int day;
+    private int start;
+    private int end;
+    private String bcol;
+    private String fcol;
+    private String lectureName;
+    private String gmapsUrl;
+    private double lat;
+    private double lon;
+    private String roomCode;
+    private String paperName;
+    private String roomName;
+    private String buildingName;
+    private String stream;
 
-   public Date getDate() {
-      return date;
-   }
+    //private <DAOClass> dao = new <DAOClass>();
 
-   public void setDate(Date date) {
-      this.date = date;
-   }
+    public TTEvent() {}
 
-   public double getLat() {
-      return lat;
-   }
+    public Date getDate() {
+        return date;
+    }
 
-   public void setLat(double lat) {
-      this.lat = lat;
-   }
+    public void setDate(Date date) {
+        this.date = date;
+    }
 
-   public double getLon() {
-      return lon;
-   }
+    public double getLat() {
+        return lat;
+    }
 
-   public void setLon(double lon) {
-      this.lon = lon;
-   }
+    public void setLat(double lat) {
+        this.lat = lat;
+    }
 
-   public String getId() {
-      return id;
-   }
+    public double getLon() {
+        return lon;
+    }
 
-   public void setId(String id) {
-      this.id = id;
-   }
+    public void setLon(double lon) {
+        this.lon = lon;
+    }
 
-   public int getDay() {
-      return day;
-   }
+    public String getId() {
+        return id;
+    }
 
-   public void setDay(int day) {
-      this.day = day;
-   }
+    public void setId(String id) {
+        this.id = id;
+    }
 
-   public int getStart() {
-      return start;
-   }
+    public int getDay() {
+        return day;
+    }
 
-   public void setStart(int start) {
-      this.start = start;
-   }
+    public void setDay(int day) {
+        this.day = day;
+    }
 
-   public int getEnd() {
-      return end;
-   }
+    public int getStart() {
+        return start;
+    }
 
-   public void setEnd(int end) {
-      this.end = end;
-   }
+    public void setStart(int start) {
+        this.start = start;
+    }
 
-   public String getBcol() {
-      return bcol;
-   }
+    public int getEnd() {
+        return end;
+    }
 
-   public void setBcol(String bcol) {
-      this.bcol = bcol;
-   }
+    public void setEnd(int end) {
+        this.end = end;
+    }
 
-   public String getFcol() {
-      return fcol;
-   }
+    public String getBcol() {
+        return bcol;
+    }
 
-   public void setFcol(String fcol) {
-      this.fcol = fcol;
-   }
+    public void setBcol(String bcol) {
+        this.bcol = bcol;
+    }
 
-   public String getLectureName() {
-      return lectureName;
-   }
+    public String getFcol() {
+        return fcol;
+    }
 
-   public void setLectureName(String lectureName) {
-      this.lectureName = lectureName;
-   }
+    public void setFcol(String fcol) {
+        this.fcol = fcol;
+    }
 
-   public String getGmapsUrl() {
-      return gmapsUrl;
-   }
+    public String getLectureName() {
+        return lectureName;
+    }
 
-   public void setGmapsUrl(String gmapsUrl) {
-      this.gmapsUrl = gmapsUrl;
-   }
+    public void setLectureName(String lectureName) {
+        this.lectureName = lectureName;
+    }
 
-   public String getRoomCode() {
-      return roomCode;
-   }
+    public String getGmapsUrl() {
+        return gmapsUrl;
+    }
 
-   public void setRoomCode(String roomCode) {
-      this.roomCode = roomCode;
-   }
+    public void setGmapsUrl(String gmapsUrl) {
+        this.gmapsUrl = gmapsUrl;
+    }
 
-   public String getPaperName() {
-      return paperName;
-   }
+    public String getRoomCode() {
+        return roomCode;
+    }
 
-   public void setPaperName(String paperName) {
-      this.paperName = paperName;
-   }
+    public void setRoomCode(String roomCode) {
+        this.roomCode = roomCode;
+    }
 
-   public String getRoomName() {
-      return roomName;
-   }
+    public String getPaperName() {
+        return paperName;
+    }
 
-   public void setRoomName(String roomName) {
-      this.roomName = roomName;
-   }
+    public void setPaperName(String paperName) {
+        this.paperName = paperName;
+    }
 
-   public String getBuildingName() {
-      return buildingName;
-   }
+    public String getRoomName() {
+        return roomName;
+    }
 
-   public void setBuildingName(String buildingName) {
-      this.buildingName = buildingName;
-   }
+    public void setRoomName(String roomName) {
+        this.roomName = roomName;
+    }
 
-   public String getStream() {
-      return stream;
-   }
+    public String getBuildingName() {
+        return buildingName;
+    }
 
-   public void setStream(String stream) {
-      this.stream = stream;
-   }
+    public void setBuildingName(String buildingName) {
+        this.buildingName = buildingName;
+    }
+
+    public String getStream() {
+        return stream;
+    }
+
+    public void setStream(String stream) {
+        this.stream = stream;
+    }
+
+    public boolean save() {
+        // TODO: Connect this to the dao (after fixing private member).
+        //return dao.save(this);
+        return false;
+    }
+
+    public boolean delete() {
+        //return dao.delete(this);
+        return false;
+    }
+
 }
