@@ -23,6 +23,7 @@ import java.util.GregorianCalendar;
 
 import static java.util.Calendar.DAY_OF_YEAR;
 
+import domain.TTEvent;
 import domain.TimetableItem;
 
 public class TimetableActivity extends AppCompatActivity {
@@ -34,12 +35,25 @@ public class TimetableActivity extends AppCompatActivity {
     ArrayAdapter<String> adapterToday;
     ArrayAdapter<String> adapterTomorrow;
 
+    private TTEvent ttEvent;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timetable);
         TextView lblTodayDate = (TextView) findViewById(R.id.lbl_today_date);
         TextView lblTomorrowDate = (TextView) findViewById(R.id.lbl_tomorrow_date);
+
+        ttEvent = new TTEvent();
+        ttEvent.setId("SENG301");
+        ttEvent.setRoomName("Central CAL");
+        ttEvent.setBuildingName("Richardson");
+        ttEvent.setLectureName("Lecture Name");
+        ttEvent.setDate(new Date());
+        ttEvent.setPaperName("Software Project Management");
+        ttEvent.setLat(-45.8660731);
+        ttEvent.setLon(170.5135830);
+        ttEvent.setRoomCode("CNCAL");
 
         Date dt = new Date();
         Calendar c = Calendar.getInstance();
@@ -131,6 +145,7 @@ public class TimetableActivity extends AppCompatActivity {
                     String label = (String) listToday.getItemAtPosition(position);
                     Intent intent = new Intent(TimetableActivity.this, ViewEventActivity.class);
                     intent.putExtra("paper", label);
+                    intent.putExtra("ttEvent", ttEvent);
                     startActivity(intent);
                 }
             });
@@ -141,6 +156,7 @@ public class TimetableActivity extends AppCompatActivity {
                     String label = (String) listTomorrow.getItemAtPosition(position);
                     Intent intent = new Intent(TimetableActivity.this, ViewEventActivity.class);
                     intent.putExtra("paper", label);
+                    intent.putExtra("ttEvent", ttEvent);
                     startActivity(intent);
                 }
             });

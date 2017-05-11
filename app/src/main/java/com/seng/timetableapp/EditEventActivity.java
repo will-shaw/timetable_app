@@ -6,17 +6,20 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
+import domain.TTEvent;
+
 public class EditEventActivity extends AppCompatActivity {
 
-    private String paper;
+    private TTEvent ttEvent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_event);
-        paper = getIntent().getStringExtra("paper");
-        if (getSupportActionBar() != null && paper != null) {
-            getSupportActionBar().setTitle("View " + paper);
+
+        ttEvent = (TTEvent) getIntent().getSerializableExtra("ttEvent");
+        if (getSupportActionBar() != null && ttEvent != null) {
+            getSupportActionBar().setTitle("View " + ttEvent.getId());
         }
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
