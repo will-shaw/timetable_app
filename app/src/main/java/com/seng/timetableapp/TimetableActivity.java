@@ -31,9 +31,7 @@ public class TimetableActivity extends AppCompatActivity {
     private RefreshTimeTable refreshTask;
     private ArrayList<TTEvent> todayItems = new ArrayList<>();
     private ArrayList<TTEvent> tomorrowItems = new ArrayList<>();
-    private Context context = this;
-    private ArrayAdapter<TTEvent> adapterToday;
-    private ArrayAdapter<TTEvent> adapterTomorrow;
+    private final Context context = this;
 
     private TimetableDAO dao;
 
@@ -44,7 +42,7 @@ public class TimetableActivity extends AppCompatActivity {
         TextView lblTodayDate = (TextView) findViewById(R.id.lbl_today_date);
         TextView lblTomorrowDate = (TextView) findViewById(R.id.lbl_tomorrow_date);
 
-        dao = new TimetableDAO(this);
+        dao = new TimetableDAO(context);
         loadTimetable();
 
         Calendar c = Calendar.getInstance();
@@ -63,7 +61,7 @@ public class TimetableActivity extends AppCompatActivity {
     /**
      * Attempts to load the timetable from the dao.
      */
-    public void loadTimetable() {
+    private void loadTimetable() {
         try {
             dao.loadTimeTable();
             Snackbar.make(getWindow().getDecorView().getRootView(), "Loading timetable...", Snackbar.LENGTH_SHORT)
@@ -93,16 +91,16 @@ public class TimetableActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.more_vert:
-                Toast.makeText(this, "Settings selected", Toast.LENGTH_SHORT)
+            case R.id.menu:
+                Toast.makeText(context, "Settings selected", Toast.LENGTH_SHORT)
                         .show();
                 break;
             case R.id.search:
-                Toast.makeText(this, "Search selected", Toast.LENGTH_SHORT)
+                Toast.makeText(context, "Search selected", Toast.LENGTH_SHORT)
                         .show();
                 break;
             case R.id.refresh:
-                Toast.makeText(this, "Refresh selected", Toast.LENGTH_SHORT)
+                Toast.makeText(context, "Refresh selected", Toast.LENGTH_SHORT)
                         .show();
                 refreshTask = new RefreshTimeTable();
                 refreshTask.execute();
@@ -167,8 +165,8 @@ public class TimetableActivity extends AppCompatActivity {
             }
 
             //Writes items to screen
-            adapterToday = new ArrayAdapter<>(context, android.R.layout.simple_list_item_1, todayItems);
-            adapterTomorrow = new ArrayAdapter<>(context, android.R.layout.simple_list_item_1, tomorrowItems);
+            ArrayAdapter<TTEvent> adapterToday = new ArrayAdapter<>(context, android.R.layout.simple_list_item_1, todayItems);
+            ArrayAdapter<TTEvent> adapterTomorrow = new ArrayAdapter<>(context, android.R.layout.simple_list_item_1, tomorrowItems);
             listToday.setAdapter(adapterToday);
             listTomorrow.setAdapter(adapterTomorrow);
         }

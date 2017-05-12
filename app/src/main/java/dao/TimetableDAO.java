@@ -22,7 +22,7 @@ public class TimetableDAO implements Serializable {
     //private static Map<String, TTEvent> timetable = null;
 
     // Context comes from Activity.
-    private Context context;
+    private final Context context;
 
     private static Collection<TTEvent> timetable = new ArrayList<>();
 

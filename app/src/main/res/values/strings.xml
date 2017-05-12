@@ -4,9 +4,7 @@
 
     <!-- Strings related to login -->
     <string name="prompt_username">Username</string>
-    <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
-    <string name="action_sign_in">Sign in or register</string>
     <string name="action_sign_in_short">Sign in</string>
     <string name="error_invalid_email">This username is invalid</string>
     <string name="error_invalid_password">This password is too short</string>
@@ -28,6 +26,10 @@
     <string name="mn_label_save">Save</string>
     <string name="mn_label_discard">Discard</string>
     <string name="mn_label_refresh">Refresh</string>
+    <string name="mn_label_search">Search</string>
+    <string name="mn_label_settings">Settings</string>
+
+    <!-- Edit Related - Defaults -->
     <string name="title_activity_edit_event">Edit</string>
 
     <!-- Maps -->

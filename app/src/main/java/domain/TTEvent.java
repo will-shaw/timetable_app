@@ -1,13 +1,7 @@
 package domain;
 
-import android.content.Context;
-
 import java.io.Serializable;
-import java.sql.Time;
 import java.util.Calendar;
-import java.util.Date;
-
-import dao.TimetableDAO;
 
 /**
  * Universal Event Class - Rich Domain Class
