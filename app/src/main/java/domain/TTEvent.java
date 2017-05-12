@@ -1,7 +1,13 @@
 package domain;
 
+import android.content.Context;
+
 import java.io.Serializable;
+import java.sql.Time;
+import java.util.Calendar;
 import java.util.Date;
+
+import dao.TimetableDAO;
 
 /**
  * Universal Event Class - Rich Domain Class
@@ -9,7 +15,7 @@ import java.util.Date;
  */
 public class TTEvent implements Serializable {
     private String id;
-    private Date date;
+    private Calendar date;
     private int day;
     private int start;
     private int end;
@@ -25,15 +31,19 @@ public class TTEvent implements Serializable {
     private String buildingName;
     private String stream;
 
-    //private <DAOClass> dao = new <DAOClass>();
+    //private TimetableDAO dao;
 
     public TTEvent() {}
 
-    public Date getDate() {
+    //public TTEvent(Context context) {
+    //    dao = new TimetableDAO(context);
+    //}
+
+    public Calendar getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(Calendar date) {
         this.date = date;
     }
 
@@ -166,6 +176,11 @@ public class TTEvent implements Serializable {
     public boolean delete() {
         //return dao.delete(this);
         return false;
+    }
+
+    @Override
+    public String toString() {
+        return this.id;
     }
 
 }
