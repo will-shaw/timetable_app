@@ -3,6 +3,7 @@ package com.seng.timetableapp;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -11,31 +12,30 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
 
 import static java.util.Calendar.DAY_OF_YEAR;
 
+import dao.TimetableDAO;
 import domain.TTEvent;
-import domain.TimetableItem;
 
 public class TimetableActivity extends AppCompatActivity {
 
     private RefreshTimeTable refreshTask;
-    ArrayList<String> todayItems = new ArrayList<>();
-    ArrayList<String> tomorrowItems = new ArrayList<>();
-    Context context = this;
-    ArrayAdapter<String> adapterToday;
-    ArrayAdapter<String> adapterTomorrow;
+    private ArrayList<TTEvent> todayItems = new ArrayList<>();
+    private ArrayList<TTEvent> tomorrowItems = new ArrayList<>();
+    private Context context = this;
+    private ArrayAdapter<TTEvent> adapterToday;
+    private ArrayAdapter<TTEvent> adapterTomorrow;
 
-    private TTEvent ttEvent;
+    private TimetableDAO dao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,25 +44,13 @@ public class TimetableActivity extends AppCompatActivity {
         TextView lblTodayDate = (TextView) findViewById(R.id.lbl_today_date);
         TextView lblTomorrowDate = (TextView) findViewById(R.id.lbl_tomorrow_date);
 
-        ttEvent = new TTEvent();
-        ttEvent.setId("SENG301");
-        ttEvent.setRoomName("Central CAL");
-        ttEvent.setBuildingName("Richardson");
-        ttEvent.setLectureName("Lecture Name");
-        ttEvent.setDate(new Date());
-        ttEvent.setPaperName("Software Project Management");
-        ttEvent.setLat(-45.8660731);
-        ttEvent.setLon(170.5135830);
-        ttEvent.setRoomCode("CNCAL");
+        dao = new TimetableDAO(this);
+        loadTimetable();
 
-        Date dt = new Date();
         Calendar c = Calendar.getInstance();
-        c.setTime(dt);
+        lblTodayDate.setText(c.getTime().toString().substring(0, 10));
         c.add(Calendar.DATE, 1);
-
-        lblTodayDate.setText(dt.toString().substring(0, 10));
-        dt = c.getTime();
-        lblTomorrowDate.setText(dt.toString().substring(0, 10));
+        lblTomorrowDate.setText(c.getTime().toString().substring(0, 10));
     }
 
     @Override
@@ -72,9 +60,39 @@ public class TimetableActivity extends AppCompatActivity {
         return true;
     }
 
+    /**
+     * Attempts to load the timetable from the dao.
+     */
+    public void loadTimetable() {
+        try {
+            dao.loadTimeTable();
+            Snackbar.make(getWindow().getDecorView().getRootView(), "Loading timetable...", Snackbar.LENGTH_SHORT)
+                    .show();
+        } catch (IOException | ClassNotFoundException ex) {
+            Snackbar.make(getWindow().getDecorView().getRootView(), "Error loading timetable :(", Snackbar.LENGTH_SHORT)
+                    .show();
+        }
+        refreshTask = new RefreshTimeTable();
+        refreshTask.execute();
+    }
+
+    /**
+     * Attempts to save the timetable to disk using dao.
+     */
+    public void saveTimetable() {
+        try {
+            dao.saveTimeTable();
+            Snackbar.make(getWindow().getDecorView().getRootView(), "Saving timetable...", Snackbar.LENGTH_SHORT)
+                    .show();
+        } catch (IOException ex) {
+            Snackbar.make(getWindow().getDecorView().getRootView(), "Error saving timetable :(", Snackbar.LENGTH_SHORT)
+                    .show();
+        }
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch(item.getItemId()) {
+        switch (item.getItemId()) {
             case R.id.more_vert:
                 Toast.makeText(this, "Settings selected", Toast.LENGTH_SHORT)
                         .show();
@@ -97,35 +115,13 @@ public class TimetableActivity extends AppCompatActivity {
     }
 
     /*
-    * Makes a dummy timetable
-    *
-    */
-    public ArrayList<TimetableItem> makeTimetable(){
-        Calendar cal = new GregorianCalendar();
-        ArrayList<TimetableItem> timetable = new ArrayList<>();
-
-        timetable.add(new TimetableItem((Calendar) cal.clone(),"Lecture","SENG301","Room14","MyHouse"));
-
-        cal.add(Calendar.DAY_OF_MONTH, 1);
-        timetable.add(new TimetableItem((Calendar) cal.clone(),"Lecture","SENG301","Room14","MyHouse"));
-
-        cal.add(Calendar.HOUR_OF_DAY, 2);
-        timetable.add(new TimetableItem((Calendar) cal.clone(),"Lecture","ANDR101","Room14","MyHouse"));
-
-        cal.add(Calendar.HOUR_OF_DAY, 2);
-        timetable.add(new TimetableItem((Calendar) cal.clone(),"Lecture","SENG301","Room14","MyHouse"));
-        return timetable;
-    }
-
-    /*
     * Gets timetable items then adds them to the list views for today and tomorrow
-    *
     */
-    private class RefreshTimeTable extends AsyncTask<String, Integer, ArrayList<TimetableItem>> {
+    private class RefreshTimeTable extends AsyncTask<String, Integer, ArrayList<TTEvent>> {
 
         @Override
-        protected ArrayList<TimetableItem> doInBackground(String... urls) {
-            return makeTimetable();
+        protected ArrayList<TTEvent> doInBackground(String... urls) {
+            return (ArrayList<TTEvent>) dao.getTimeTable();
         }
 
         @Override
@@ -134,7 +130,7 @@ public class TimetableActivity extends AppCompatActivity {
         }
 
         @Override
-        protected void onPostExecute(ArrayList<TimetableItem> timetable) {
+        protected void onPostExecute(ArrayList<TTEvent> timetable) {
 
             final ListView listToday = (ListView) findViewById(R.id.list_tt_today);
             final ListView listTomorrow = (ListView) findViewById(R.id.list_tt_tomorrow);
@@ -142,10 +138,9 @@ public class TimetableActivity extends AppCompatActivity {
             listToday.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    String label = (String) listToday.getItemAtPosition(position);
+                    TTEvent event = (TTEvent) listToday.getItemAtPosition(position);
                     Intent intent = new Intent(TimetableActivity.this, ViewEventActivity.class);
-                    intent.putExtra("paper", label);
-                    intent.putExtra("ttEvent", ttEvent);
+                    intent.putExtra("ttEvent", event);
                     startActivity(intent);
                 }
             });
@@ -153,22 +148,21 @@ public class TimetableActivity extends AppCompatActivity {
             listTomorrow.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    String label = (String) listTomorrow.getItemAtPosition(position);
+                    TTEvent event = (TTEvent) listTomorrow.getItemAtPosition(position);
                     Intent intent = new Intent(TimetableActivity.this, ViewEventActivity.class);
-                    intent.putExtra("paper", label);
-                    intent.putExtra("ttEvent", ttEvent);
+                    intent.putExtra("ttEvent", event);
                     startActivity(intent);
                 }
             });
 
             //Creates string arrays for today and tomorrow
-            for (TimetableItem ttItem: timetable) {
-                Integer daysAway = ttItem.getDate().get(DAY_OF_YEAR) - new GregorianCalendar().get(DAY_OF_YEAR);
+            for (TTEvent ttEvent : timetable) {
+                Integer daysAway = ttEvent.getDate().get(DAY_OF_YEAR) - new GregorianCalendar().get(DAY_OF_YEAR);
 
                 if (daysAway == 0) {
-                    todayItems.add(ttItem.getSubjectCode());
+                    todayItems.add(ttEvent);
                 } else if (daysAway == 1) {
-                    tomorrowItems.add(ttItem.getSubjectCode());
+                    tomorrowItems.add(ttEvent);
                 }
             }
 
