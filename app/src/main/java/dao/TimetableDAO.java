@@ -10,7 +10,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
-import java.util.Date;
 
 import domain.TTEvent;
 
@@ -64,7 +63,7 @@ public class TimetableDAO implements Serializable {
         return "timetableDAO{}";
     }
 
-    public Collection getTimeTable() {
+    public Collection<TTEvent> getTimeTable() {
         return timetable;
     }
 
