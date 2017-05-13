@@ -19,6 +19,7 @@ import android.widget.Toast;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 
 import static java.util.Calendar.DAY_OF_YEAR;
@@ -117,6 +118,71 @@ public class TimetableActivity extends AppCompatActivity {
     */
     private class RefreshTimeTable extends AsyncTask<String, Integer, ArrayList<TTEvent>> {
 
+        //get dummy timetable
+        private ArrayList<TTEvent> getDummy(){
+
+            ArrayList<TTEvent> timetable = new ArrayList<>();
+            TTEvent tte1 = new TTEvent();
+            TTEvent tte2 = new TTEvent();
+            TTEvent tte3 = new TTEvent();
+            TTEvent tte4 = new TTEvent();
+
+            GregorianCalendar date = new GregorianCalendar();
+
+            tte1.setId("SENG301");
+            tte1.setRoomName("Central CAL");
+            tte1.setBuildingName("Richardson");
+            tte1.setLectureName("Lecture Name");
+            tte1.setDate((GregorianCalendar)date.clone());
+            tte1.setPaperName("Software Project Management");
+            tte1.setLat(-45.8660731);
+            tte1.setLon(170.5135830);
+            tte1.setRoomCode("CNCAL");
+
+            date.add(Calendar.DAY_OF_MONTH, 1);
+
+            tte2.setId("SENG301");
+            tte2.setRoomName("Central CAL");
+            tte2.setBuildingName("Richardson");
+            tte2.setLectureName("Lecture Name");
+            tte2.setDate((GregorianCalendar)date.clone());
+            tte2.setPaperName("Software Project Management");
+            tte2.setLat(-45.8660731);
+            tte2.setLon(170.5135830);
+            tte2.setRoomCode("CNCAL");
+
+            date.add(Calendar.HOUR_OF_DAY, 2);
+
+            tte3.setId("SENG301");
+            tte3.setRoomName("Central CAL");
+            tte3.setBuildingName("Richardson");
+            tte3.setLectureName("Lecture Name");
+            tte3.setDate((GregorianCalendar)date.clone());
+            tte3.setPaperName("Software Project Management");
+            tte3.setLat(-45.8660731);
+            tte3.setLon(170.5135830);
+            tte3.setRoomCode("CNCAL");
+
+            date.add(Calendar.HOUR_OF_DAY, 2);
+
+            tte4.setId("SENG301");
+            tte4.setRoomName("Central CAL");
+            tte4.setBuildingName("Richardson");
+            tte4.setLectureName("Lecture Name");
+            tte4.setDate((GregorianCalendar)date.clone());
+            tte4.setPaperName("Software Project Management");
+            tte4.setLat(-45.8660731);
+            tte4.setLon(170.5135830);
+            tte4.setRoomCode("CNCAL");
+
+            timetable.add(tte1);
+            timetable.add(tte2);
+            timetable.add(tte3);
+            timetable.add(tte4);
+
+            return timetable;
+        }
+
         @Override
         protected ArrayList<TTEvent> doInBackground(String... urls) {
             return (ArrayList<TTEvent>) dao.getTimeTable();
@@ -129,6 +195,10 @@ public class TimetableActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(ArrayList<TTEvent> timetable) {
+
+            //get dummy timetable
+                timetable = getDummy();
+
 
             final ListView listToday = (ListView) findViewById(R.id.list_tt_today);
             final ListView listTomorrow = (ListView) findViewById(R.id.list_tt_tomorrow);
