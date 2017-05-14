@@ -1,3 +1,5 @@
+package com.seng.timetableapp;
+
 import java.util.Date;
 
 /**

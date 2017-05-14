@@ -1,11 +1,15 @@
 package com.seng.timetableapp;
 
-import android.util.ArrayMap;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-import org.json.JSONObject;
+import java.util.Date;
+import java.text.SimpleDateFormat;
 
 /**
  * Created by shaun on 5/8/2017.
@@ -76,18 +80,18 @@ public class DataProcessor {
     * @param s String to work on
     * @return An array of strings, each being a block as defined by cS and cE, null if mismatched.
     */
-   private Collection<String> getBlocks(char cS, char cE, String s) {
+   public Collection<String> getBlocks(char cS, char cE, String s) {
       Collection<String> blocks = new ArrayList<>();
       String t = nextChar(cS, s);
       int nests = 0;
       int start = 0;
-      boolean lookForStart = false;
+      boolean lookForStart = true;
       int i;
       for(i = 0; i < t.length(); i++) {
          //If starting a new block, skip over in-between characters
          if(lookForStart && t.charAt(i) != cS) {
             continue;
-         } else {
+         } else if(lookForStart) {
             lookForStart = false;
             start = i;
          }
@@ -98,6 +102,7 @@ public class DataProcessor {
          }
          //If nests is zero, we've finished the block and can return it.
          if(nests == 0) {
+            //System.out.println("ADDED -> Start: " + start + ", length: " + i + t.substring(start,i+1));
             blocks.add(t.substring(start,i+1));
             lookForStart = true;
          }
@@ -116,16 +121,19 @@ public class DataProcessor {
     * @param s The string block to parse.
     * @return An event object.
     */
-   public TTEvent parseEventString(String s) {
-      JSONObject jo = new JSONObject(s);
+   private TTEvent parseEventString(String s) {
+      String info;
       TTEvent t = new TTEvent();
-      t.setId(jo.getString("id"));
-      t.setDay(jo.getString("day"));
-      t.setStart(Integer.parseInt(seqUntilChar(':',jo.getString("start"))));
-      t.setEnd(Integer.parseInt(seqUntilChar(':',jo.getString("end"))));
-      t.setBcol(jo.getString("bcol"));
-      t.setFcol(jo.getString("fcol"));
-      String info = jo.getString("info");
+      JsonParser jp = new JsonParser();
+      //System.out.println(s);
+      JsonObject jo = jp.parse(s).getAsJsonObject();
+      t.setId(jo.get("id").getAsString());
+      t.setDay(jo.get("day").getAsInt());
+      t.setStart(Integer.parseInt(seqUntilChar(':', jo.get("start").getAsString())));
+      t.setEnd(Integer.parseInt(seqUntilChar(':', jo.get("end").getAsString())));
+      t.setBcol(jo.get("bcol").getAsString());
+      t.setFcol(jo.get("fcol").getAsString());
+      info = jo.get("info").getAsString();
       //Begin parsing info
       info = nextChar('\n', info).substring(1);
       t.setLectureName(seqUntilChar('<',info));
@@ -150,36 +158,28 @@ public class DataProcessor {
    }
 
    public Collection<TTEvent> parseWebData(String eventData, String options) {
-      JSONObject jo = new JSONObject(options);
-      String beginDate = jo.getString("title");
-      beginDate = beginDate.substring(32); //Skip "Timetable for (Now showing dates "
+      options = nextChar('{', options);
+      options = options.substring(0,options.length()-2);
+      JsonParser jp = new JsonParser();
+      JsonObject jo = jp.parse(options).getAsJsonObject();
+      String beginDate = jo.get("title").getAsString();
+      beginDate = beginDate.substring(34); //Skip "Timetable for (Now showing dates "
       beginDate = seqUntilChar(' ', beginDate);
       SimpleDateFormat sdf = new SimpleDateFormat("d/m/Y");
-      Date date = sdf.parse(beginDate);
+      Date date;
+      try {
+         date = sdf.parse(beginDate);
+      } catch(ParseException e) {
+         date = new Date(0);
+      }
+      eventData = nextChar('{', eventData);
       Collection<String> blocks = getBlocks('{', '}', eventData);
       Collection<TTEvent> items = new ArrayList<>();
-      for(String s : blocks) {
-         TTEvent t = parseEventString(s);
+      for(String j : blocks) {
+         TTEvent t = parseEventString(j);
          t.setDate(date);
          items.add(t);
       }
       return items;
    }
 }
-
-// var eventdata = [{
-//     "id": "YTTB1",
-//     "day": 1,
-//     "start": "11:00",
-//     "end": "12:00",
-//     "draggable": false,
-//     "resizable": false,
-//     "selected": false,
-//     "bcol": "lightgrey",
-//     "fcol": "#121212",
-//     "info": "Lecture<br>\nCOSC301<br>\n\n<a href=\"https:\/\/maps.google.com\/?q=-45.8636426650169,170.513851671001&ll=-45.8636426650169,170.513851671001&z=19&t=k\" target=\"_blank\">SDAV1<\/a>\n\n<div class=\"sv-hidden-md sv-hidden-lg sv-hidden-sm\">\n\t<a onclick=\"$('.uo_mobile_more_COSC301S1DNI2017LL1').toggle()\" href=\"javascript:void(0)\">More...<\/a>\n\t<div class=\"uo_mobile_more_COSC301S1DNI2017LL1\" style=\"display:none\">\n<div class='sv-col-sm-3'>\n\t<span><strong>Paper:<\/strong><\/span>\n<\/div>\n<div class='sv-col-sm-9'>\n\t<span>Network Management<\/span>\n<\/div>\n<div class='sv-col-sm-3'>\n\t<span><strong>Stream:<\/strong><\/span>\n<\/div>\n<div class='sv-col-sm-9'>\n\t<span>L1<\/span>\n<\/div>\n\n<div class='sv-col-sm-3'>\n\t<span><strong>Room:<\/strong><\/span>\n<\/div>\n<div class='sv-col-sm-9'>\n\t<span>St David Seminar Rm 1 <\/span>\n<\/div>\n<div class='sv-col-sm-3'>\n\t<span><strong>Building:<\/strong><\/span>\n<\/div>\n<div class='sv-col-sm-9'>\n\t<span> St David Complex <\/span>\n<\/div>\n\n\t<\/div>\n<\/div>",
-//     "ttip": "<div class='sv-col-sm-3'>\n\t<span><strong>Paper:<\/strong><\/span>\n<\/div>\n<div class='sv-col-sm-9'>\n\t<span>Network Management<\/span>\n<\/div>\n<div class='sv-col-sm-3'>\n\t<span><strong>Stream:<\/strong><\/span>\n<\/div>\n<div class='sv-col-sm-9'>\n\t<span>L1<\/span>\n<\/div>\n\n<div class='sv-col-sm-3'>\n\t<span><strong>Room:<\/strong><\/span>\n<\/div>\n<div class='sv-col-sm-9'>\n\t<span>St David Seminar Rm 1 <\/span>\n<\/div>\n<div class='sv-col-sm-3'>\n\t<span><strong>Building:<\/strong><\/span>\n<\/div>\n<div class='sv-col-sm-9'>\n\t<span> St David Complex <\/span>\n<\/div>\n",
-//     "preinfo": "",
-//     "isnote": false,
-//     "extra": {"tts_seqn": 9, "rcid": ""}
-// }, {
