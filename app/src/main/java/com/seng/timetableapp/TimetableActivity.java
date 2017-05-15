@@ -32,6 +32,8 @@ public class TimetableActivity extends AppCompatActivity {
 
     private RefreshTimeTable refreshTask;
     private final Context context = this;
+    private ArrayList<TTEvent> todayItems = new ArrayList<>();
+    private ArrayList<TTEvent> tomorrowItems = new ArrayList<>();
 
     private TimetableDAO dao;
 
@@ -282,7 +284,7 @@ public class TimetableActivity extends AppCompatActivity {
 //                }
 
 
-                dailyTTEvents.get(day);
+                //dailyTTEvents.get(day);
                 //kkkkaksdmaosdo
 
 
@@ -292,7 +294,7 @@ public class TimetableActivity extends AppCompatActivity {
 
             //Writes items to screen
             ArrayAdapter<TTEvent> adapterToday = new ArrayAdapter<>(context, android.R.layout.simple_list_item_1, todayItems);
-            ArrayAdapter<TTEvent> adapterTomorrow = new ArrayAdapter<>(context, android.R.layout.simple_list_item_1, tomorowItems);
+            ArrayAdapter<TTEvent> adapterTomorrow = new ArrayAdapter<>(context, android.R.layout.simple_list_item_1, tomorrowItems);
             listToday.setAdapter(adapterToday);
             listTomorrow.setAdapter(adapterTomorrow);
 
