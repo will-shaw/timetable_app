@@ -2,6 +2,7 @@ package domain;
 
 import java.io.Serializable;
 import java.util.Calendar;
+import java.util.Objects;
 
 /**
  * Universal Event Class - Rich Domain Class
@@ -170,6 +171,20 @@ public class TTEvent implements Serializable {
     public boolean delete() {
         //return dao.delete(this);
         return false;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        TTEvent ttEvent = (TTEvent) o;
+        return Objects.equals(id, ttEvent.id) &&
+                Objects.equals(date, ttEvent.date);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, date);
     }
 
     @Override
