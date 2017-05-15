@@ -42,6 +42,13 @@
 
     <!-- Edit Related - Defaults -->
     <string name="title_activity_edit_event">Edit</string>
+    <string name="edit_label_building">Building</string>
+
+    <!-- Edit Related - Placeholders -->
+    <string name="edit_ph_paper">e.g. HUBS191</string>
+    <string name="edit_ph_paperName">e.g. Microbiology &amp; Immu&#8230;</string>
+    <string name="edit_ph_roomCode">CASTA</string>
+    <string name="edit_ph_building">e.g. Castle</string>
 
     <!-- Maps -->
     <string name="google_android_map_api_key">AIzaSyB1MxKPBv4m5DkVzF7Fl9hb87oIcJZ2bfI</string>
