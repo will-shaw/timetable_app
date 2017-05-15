@@ -96,6 +96,16 @@ public class ViewEventActivity extends AppCompatActivity implements OnMapReadyCa
     }
 
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK) {
+            if (data.hasExtra("ttEvent")) {
+                this.ttEvent = (TTEvent) data.getSerializableExtra("ttEvent");
+                fillDetails();
+            }
+        }
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_view, menu);
@@ -108,7 +118,6 @@ public class ViewEventActivity extends AppCompatActivity implements OnMapReadyCa
 
             case R.id.edit:
                 Intent intent = new Intent(ViewEventActivity.this, EditEventActivity.class);
-                // TODO: Pass through either Event, or just the ID for the next activity to pull.
                 intent.putExtra("ttEvent", ttEvent);
                 startActivity(intent);
                 break;
