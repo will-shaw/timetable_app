@@ -302,49 +302,48 @@ public class TimetableActivity extends AppCompatActivity {
 
                     //if the dayTT is empty, make a new dayTT with event, and add it.
                 }else{
-                    ArrayList<TTEvent> dayTT = new ArrayList<TTEvent>();
+                    ArrayList<TTEvent> dayTT = new ArrayList<>();
                     dayTT.add(ttEvent);
                     weekTT.set(day, dayTT);
                 }
             }
 
-            String ttEventString;
-            ArrayList<ArrayList<String>> weekTTStrings = new ArrayList<ArrayList<String>>();
+            TTEvent event;
+            ArrayList<ArrayList<TTEvent>> weekEvents = new ArrayList<>();
 
                 //for each day of the week
                 for(int i = 0; i < weekTT.size(); i++){
                     //for each ttEvent in the day
                     for(int j = 0; j < weekTT.get(i).size(); j++){
                         //get ttEvent string
-                        ttEventString = weekTT.get(i).get(j).getId();
+                        event = weekTT.get(i).get(j);
 
-                        ArrayList<String> dayTTStrings = new ArrayList<String>();
+                        ArrayList<TTEvent> dayEvents = new ArrayList<>();
                         //try get string array for day if it exists
                         try {
-                            dayTTStrings = weekTTStrings.get(i);
+                            dayEvents = weekEvents.get(i);
                         }catch(java.lang.IndexOutOfBoundsException e){
 
                         }
 
                         //add event string to dayTTStrings array
-                        if (!dayTTStrings.contains(ttEventString)){
-                            dayTTStrings.add(ttEventString);
+                        if (!dayEvents.contains(event)){
+                            dayEvents.add(event);
                         }
                         //set dayTTStrings array back into weekTTStrings array
                         try {
-                            weekTTStrings.set(i, dayTTStrings);
+                            weekEvents.set(i, dayEvents);
                         }catch(java.lang.IndexOutOfBoundsException e){
-                            weekTTStrings.add(dayTTStrings);
+                            weekEvents.add(dayEvents);
                         }
-
 
                     }
                 }
 
 
 
-            ArrayAdapter<String> adapterToday = new ArrayAdapter<>(context, android.R.layout.simple_list_item_1, weekTTStrings.get(0));
-            ArrayAdapter<String> adapterTomorrow = new ArrayAdapter<>(context, android.R.layout.simple_list_item_1, weekTTStrings.get(1));
+            ArrayAdapter<TTEvent> adapterToday = new ArrayAdapter<>(context, android.R.layout.simple_list_item_1, weekEvents.get(0));
+            ArrayAdapter<TTEvent> adapterTomorrow = new ArrayAdapter<>(context, android.R.layout.simple_list_item_1, weekEvents.get(1));
             listToday.setAdapter(adapterToday);
             listTomorrow.setAdapter(adapterTomorrow);
 
