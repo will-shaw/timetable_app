@@ -36,6 +36,7 @@
     <string name="mn_label_edit">Edit</string>
     <string name="mn_label_save">Save</string>
     <string name="mn_label_discard">Discard</string>
+    <string name="mn_label_delete">Delete</string>
     <string name="mn_label_refresh">Refresh</string>
     <string name="mn_label_search">Search</string>
     <string name="mn_label_settings">Settings</string>

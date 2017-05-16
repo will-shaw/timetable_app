@@ -2,17 +2,12 @@ package com.seng.timetableapp;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.AutoCompleteTextView;
 
-import java.io.IOException;
-import java.sql.Time;
-
-import dao.TimetableDAO;
 import domain.TTEvent;
 
 public class EditEventActivity extends AppCompatActivity {
@@ -22,7 +17,8 @@ public class EditEventActivity extends AppCompatActivity {
     private AutoCompleteTextView pName;
     private AutoCompleteTextView pRoom;
     private AutoCompleteTextView pBuilding;
-    private TimetableDAO dao;
+
+    private final int RESULT_DELETE = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,8 +26,6 @@ public class EditEventActivity extends AppCompatActivity {
         setContentView(R.layout.activity_edit_event);
 
         ttEvent = (TTEvent) getIntent().getSerializableExtra("ttEvent");
-
-        dao = new TimetableDAO(this);
 
         pPaper = (AutoCompleteTextView) findViewById(R.id.edit_text_paper);
         pName = (AutoCompleteTextView) findViewById(R.id.edit_text_paperName);
@@ -59,15 +53,6 @@ public class EditEventActivity extends AppCompatActivity {
         ttEvent.setPaperName(pName.getText().toString());
         ttEvent.setRoomCode(pRoom.getText().toString());
         ttEvent.setBuildingName(pBuilding.getText().toString());
-        dao.save(ttEvent);
-        try {
-            dao.saveTimeTable();
-            Snackbar.make(getWindow().getDecorView().getRootView(), "Saved", Snackbar.LENGTH_SHORT)
-                    .show();
-        } catch (IOException e) {
-            Snackbar.make(getWindow().getDecorView().getRootView(), "Cannot save :(", Snackbar.LENGTH_SHORT)
-                    .show();
-        }
     }
 
     @Override
@@ -84,8 +69,13 @@ public class EditEventActivity extends AppCompatActivity {
             case R.id.save:
                 Intent data = new Intent();
                 updateDetails();
-                data.putExtra("ttEvent", ttEvent);
+                data.putExtra("returnEvent", ttEvent);
                 setResult(RESULT_OK, data);
+                this.finish();
+                break;
+
+            case R.id.delete:
+                setResult(RESULT_DELETE);
                 this.finish();
                 break;
 

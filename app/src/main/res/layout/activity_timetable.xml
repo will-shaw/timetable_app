@@ -7,6 +7,11 @@
     tools:context="com.seng.timetableapp.TimetableActivity"
     tools:layout_editor_absoluteY="16dp"
     tools:layout_editor_absoluteX="16dp">
+    <android.support.v4.widget.SwipeRefreshLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/swiperefresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
     <ScrollView
         android:id="@+id/scrollView2"
@@ -535,5 +540,7 @@
 
         </LinearLayout>
     </ScrollView>
+
+    </android.support.v4.widget.SwipeRefreshLayout>
 
 </android.support.constraint.ConstraintLayout>

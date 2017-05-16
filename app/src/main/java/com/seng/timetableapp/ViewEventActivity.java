@@ -3,6 +3,7 @@ package com.seng.timetableapp;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -18,6 +19,9 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.io.IOException;
+
+import dao.TimetableDAO;
 import domain.TTEvent;
 
 public class ViewEventActivity extends AppCompatActivity implements OnMapReadyCallback {
@@ -25,6 +29,8 @@ public class ViewEventActivity extends AppCompatActivity implements OnMapReadyCa
     private MapView mapView;
     private GoogleMap map;
     private TTEvent ttEvent;
+
+    private final int RESULT_DELETE = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +68,7 @@ public class ViewEventActivity extends AppCompatActivity implements OnMapReadyCa
         TextView pLocation = (TextView) findViewById(R.id.viewLocation);
 
         pCode.setText(ttEvent.getId());
-        pTimeDate.setText(ttEvent.getDate().toString().substring(0, 11));
+        pTimeDate.setText(ttEvent.getDate().getTime().toString().substring(0, 10));
         pName.setText(ttEvent.getPaperName());
         pRoomCode.setText(ttEvent.getRoomCode());
         pColour.setBackgroundColor(Color.RED); // TODO: Remove static assignment.
@@ -76,13 +82,15 @@ public class ViewEventActivity extends AppCompatActivity implements OnMapReadyCa
 
         MapsInitializer.initialize(ViewEventActivity.this);
 
-        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(new LatLng(ttEvent.getLat(), ttEvent.getLon()), 10);
+        CameraUpdate cameraUpdate = CameraUpdateFactory
+                .newLatLngZoom(new LatLng(ttEvent.getLat(), ttEvent.getLon()), 10);
         map.moveCamera(cameraUpdate);
 
         map.setOnMapLoadedCallback(new GoogleMap.OnMapLoadedCallback() {
             @Override
             public void onMapLoaded() {
-                CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(new LatLng(ttEvent.getLat(), ttEvent.getLon()), 17);
+                CameraUpdate cameraUpdate = CameraUpdateFactory
+                        .newLatLngZoom(new LatLng(ttEvent.getLat(), ttEvent.getLon()), 17);
                 map.animateCamera(cameraUpdate);
 
                 map.addMarker(new MarkerOptions()
@@ -98,10 +106,29 @@ public class ViewEventActivity extends AppCompatActivity implements OnMapReadyCa
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
-            if (data.hasExtra("ttEvent")) {
-                this.ttEvent = (TTEvent) data.getSerializableExtra("ttEvent");
-                fillDetails();
+            if (data.hasExtra("returnEvent")) {
+                this.ttEvent = (TTEvent) data.getSerializableExtra("returnEvent");
+                try {
+                    fillDetails();
+                    TimetableDAO dao = new TimetableDAO(this);
+                    dao.save(ttEvent);
+                    dao.saveTimeTable();
+                    Snackbar.make(getWindow()
+                            .getDecorView()
+                            .getRootView(), "Saved", Snackbar.LENGTH_SHORT)
+                            .show();
+                } catch (IOException e) {
+                    Snackbar.make(getWindow()
+                            .getDecorView()
+                            .getRootView(), "Cannot save :(", Snackbar.LENGTH_SHORT)
+                            .show();
+                }
             }
+        } else if (resultCode == RESULT_DELETE) {
+            Intent intent = new Intent();
+            intent.putExtra("ttEvent", ttEvent);
+            setResult(RESULT_DELETE, intent);
+            this.finish();
         }
     }
 
@@ -119,10 +146,11 @@ public class ViewEventActivity extends AppCompatActivity implements OnMapReadyCa
             case R.id.edit:
                 Intent intent = new Intent(ViewEventActivity.this, EditEventActivity.class);
                 intent.putExtra("ttEvent", ttEvent);
-                startActivity(intent);
+                startActivityForResult(intent, 1);
                 break;
 
             case android.R.id.home:
+                setResult(RESULT_OK);
                 this.finish();
                 break;
 
