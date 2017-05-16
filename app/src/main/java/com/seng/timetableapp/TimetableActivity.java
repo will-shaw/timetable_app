@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.design.widget.Snackbar;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
@@ -16,8 +17,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -32,8 +31,9 @@ public class TimetableActivity extends AppCompatActivity {
 
     private RefreshTimeTable refreshTask;
     private final Context context = this;
+    private SwipeRefreshLayout swipeRefresh;
 
-
+    private final int RESULT_DELETE = 2;
     private TimetableDAO dao;
 
     @Override
@@ -43,7 +43,49 @@ public class TimetableActivity extends AppCompatActivity {
         TextView lblTodayDate = (TextView) findViewById(R.id.lbl_day_1_date);
         TextView lblTomorrowDate = (TextView) findViewById(R.id.lbl_date_day_2);
 
+        swipeRefresh = (SwipeRefreshLayout) findViewById(R.id.swiperefresh);
+
+        swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refreshTask = new RefreshTimeTable();
+                refreshTask.execute();
+            }
+        });
+
         dao = new TimetableDAO(context);
+
+        TTEvent ttEvent1 = new TTEvent();
+        ttEvent1.setId("SENG301");
+        ttEvent1.setRoomName("Central CAL");
+        ttEvent1.setBuildingName("Richardson");
+        ttEvent1.setLectureName("Lecture Name");
+        Calendar eventDate = Calendar.getInstance();
+        ttEvent1.setDate(eventDate);
+        ttEvent1.setPaperName("Software Project Management");
+        ttEvent1.setLat(-45.8660731);
+        ttEvent1.setLon(170.5135830);
+        ttEvent1.setRoomCode("CNCAL");
+
+        dao.save(ttEvent1);
+
+        TTEvent ttEvent2 = new TTEvent();
+        ttEvent2.setId("COSC345");
+        ttEvent2.setRoomName("St Dav. 2");
+        ttEvent2.setBuildingName("St Davids");
+        ttEvent2.setLectureName("Lecture Name");
+        eventDate = Calendar.getInstance();
+        eventDate.add(Calendar.HOUR_OF_DAY, 2);
+        ttEvent2.setDate(eventDate);
+        ttEvent2.setPaperName("Software Engineering");
+        ttEvent2.setLat(-45.8636919);
+        ttEvent2.setLon(170.5135476);
+        ttEvent2.setRoomCode("STDAV2");
+
+        dao.save(ttEvent2);
+
+        saveTimetable();
+
         loadTimetable();
 
         Calendar c = Calendar.getInstance();
@@ -57,6 +99,31 @@ public class TimetableActivity extends AppCompatActivity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_main, menu);
         return true;
+    }
+
+    @Override
+    protected void onActivityResult(int request, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK) {
+            refreshTask = new RefreshTimeTable();
+            refreshTask.execute();
+        } else if (resultCode == RESULT_DELETE) {
+            TTEvent ttEvent = (TTEvent) data.getSerializableExtra("ttEvent");
+            try {
+                System.out.println("Deleting: " + dao.delete(ttEvent));
+                dao.saveTimeTable();
+                Snackbar.make(getWindow()
+                        .getDecorView()
+                        .getRootView(), "Deleted", Snackbar.LENGTH_SHORT)
+                        .show();
+            } catch (IOException e) {
+                Snackbar.make(getWindow()
+                        .getDecorView()
+                        .getRootView(), "Cannot delete :(", Snackbar.LENGTH_SHORT)
+                        .show();
+            }
+            refreshTask = new RefreshTimeTable();
+            refreshTask.execute();
+        }
     }
 
     /**
@@ -93,16 +160,10 @@ public class TimetableActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu:
-                Toast.makeText(context, "Settings selected", Toast.LENGTH_SHORT)
-                        .show();
                 break;
             case R.id.search:
-                Toast.makeText(context, "Search selected", Toast.LENGTH_SHORT)
-                        .show();
                 break;
             case R.id.refresh:
-                Toast.makeText(context, "Refresh selected", Toast.LENGTH_SHORT)
-                        .show();
                 refreshTask = new RefreshTimeTable();
                 refreshTask.execute();
                 break;
@@ -120,114 +181,6 @@ public class TimetableActivity extends AppCompatActivity {
         private ArrayList<ArrayList<TTEvent>> weekTT = new ArrayList<>();
 
         private final Integer PADDING = 15;
-
-        //get dummy timetable
-        private ArrayList<TTEvent> getDummy(){
-
-            ArrayList<TTEvent> timetable = new ArrayList<>();
-            TTEvent tte1 = new TTEvent();
-            TTEvent tte2 = new TTEvent();
-            TTEvent tte3 = new TTEvent();
-            TTEvent tte4 = new TTEvent();
-            TTEvent tte5 = new TTEvent();
-            TTEvent tte6 = new TTEvent();
-            TTEvent tte7 = new TTEvent();
-
-
-            GregorianCalendar date = new GregorianCalendar();
-
-            tte1.setId("SENG301");
-            tte1.setRoomName("Central CAL");
-            tte1.setBuildingName("Richardson");
-            tte1.setLectureName("Lecture Name");
-            tte1.setDate((GregorianCalendar)date.clone());
-            tte1.setPaperName("Software Project Management");
-            tte1.setLat(-45.8660731);
-            tte1.setLon(170.5135830);
-            tte1.setRoomCode("CNCAL");
-
-            date.add(Calendar.DAY_OF_MONTH, 1);
-
-            tte2.setId("SENG302");
-            tte2.setRoomName("Central CAL");
-            tte2.setBuildingName("Richardson");
-            tte2.setLectureName("Lecture Name");
-            tte2.setDate((GregorianCalendar)date.clone());
-            tte2.setPaperName("Software Project Management");
-            tte2.setLat(-45.8660731);
-            tte2.setLon(170.5135830);
-            tte2.setRoomCode("CNCAL");
-
-            date.add(Calendar.HOUR_OF_DAY, -2);
-
-            tte3.setId("SENG303");
-            tte3.setRoomName("Central CAL");
-            tte3.setBuildingName("Richardson");
-            tte3.setLectureName("Lecture Name");
-            tte3.setDate((GregorianCalendar)date.clone());
-            tte3.setPaperName("Software Project Management");
-            tte3.setLat(-45.8660731);
-            tte3.setLon(170.5135830);
-            tte3.setRoomCode("CNCAL");
-
-            date.add(Calendar.HOUR_OF_DAY, -1);
-
-            tte4.setId("SENG304");
-            tte4.setRoomName("Central CAL");
-            tte4.setBuildingName("Richardson");
-            tte4.setLectureName("Lecture Name");
-            tte4.setDate((GregorianCalendar)date.clone());
-            tte4.setPaperName("Software Project Management");
-            tte4.setLat(-45.8660731);
-            tte4.setLon(170.5135830);
-            tte4.setRoomCode("CNCAL");
-
-            date.add(Calendar.HOUR_OF_DAY, 0);
-
-            tte5.setId("SENG305");
-            tte5.setRoomName("Central CAL");
-            tte5.setBuildingName("Richardson");
-            tte5.setLectureName("Lecture Name");
-            tte5.setDate((GregorianCalendar)date.clone());
-            tte5.setPaperName("Software Project Management");
-            tte5.setLat(-45.8660731);
-            tte5.setLon(170.5135830);
-            tte5.setRoomCode("CNCAL");
-
-            date.add(Calendar.HOUR_OF_DAY, 1);
-
-            tte6.setId("SENG306");
-            tte6.setRoomName("Central CAL");
-            tte6.setBuildingName("Richardson");
-            tte6.setLectureName("Lecture Name");
-            tte6.setDate((GregorianCalendar)date.clone());
-            tte6.setPaperName("Software Project Management");
-            tte6.setLat(-45.8660731);
-            tte6.setLon(170.5135830);
-            tte6.setRoomCode("CNCAL");
-
-            date.add(Calendar.HOUR_OF_DAY, 2);
-
-            tte7.setId("SENG307");
-            tte7.setRoomName("Central CAL");
-            tte7.setBuildingName("Richardson");
-            tte7.setLectureName("Lecture Name");
-            tte7.setDate((GregorianCalendar)date.clone());
-            tte7.setPaperName("Software Project Management");
-            tte7.setLat(-45.8660731);
-            tte7.setLon(170.5135830);
-            tte7.setRoomCode("CNCAL");
-
-            timetable.add(tte1);
-            timetable.add(tte2);
-            timetable.add(tte3);
-            timetable.add(tte4);
-            timetable.add(tte5);
-            timetable.add(tte6);
-            timetable.add(tte7);
-
-            return timetable;
-        }
 
         //get pixels from row
         private Integer getPixels(Integer rows){
@@ -249,14 +202,19 @@ public class TimetableActivity extends AppCompatActivity {
         protected void onPostExecute(ArrayList<TTEvent> timetable) {
             Integer todayItemSize = 1, tomorowItemSize = 1;
 
-            //get dummy timetable
-                timetable = getDummy();
+            // I added the dummy timetable to the DAO for now, just use:
+            timetable = dao.getDummy();
 
+            //timetable = (ArrayList) dao.getTimeTable();
 
             final ListView listToday = (ListView) findViewById(R.id.list_tt_day_1);
             final ListView listTomorrow = (ListView) findViewById(R.id.list_tt_day_2);
             final CardView cardToday = (CardView) findViewById(R.id.card__day_1);
             final CardView cardTomorow= (CardView) findViewById(R.id.card_day_2);
+
+            ArrayList<TTEvent> empty = new ArrayList<>();
+            listToday.setAdapter(new ArrayAdapter<>(context, android.R.layout.simple_list_item_1, empty));
+            listTomorrow.setAdapter(new ArrayAdapter<>(context, android.R.layout.simple_list_item_1, empty));
 
             listToday.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
@@ -264,7 +222,7 @@ public class TimetableActivity extends AppCompatActivity {
                     TTEvent event = (TTEvent) listToday.getItemAtPosition(position);
                     Intent intent = new Intent(TimetableActivity.this, ViewEventActivity.class);
                     intent.putExtra("ttEvent", event);
-                    startActivity(intent);
+                    startActivityForResult(intent, 1);
                 }
             });
 
@@ -274,7 +232,7 @@ public class TimetableActivity extends AppCompatActivity {
                     TTEvent event = (TTEvent) listTomorrow.getItemAtPosition(position);
                     Intent intent = new Intent(TimetableActivity.this, ViewEventActivity.class);
                     intent.putExtra("ttEvent", event);
-                    startActivity(intent);
+                    startActivityForResult(intent, 1);
                 }
             });
 
@@ -340,12 +298,14 @@ public class TimetableActivity extends AppCompatActivity {
                     }
                 }
 
-
-
-            ArrayAdapter<TTEvent> adapterToday = new ArrayAdapter<>(context, android.R.layout.simple_list_item_1, weekEvents.get(0));
-            ArrayAdapter<TTEvent> adapterTomorrow = new ArrayAdapter<>(context, android.R.layout.simple_list_item_1, weekEvents.get(1));
-            listToday.setAdapter(adapterToday);
-            listTomorrow.setAdapter(adapterTomorrow);
+            if (weekEvents.size() > 0) {
+                ArrayAdapter<TTEvent> adapterToday = new ArrayAdapter<>(context, android.R.layout.simple_list_item_1, weekEvents.get(0));
+                listToday.setAdapter(adapterToday);
+            }
+            if (weekEvents.size() > 1) {
+                ArrayAdapter<TTEvent> adapterTomorrow = new ArrayAdapter<>(context, android.R.layout.simple_list_item_1, weekEvents.get(1));
+                listTomorrow.setAdapter(adapterTomorrow);
+            }
 
             Integer day = 0;
             cardToday.setLayoutParams(new LinearLayout.LayoutParams(cardToday.getWidth(), getPixels(weekTT.get(day).size())));
@@ -361,8 +321,7 @@ public class TimetableActivity extends AppCompatActivity {
             //TODO: and lists view references and on click listeners to complete days 3-7. It should just work cause everything else is hunkydory af
 
 
-
-
+            swipeRefresh.setRefreshing(false);
         }
     }
 
