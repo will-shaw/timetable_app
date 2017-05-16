@@ -356,8 +356,12 @@ public class TimetableActivity extends AppCompatActivity {
             day++;
             cardTomorow.setLayoutParams(new LinearLayout.LayoutParams(cardTomorow.getWidth(), getPixels(weekTT.get(day).size())));
             LinearLayout linearTomorow = (LinearLayout)cardTomorow.getParent();
-
             linearTomorow.setPadding(PADDING,PADDING,0,0);
+
+            //TODO: should probably think up a cleverer way of doing it loop it up somehow idk but erm, yeah. like add more array adaptors
+            //TODO: and lists view references and on click listeners to complete days 3-7. It should just work cause everything else is hunkydory af
+
+
 
 
         }
