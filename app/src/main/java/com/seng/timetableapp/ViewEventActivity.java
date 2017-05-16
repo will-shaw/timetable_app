@@ -30,6 +30,8 @@ public class ViewEventActivity extends AppCompatActivity implements OnMapReadyCa
     private GoogleMap map;
     private TTEvent ttEvent;
 
+    private final int RESULT_DELETE = 2;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -122,6 +124,11 @@ public class ViewEventActivity extends AppCompatActivity implements OnMapReadyCa
                             .show();
                 }
             }
+        } else if (resultCode == RESULT_DELETE) {
+            Intent intent = new Intent();
+            intent.putExtra("ttEvent", ttEvent);
+            setResult(RESULT_DELETE, intent);
+            this.finish();
         }
     }
 
