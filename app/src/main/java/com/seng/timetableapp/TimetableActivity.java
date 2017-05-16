@@ -17,13 +17,10 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-
 import static java.util.Calendar.DAY_OF_YEAR;
-
 import dao.TimetableDAO;
 import domain.TTEvent;
 
@@ -43,7 +40,7 @@ public class TimetableActivity extends AppCompatActivity {
         TextView lblTodayDate = (TextView) findViewById(R.id.lbl_day_1_date);
         TextView lblTomorrowDate = (TextView) findViewById(R.id.lbl_date_day_2);
 
-        swipeRefresh = (SwipeRefreshLayout) findViewById(R.id.swiperefresh);
+        swipeRefresh = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh);
 
         swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -54,38 +51,6 @@ public class TimetableActivity extends AppCompatActivity {
         });
 
         dao = new TimetableDAO(context);
-
-        TTEvent ttEvent1 = new TTEvent();
-        ttEvent1.setId("SENG301");
-        ttEvent1.setRoomName("Central CAL");
-        ttEvent1.setBuildingName("Richardson");
-        ttEvent1.setLectureName("Lecture Name");
-        Calendar eventDate = Calendar.getInstance();
-        ttEvent1.setDate(eventDate);
-        ttEvent1.setPaperName("Software Project Management");
-        ttEvent1.setLat(-45.8660731);
-        ttEvent1.setLon(170.5135830);
-        ttEvent1.setRoomCode("CNCAL");
-
-        dao.save(ttEvent1);
-
-        TTEvent ttEvent2 = new TTEvent();
-        ttEvent2.setId("COSC345");
-        ttEvent2.setRoomName("St Dav. 2");
-        ttEvent2.setBuildingName("St Davids");
-        ttEvent2.setLectureName("Lecture Name");
-        eventDate = Calendar.getInstance();
-        eventDate.add(Calendar.HOUR_OF_DAY, 2);
-        ttEvent2.setDate(eventDate);
-        ttEvent2.setPaperName("Software Engineering");
-        ttEvent2.setLat(-45.8636919);
-        ttEvent2.setLon(170.5135476);
-        ttEvent2.setRoomCode("STDAV2");
-
-        dao.save(ttEvent2);
-
-        saveTimetable();
-
         loadTimetable();
 
         Calendar c = Calendar.getInstance();
@@ -199,7 +164,7 @@ public class TimetableActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(ArrayList<TTEvent> timetable) {
-            Integer todayItemSize = 1, tomorowItemSize = 1;
+            //Integer todayItemSize = 1, tomorrowItemSize = 1;
 
             // I added the dummy timetable to the DAO for now, just use:
             timetable = (ArrayList<TTEvent>) dao.getTimeTable();
@@ -207,7 +172,7 @@ public class TimetableActivity extends AppCompatActivity {
             final ListView listToday = (ListView) findViewById(R.id.list_tt_day_1);
             final ListView listTomorrow = (ListView) findViewById(R.id.list_tt_day_2);
             final CardView cardToday = (CardView) findViewById(R.id.card__day_1);
-            final CardView cardTomorow= (CardView) findViewById(R.id.card_day_2);
+            final CardView cardTomorrow= (CardView) findViewById(R.id.card_day_2);
 
             ArrayList<TTEvent> empty = new ArrayList<>();
             listToday.setAdapter(new ArrayAdapter<>(context, android.R.layout.simple_list_item_1, empty));
@@ -246,9 +211,9 @@ public class TimetableActivity extends AppCompatActivity {
             for (TTEvent ttEvent : timetable) {
                 //sees how far away ttEvent is
                 Integer day = ttEvent.getDate().get(DAY_OF_YEAR) - new GregorianCalendar().get(DAY_OF_YEAR);
-                //if dayTT isnt empty
+                //if dayTT isn't empty
                 if(!weekTT.get(day).isEmpty()){
-                    //and it doesnt contain the event, add it
+                    //and it doesn't contain the event, add it
                     if(!weekTT.get(day).contains(ttEvent)){
                         ArrayList<TTEvent> dayTT = weekTT.get(day);
                         dayTT.add(ttEvent);
@@ -278,7 +243,7 @@ public class TimetableActivity extends AppCompatActivity {
                         try {
                             dayEvents = weekEvents.get(i);
                         }catch(java.lang.IndexOutOfBoundsException e){
-
+                            System.err.println("Caught out of bounds in: TimetableActivity");
                         }
 
                         //add event string to dayTTStrings array
@@ -310,12 +275,12 @@ public class TimetableActivity extends AppCompatActivity {
             linearToday.setPadding(PADDING,PADDING,0,0);
 
             day++;
-            cardTomorow.setLayoutParams(new LinearLayout.LayoutParams(cardTomorow.getWidth(), getPixels(weekTT.get(day).size())));
-            LinearLayout linearTomorow = (LinearLayout)cardTomorow.getParent();
-            linearTomorow.setPadding(PADDING,PADDING,0,0);
+            cardTomorrow.setLayoutParams(new LinearLayout.LayoutParams(cardTomorrow.getWidth(), getPixels(weekTT.get(day).size())));
+            LinearLayout linearTomorrow = (LinearLayout)cardTomorrow.getParent();
+            linearTomorrow.setPadding(PADDING,PADDING,0,0);
 
             //TODO: should probably think up a cleverer way of doing it loop it up somehow idk but erm, yeah. like add more array adaptors
-            //TODO: and lists view references and on click listeners to complete days 3-7. It should just work cause everything else is hunkydory af
+            //TODO: and lists view references and on click listeners to complete days 3-7. It should just work cause everything else is hunky-dory af
 
 
             swipeRefresh.setRefreshing(false);

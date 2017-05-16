@@ -1,9 +1,7 @@
 package dao;
 
-import java.io.IOException;
 import java.util.Calendar;
 import java.util.Collection;
-
 import domain.TTEvent;
 
 /** Timetable Interface
@@ -12,9 +10,9 @@ import domain.TTEvent;
 
 interface TimetableInterface {
 
-    boolean loadTimeTable() throws IOException, ClassNotFoundException;
+    boolean loadTimeTable();
 
-    boolean saveTimeTable() throws IOException;
+    boolean saveTimeTable();
 
     Collection<TTEvent> search(Calendar date, String paperCode);
 

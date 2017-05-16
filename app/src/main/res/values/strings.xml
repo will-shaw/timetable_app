@@ -47,7 +47,7 @@
 
     <!-- Edit Related - Placeholders -->
     <string name="edit_ph_paper">e.g. HUBS191</string>
-    <string name="edit_ph_paperName">e.g. Microbiology &amp; Immu&#8230;</string>
+    <string name="edit_ph_paperName">e.g. Microbiology &amp; Immune&#8230;</string>
     <string name="edit_ph_roomCode">CASTA</string>
     <string name="edit_ph_building">e.g. Castle</string>
 
@@ -61,5 +61,9 @@
     <string name="view_label_roomCode">Room Code</string>
     <string name="view_label_colour">Colour</string>
     <string name="view_label_location">Location</string>
+
+    <!-- Intent Filter Titles -->
+    <string name="filter_title_login">Login</string>
+    <string name="filter_title_timetable">Timetable</string>
 
 </resources>
