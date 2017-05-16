@@ -1,157 +1,180 @@
 package domain;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.util.Calendar;
 
 /**
- * Universal Event Class
+ * Universal Event Class - Rich Domain Class
  *    So that all parts of code have a consistent standard for data io.
  */
 public class TTEvent implements Serializable {
-   private String id;
-   private Date date;
-   private int day;
-   private int start;
-   private int end;
-   private String bcol;
-   private String fcol;
-   private String lectureName;
-   private String gmapsUrl;
-   private double lat;
-   private double lon;
-   private String roomCode;
-   private String paperName;
-   private String roomName;
-   private String buildingName;
-   private String stream;
-   
-   public TTEvent() {}
+    private String id;
+    private Calendar date;
+    private int day;
+    private int start;
+    private int end;
+    private String bcol;
+    private String fcol;
+    private String lectureName;
+    private String gmapsUrl;
+    private double lat;
+    private double lon;
+    private String roomCode;
+    private String paperName;
+    private String roomName;
+    private String buildingName;
+    private String stream;
 
-   public Date getDate() {
-      return date;
-   }
+    //private TimetableDAO dao;
 
-   public void setDate(Date date) {
-      this.date = date;
-   }
+    public TTEvent() {}
 
-   public double getLat() {
-      return lat;
-   }
+    //public TTEvent(Context context) {
+    //    dao = new TimetableDAO(context);
+    //}
 
-   public void setLat(double lat) {
-      this.lat = lat;
-   }
+    public Calendar getDate() {
+        return date;
+    }
 
-   public double getLon() {
-      return lon;
-   }
+    public void setDate(Calendar date) {
+        this.date = date;
+    }
 
-   public void setLon(double lon) {
-      this.lon = lon;
-   }
+    public double getLat() {
+        return lat;
+    }
 
-   public String getId() {
-      return id;
-   }
+    public void setLat(double lat) {
+        this.lat = lat;
+    }
 
-   public void setId(String id) {
-      this.id = id;
-   }
+    public double getLon() {
+        return lon;
+    }
 
-   public int getDay() {
-      return day;
-   }
+    public void setLon(double lon) {
+        this.lon = lon;
+    }
 
-   public void setDay(int day) {
-      this.day = day;
-   }
+    public String getId() {
+        return id;
+    }
 
-   public int getStart() {
-      return start;
-   }
+    public void setId(String id) {
+        this.id = id;
+    }
 
-   public void setStart(int start) {
-      this.start = start;
-   }
+    public int getDay() {
+        return day;
+    }
 
-   public int getEnd() {
-      return end;
-   }
+    public void setDay(int day) {
+        this.day = day;
+    }
 
-   public void setEnd(int end) {
-      this.end = end;
-   }
+    public int getStart() {
+        return start;
+    }
 
-   public String getBcol() {
-      return bcol;
-   }
+    public void setStart(int start) {
+        this.start = start;
+    }
 
-   public void setBcol(String bcol) {
-      this.bcol = bcol;
-   }
+    public int getEnd() {
+        return end;
+    }
 
-   public String getFcol() {
-      return fcol;
-   }
+    public void setEnd(int end) {
+        this.end = end;
+    }
 
-   public void setFcol(String fcol) {
-      this.fcol = fcol;
-   }
+    public String getBcol() {
+        return bcol;
+    }
 
-   public String getLectureName() {
-      return lectureName;
-   }
+    public void setBcol(String bcol) {
+        this.bcol = bcol;
+    }
 
-   public void setLectureName(String lectureName) {
-      this.lectureName = lectureName;
-   }
+    public String getFcol() {
+        return fcol;
+    }
 
-   public String getGmapsUrl() {
-      return gmapsUrl;
-   }
+    public void setFcol(String fcol) {
+        this.fcol = fcol;
+    }
 
-   public void setGmapsUrl(String gmapsUrl) {
-      this.gmapsUrl = gmapsUrl;
-   }
+    public String getLectureName() {
+        return lectureName;
+    }
 
-   public String getRoomCode() {
-      return roomCode;
-   }
+    public void setLectureName(String lectureName) {
+        this.lectureName = lectureName;
+    }
 
-   public void setRoomCode(String roomCode) {
-      this.roomCode = roomCode;
-   }
+    public String getGmapsUrl() {
+        return gmapsUrl;
+    }
 
-   public String getPaperName() {
-      return paperName;
-   }
+    public void setGmapsUrl(String gmapsUrl) {
+        this.gmapsUrl = gmapsUrl;
+    }
 
-   public void setPaperName(String paperName) {
-      this.paperName = paperName;
-   }
+    public String getRoomCode() {
+        return roomCode;
+    }
 
-   public String getRoomName() {
-      return roomName;
-   }
+    public void setRoomCode(String roomCode) {
+        this.roomCode = roomCode;
+    }
 
-   public void setRoomName(String roomName) {
-      this.roomName = roomName;
-   }
+    public String getPaperName() {
+        return paperName;
+    }
 
-   public String getBuildingName() {
-      return buildingName;
-   }
+    public void setPaperName(String paperName) {
+        this.paperName = paperName;
+    }
 
-   public void setBuildingName(String buildingName) {
-      this.buildingName = buildingName;
-   }
+    public String getRoomName() {
+        return roomName;
+    }
 
-   public String getStream() {
-      return stream;
-   }
+    public void setRoomName(String roomName) {
+        this.roomName = roomName;
+    }
 
-   public void setStream(String stream) {
-      this.stream = stream;
-   }
+    public String getBuildingName() {
+        return buildingName;
+    }
+
+    public void setBuildingName(String buildingName) {
+        this.buildingName = buildingName;
+    }
+
+    public String getStream() {
+        return stream;
+    }
+
+    public void setStream(String stream) {
+        this.stream = stream;
+    }
+
+    public boolean save() {
+        // TODO: Connect this to the dao (after fixing private member).
+        //return dao.save(this);
+        return false;
+    }
+
+    public boolean delete() {
+        //return dao.delete(this);
+        return false;
+    }
+
+    @Override
+    public String toString() {
+        return this.id;
+    }
+
 }

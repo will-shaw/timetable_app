@@ -4,9 +4,7 @@
 
     <!-- Strings related to login -->
     <string name="prompt_username">Username</string>
-    <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
-    <string name="action_sign_in">Sign in or register</string>
     <string name="action_sign_in_short">Sign in</string>
     <string name="error_invalid_email">This username is invalid</string>
     <string name="error_invalid_password">This password is too short</string>
@@ -17,10 +15,21 @@
     </string>
 
     <!-- Timetable Related -->
-    <string name="tt_label_today">Today</string>
-    <string name="tt_label_tomorrow">Tomorrow</string>
-    <string name="tt_date_today">Today\'s Date</string>
-    <string name="tt_date_tomorrow">Tomorrow\'s Date</string>
+    <string name="tt_label_day_1">Day 1</string>
+    <string name="tt_label_day_2">Day 2</string>
+    <string name="tt_label_day_3">Day 3</string>
+    <string name="tt_label_day_4">Day 4</string>
+    <string name="tt_label_day_5">Day 5</string>
+    <string name="tt_label_day_6">Day 6</string>
+    <string name="tt_label_day_7">Day 7</string>
+
+    <string name="tt_date_day_1">Day 1\'s Date</string>
+    <string name="tt_date_day_2">Day 2\'s Date</string>
+    <string name="tt_date_day_3">Day 3\'s Date</string>
+    <string name="tt_date_day_4">Day 4\'s Date</string>
+    <string name="tt_date_day_5">Day 5\'s Date</string>
+    <string name="tt_date_day_6">Day 6\'s Date</string>
+    <string name="tt_date_day_7">Day 7\'s Date</string>
     <string name="title_activity_view_event">View</string>
 
     <!-- Menu Related -->
@@ -28,6 +37,10 @@
     <string name="mn_label_save">Save</string>
     <string name="mn_label_discard">Discard</string>
     <string name="mn_label_refresh">Refresh</string>
+    <string name="mn_label_search">Search</string>
+    <string name="mn_label_settings">Settings</string>
+
+    <!-- Edit Related - Defaults -->
     <string name="title_activity_edit_event">Edit</string>
 
     <!-- Maps -->

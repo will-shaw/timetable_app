@@ -4,21 +4,21 @@
     >
 
     <item
-        android:id="@+id/more_vert"
+        android:id="@+id/menu"
         android:icon="@drawable/ic_menu"
-        android:title="Settings"
         android:orderInCategory="200"
+        android:title="@string/mn_label_settings"
         app:showAsAction="always" />
 
     <item android:id="@+id/refresh"
-        android:title="Refresh"
+        android:title="@string/mn_label_refresh"
         android:icon="@drawable/ic_refresh"
         android:orderInCategory="150"
         app:showAsAction="ifRoom"
         />
 
     <item android:id="@+id/search"
-        android:title="Search"
+        android:title="@string/mn_label_search"
         android:icon="@drawable/ic_search"
         android:orderInCategory="100"
         app:showAsAction="ifRoom"
