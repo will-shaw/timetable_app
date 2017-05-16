@@ -12,9 +12,9 @@ import domain.TTEvent;
 
 interface TimetableInterface {
 
-    void loadTimeTable() throws IOException, ClassNotFoundException;
+    boolean loadTimeTable() throws IOException, ClassNotFoundException;
 
-    void saveTimeTable() throws IOException;
+    boolean saveTimeTable() throws IOException;
 
     Collection<TTEvent> search(Calendar date, String paperCode);
 
