@@ -120,7 +120,7 @@ public class TimetableActivity extends AppCompatActivity {
         private ArrayList<TTEvent> todayItems = new ArrayList<>();
         private ArrayList<TTEvent> tomorowItems = new ArrayList<>();
         private final Integer PADDING = 15;
-        private final Integer PIXELS_PER_ROW = 97;
+        private final Integer PIXELS_PER_ROW = 100;
 
         //get dummy timetable
         private ArrayList<TTEvent> getDummy(){
@@ -242,7 +242,7 @@ public class TimetableActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(ArrayList<TTEvent> timetable) {
-            Integer todayItemSize = 0, tomorowItemSize = 0;
+            Integer todayItemSize = 1, tomorowItemSize = 1;
 
             //get dummy timetable
                 timetable = getDummy();
@@ -294,11 +294,11 @@ public class TimetableActivity extends AppCompatActivity {
             listToday.setAdapter(adapterToday);
             listTomorrow.setAdapter(adapterTomorrow);
 
-            cardToday.setLayoutParams(new LinearLayout.LayoutParams(cardToday.getWidth(), cardToday.getHeight()+todayItemSize*PIXELS_PER_ROW));
+            cardToday.setLayoutParams(new LinearLayout.LayoutParams(cardToday.getWidth(), todayItemSize*PIXELS_PER_ROW));
             LinearLayout linearToday = (LinearLayout)cardToday.getParent();
             linearToday.setPadding(PADDING,PADDING,0,0);
 
-            cardTomorow.setLayoutParams(new LinearLayout.LayoutParams(cardTomorow.getWidth(), cardTomorow.getHeight()+tomorowItemSize*PIXELS_PER_ROW));
+            cardTomorow.setLayoutParams(new LinearLayout.LayoutParams(cardTomorow.getWidth(), tomorowItemSize*PIXELS_PER_ROW));
             LinearLayout linearTomorow = (LinearLayout)cardTomorow.getParent();
 
             linearTomorow.setPadding(PADDING,PADDING,0,0);
