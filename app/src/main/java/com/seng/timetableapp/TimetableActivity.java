@@ -32,8 +32,7 @@ public class TimetableActivity extends AppCompatActivity {
 
     private RefreshTimeTable refreshTask;
     private final Context context = this;
-    private ArrayList<TTEvent> todayItems = new ArrayList<>();
-    private ArrayList<TTEvent> tomorrowItems = new ArrayList<>();
+
 
     private TimetableDAO dao;
 
@@ -118,9 +117,9 @@ public class TimetableActivity extends AppCompatActivity {
     * Gets timetable items then adds them to the list views for today and tomorrow
     */
     private class RefreshTimeTable extends AsyncTask<String, Integer, ArrayList<TTEvent>> {
-        private ArrayList<ArrayList<TTEvent>> dailyTTEvents = new ArrayList<>();
+        private ArrayList<ArrayList<TTEvent>> weekTT = new ArrayList<>();
+
         private final Integer PADDING = 15;
-        private final Integer PIXELS_PER_ROW = 100;
 
         //get dummy timetable
         private ArrayList<TTEvent> getDummy(){
@@ -230,6 +229,12 @@ public class TimetableActivity extends AppCompatActivity {
             return timetable;
         }
 
+        //get pixels from row
+        private Integer getPixels(Integer rows){
+            rows+=1;
+            return rows*100;
+        }
+
         @Override
         protected ArrayList<TTEvent> doInBackground(String... urls) {
             return (ArrayList<TTEvent>) dao.getTimeTable();
@@ -273,36 +278,83 @@ public class TimetableActivity extends AppCompatActivity {
                 }
             });
 
-            //Creates string arrays for today and tomorrow
-            for (TTEvent ttEvent : timetable) {
-                Integer day = ttEvent.getDate().get(DAY_OF_YEAR) - new GregorianCalendar().get(DAY_OF_YEAR);
-
-
-                //I dono if this shiz will be auto initialized or not
-//                if(dailyTTEvents.get(day) == null){
-//                    dailyTTEvents.add(day, new ArrayList<TTEvent>());
-//                }
-
-
-                //dailyTTEvents.get(day);
-                //kkkkaksdmaosd
-
-
+            //initialize weekTT
+            if(weekTT.isEmpty()) {
+                int i = 0;
+                while (i < 7) {
+                    weekTT.add(new ArrayList<TTEvent>());
+                    i++;
+                }
             }
 
+            //adds ttEvents to correct day of weekTT
+            for (TTEvent ttEvent : timetable) {
+                //sees how far away ttEvent is
+                Integer day = ttEvent.getDate().get(DAY_OF_YEAR) - new GregorianCalendar().get(DAY_OF_YEAR);
+                //if dayTT isnt empty
+                if(!weekTT.get(day).isEmpty()){
+                    //and it doesnt contain the event, add it
+                    if(!weekTT.get(day).contains(ttEvent)){
+                        ArrayList<TTEvent> dayTT = weekTT.get(day);
+                        dayTT.add(ttEvent);
+                        weekTT.set(day,dayTT);
+                    }
+
+                    //if the dayTT is empty, make a new dayTT with event, and add it.
+                }else{
+                    ArrayList<TTEvent> dayTT = new ArrayList<TTEvent>();
+                    dayTT.add(ttEvent);
+                    weekTT.set(day, dayTT);
+                }
+            }
+
+            String ttEventString;
+            ArrayList<ArrayList<String>> weekTTStrings = new ArrayList<ArrayList<String>>();
+
+                //for each day of the week
+                for(int i = 0; i < weekTT.size(); i++){
+                    //for each ttEvent in the day
+                    for(int j = 0; j < weekTT.get(i).size(); j++){
+                        //get ttEvent string
+                        ttEventString = weekTT.get(i).get(j).getId();
+
+                        ArrayList<String> dayTTStrings = new ArrayList<String>();
+                        //try get string array for day if it exists
+                        try {
+                            dayTTStrings = weekTTStrings.get(i);
+                        }catch(java.lang.IndexOutOfBoundsException e){
+
+                        }
+
+                        //add event string to dayTTStrings array
+                        if (!dayTTStrings.contains(ttEventString)){
+                            dayTTStrings.add(ttEventString);
+                        }
+                        //set dayTTStrings array back into weekTTStrings array
+                        try {
+                            weekTTStrings.set(i, dayTTStrings);
+                        }catch(java.lang.IndexOutOfBoundsException e){
+                            weekTTStrings.add(dayTTStrings);
+                        }
 
 
-            //Writes items to screen
-            ArrayAdapter<TTEvent> adapterToday = new ArrayAdapter<>(context, android.R.layout.simple_list_item_1, todayItems);
-            ArrayAdapter<TTEvent> adapterTomorrow = new ArrayAdapter<>(context, android.R.layout.simple_list_item_1, tomorrowItems);
+                    }
+                }
+
+
+
+            ArrayAdapter<String> adapterToday = new ArrayAdapter<>(context, android.R.layout.simple_list_item_1, weekTTStrings.get(0));
+            ArrayAdapter<String> adapterTomorrow = new ArrayAdapter<>(context, android.R.layout.simple_list_item_1, weekTTStrings.get(1));
             listToday.setAdapter(adapterToday);
             listTomorrow.setAdapter(adapterTomorrow);
 
-            cardToday.setLayoutParams(new LinearLayout.LayoutParams(cardToday.getWidth(), todayItemSize*PIXELS_PER_ROW));
+            Integer day = 0;
+            cardToday.setLayoutParams(new LinearLayout.LayoutParams(cardToday.getWidth(), getPixels(weekTT.get(day).size())));
             LinearLayout linearToday = (LinearLayout)cardToday.getParent();
             linearToday.setPadding(PADDING,PADDING,0,0);
 
-            cardTomorow.setLayoutParams(new LinearLayout.LayoutParams(cardTomorow.getWidth(), tomorowItemSize*PIXELS_PER_ROW));
+            day++;
+            cardTomorow.setLayoutParams(new LinearLayout.LayoutParams(cardTomorow.getWidth(), getPixels(weekTT.get(day).size())));
             LinearLayout linearTomorow = (LinearLayout)cardTomorow.getParent();
 
             linearTomorow.setPadding(PADDING,PADDING,0,0);
