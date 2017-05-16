@@ -21,7 +21,6 @@ import android.widget.Toast;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
 
 import static java.util.Calendar.DAY_OF_YEAR;
@@ -40,8 +39,8 @@ public class TimetableActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timetable);
-        TextView lblTodayDate = (TextView) findViewById(R.id.lbl_today_date);
-        TextView lblTomorrowDate = (TextView) findViewById(R.id.lbl_tomorrow_date);
+        TextView lblTodayDate = (TextView) findViewById(R.id.lbl_day_1_date);
+        TextView lblTomorrowDate = (TextView) findViewById(R.id.lbl_date_day_2);
 
         dao = new TimetableDAO(context);
         loadTimetable();
@@ -248,10 +247,10 @@ public class TimetableActivity extends AppCompatActivity {
                 timetable = getDummy();
 
 
-            final ListView listToday = (ListView) findViewById(R.id.list_tt_today);
-            final ListView listTomorrow = (ListView) findViewById(R.id.list_tt_tomorrow);
-            final CardView cardToday = (CardView) findViewById(R.id.card_today);
-            final CardView cardTomorow= (CardView) findViewById(R.id.card_tomorrow);
+            final ListView listToday = (ListView) findViewById(R.id.list_tt_day_1);
+            final ListView listTomorrow = (ListView) findViewById(R.id.list_tt_day_2);
+            final CardView cardToday = (CardView) findViewById(R.id.card__day_1);
+            final CardView cardTomorow= (CardView) findViewById(R.id.card_day_2);
 
             listToday.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
