@@ -31,9 +31,6 @@
             android:name=".TimetableActivity"
             android:label="@string/timetable_label"
             android:theme="@style/Theme.Design.Light">
-            <intent-filter
-                android:label="@string/filter_title_timetable">
-            </intent-filter>
         </activity>
         <activity
             android:name=".ViewEventActivity"
