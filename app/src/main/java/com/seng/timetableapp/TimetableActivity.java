@@ -116,8 +116,7 @@ public class TimetableActivity extends AppCompatActivity {
     * Gets timetable items then adds them to the list views for today and tomorrow
     */
     private class RefreshTimeTable extends AsyncTask<String, Integer, ArrayList<TTEvent>> {
-        private ArrayList<TTEvent> todayItems = new ArrayList<>();
-        private ArrayList<TTEvent> tomorowItems = new ArrayList<>();
+        private ArrayList<ArrayList<TTEvent>> dailyTTEvents = new ArrayList<>();
         private final Integer PADDING = 15;
         private final Integer PIXELS_PER_ROW = 100;
 
@@ -274,15 +273,19 @@ public class TimetableActivity extends AppCompatActivity {
 
             //Creates string arrays for today and tomorrow
             for (TTEvent ttEvent : timetable) {
-                Integer daysAway = ttEvent.getDate().get(DAY_OF_YEAR) - new GregorianCalendar().get(DAY_OF_YEAR);
+                Integer day = ttEvent.getDate().get(DAY_OF_YEAR) - new GregorianCalendar().get(DAY_OF_YEAR);
 
-                if (daysAway == 0) {
-                    todayItems.add(ttEvent);
-                    todayItemSize++;
-                } else if (daysAway == 1) {
-                    tomorowItems.add(ttEvent);
-                    tomorowItemSize++;
-                }
+
+                //I dono if this shiz will be auto initialized or not
+//                if(dailyTTEvents.get(day) == null){
+//                    dailyTTEvents.add(day, new ArrayList<TTEvent>());
+//                }
+
+
+                dailyTTEvents.get(day);
+                //kkkkaksdmaosdo
+
+
             }
 
 
