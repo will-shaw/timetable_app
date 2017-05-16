@@ -108,14 +108,13 @@ public class TimetableActivity extends AppCompatActivity {
             refreshTask.execute();
         } else if (resultCode == RESULT_DELETE) {
             TTEvent ttEvent = (TTEvent) data.getSerializableExtra("ttEvent");
-            try {
-                System.out.println("Deleting: " + dao.delete(ttEvent));
-                dao.saveTimeTable();
+            boolean saved = dao.delete(ttEvent) && dao.saveTimeTable();
+            if (saved) {
                 Snackbar.make(getWindow()
                         .getDecorView()
                         .getRootView(), "Deleted", Snackbar.LENGTH_SHORT)
                         .show();
-            } catch (IOException e) {
+            } else {
                 Snackbar.make(getWindow()
                         .getDecorView()
                         .getRootView(), "Cannot delete :(", Snackbar.LENGTH_SHORT)
@@ -130,11 +129,11 @@ public class TimetableActivity extends AppCompatActivity {
      * Attempts to load the timetable from the dao.
      */
     private void loadTimetable() {
-        try {
-            dao.loadTimeTable();
+        boolean loaded = dao.loadTimeTable();
+        if (loaded) {
             Snackbar.make(getWindow().getDecorView().getRootView(), "Loading timetable...", Snackbar.LENGTH_SHORT)
                     .show();
-        } catch (IOException | ClassNotFoundException ex) {
+        } else {
             Snackbar.make(getWindow().getDecorView().getRootView(), "Error loading timetable :(", Snackbar.LENGTH_SHORT)
                     .show();
         }
@@ -146,11 +145,11 @@ public class TimetableActivity extends AppCompatActivity {
      * Attempts to save the timetable to disk using dao.
      */
     public void saveTimetable() {
-        try {
-            dao.saveTimeTable();
+        boolean saved = dao.saveTimeTable();
+        if (saved) {
             Snackbar.make(getWindow().getDecorView().getRootView(), "Saving timetable...", Snackbar.LENGTH_SHORT)
                     .show();
-        } catch (IOException ex) {
+        } else {
             Snackbar.make(getWindow().getDecorView().getRootView(), "Error saving timetable :(", Snackbar.LENGTH_SHORT)
                     .show();
         }
@@ -203,9 +202,7 @@ public class TimetableActivity extends AppCompatActivity {
             Integer todayItemSize = 1, tomorowItemSize = 1;
 
             // I added the dummy timetable to the DAO for now, just use:
-            timetable = dao.getDummy();
-
-            //timetable = (ArrayList) dao.getTimeTable();
+            timetable = (ArrayList<TTEvent>) dao.getTimeTable();
 
             final ListView listToday = (ListView) findViewById(R.id.list_tt_day_1);
             final ListView listTomorrow = (ListView) findViewById(R.id.list_tt_day_2);

@@ -108,16 +108,16 @@ public class ViewEventActivity extends AppCompatActivity implements OnMapReadyCa
         if (resultCode == RESULT_OK) {
             if (data.hasExtra("returnEvent")) {
                 this.ttEvent = (TTEvent) data.getSerializableExtra("returnEvent");
-                try {
-                    fillDetails();
-                    TimetableDAO dao = new TimetableDAO(this);
-                    dao.save(ttEvent);
-                    dao.saveTimeTable();
+
+                fillDetails();
+                TimetableDAO dao = new TimetableDAO(this);
+                boolean saved = dao.save(ttEvent) && dao.saveTimeTable();
+                if (saved) {
                     Snackbar.make(getWindow()
                             .getDecorView()
                             .getRootView(), "Saved", Snackbar.LENGTH_SHORT)
                             .show();
-                } catch (IOException e) {
+                } else {
                     Snackbar.make(getWindow()
                             .getDecorView()
                             .getRootView(), "Cannot save :(", Snackbar.LENGTH_SHORT)

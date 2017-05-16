@@ -33,6 +33,7 @@ public class TimetableDAO implements Serializable, TimetableInterface {
     /** Constructor: receives context from Activity. */
     public TimetableDAO(Context context) {
         this.context = context;
+        timetable = getDummy(); // TODO: Remove once not needed
     }
 
     /** Constructor: receives context from Activity. Allows for pre-existing timetable data. */
@@ -41,25 +42,36 @@ public class TimetableDAO implements Serializable, TimetableInterface {
         timetable = collect;
     }
 
-    /** Saves the timetable to file, in serialized object format. */
+    /**
+     * Saves the timetable to file, in serialized object format.
+     */
     @Override
-    public void saveTimeTable() throws IOException {
-        FileOutputStream fos = context.openFileOutput(FILE_NAME, Context.MODE_PRIVATE);
-        ObjectOutputStream os = new ObjectOutputStream(fos);
-        os.writeObject(timetable);
-        os.close();
-        fos.close();
+    public boolean saveTimeTable() {
+        try (FileOutputStream fos = context.openFileOutput(FILE_NAME, Context.MODE_PRIVATE);
+             ObjectOutputStream os = new ObjectOutputStream(fos)
+        ) {
+            os.writeObject(timetable);
+        } catch (IOException e) {
+            return false;
+        }
+        return true;
     }
 
-    /** Loads from file (if exists) and de-serializes into timetable object. */
+    /**
+     * Loads from file (if exists) and de-serializes into timetable object.
+     */
     @Override
     @SuppressWarnings("unchecked")
-    public void loadTimeTable() throws IOException, ClassNotFoundException {
-        FileInputStream fis = context.openFileInput(FILE_NAME);
-        ObjectInputStream is = new ObjectInputStream(fis);
-        timetable = (Collection<TTEvent>) is.readObject();
-        is.close();
-        fis.close();
+    public boolean loadTimeTable() {
+        try (
+                FileInputStream fis = context.openFileInput(FILE_NAME);
+                ObjectInputStream is = new ObjectInputStream(fis)
+        ) {
+            timetable = (Collection<TTEvent>) is.readObject();
+        } catch (IOException | ClassNotFoundException e) {
+            return false;
+        }
+        return true;
     }
 
     /** Search by paper code.
@@ -151,7 +163,7 @@ public class TimetableDAO implements Serializable, TimetableInterface {
 
 
     // TODO: Remove this temporary event list when we're done using it.
-    public ArrayList<TTEvent> getDummy(){
+    private ArrayList<TTEvent> getDummy(){
 
         ArrayList<TTEvent> timetable = new ArrayList<>();
         TTEvent tte1 = new TTEvent();
