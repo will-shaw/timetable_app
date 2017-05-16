@@ -285,7 +285,7 @@ public class TimetableActivity extends AppCompatActivity {
 
 
                 //dailyTTEvents.get(day);
-                //kkkkaksdmaosdo
+                //kkkkaksdmaosd
 
 
             }
