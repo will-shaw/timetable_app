@@ -127,9 +127,8 @@ public class TimetableDAO implements Serializable, TimetableInterface {
     public boolean save(TTEvent ttEvent) {
         if (timetable.contains(ttEvent)) {
             timetable.remove(ttEvent);
-            return timetable.add(ttEvent);
         }
-        return false;
+        return timetable.add(ttEvent);
     }
 
     /** Deletes an event from the timetable.
