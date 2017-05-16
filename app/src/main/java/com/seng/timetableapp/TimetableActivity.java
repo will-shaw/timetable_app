@@ -6,10 +6,12 @@ import android.os.AsyncTask;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -30,8 +32,6 @@ import domain.TTEvent;
 public class TimetableActivity extends AppCompatActivity {
 
     private RefreshTimeTable refreshTask;
-    private ArrayList<TTEvent> todayItems = new ArrayList<>();
-    private ArrayList<TTEvent> tomorrowItems = new ArrayList<>();
     private final Context context = this;
 
     private TimetableDAO dao;
@@ -117,6 +117,10 @@ public class TimetableActivity extends AppCompatActivity {
     * Gets timetable items then adds them to the list views for today and tomorrow
     */
     private class RefreshTimeTable extends AsyncTask<String, Integer, ArrayList<TTEvent>> {
+        private ArrayList<TTEvent> todayItems = new ArrayList<>();
+        private ArrayList<TTEvent> tomorowItems = new ArrayList<>();
+        private final Integer PADDING = 15;
+        private final Integer PIXELS_PER_ROW = 97;
 
         //get dummy timetable
         private ArrayList<TTEvent> getDummy(){
@@ -126,6 +130,10 @@ public class TimetableActivity extends AppCompatActivity {
             TTEvent tte2 = new TTEvent();
             TTEvent tte3 = new TTEvent();
             TTEvent tte4 = new TTEvent();
+            TTEvent tte5 = new TTEvent();
+            TTEvent tte6 = new TTEvent();
+            TTEvent tte7 = new TTEvent();
+
 
             GregorianCalendar date = new GregorianCalendar();
 
@@ -141,7 +149,7 @@ public class TimetableActivity extends AppCompatActivity {
 
             date.add(Calendar.DAY_OF_MONTH, 1);
 
-            tte2.setId("SENG301");
+            tte2.setId("SENG302");
             tte2.setRoomName("Central CAL");
             tte2.setBuildingName("Richardson");
             tte2.setLectureName("Lecture Name");
@@ -151,9 +159,9 @@ public class TimetableActivity extends AppCompatActivity {
             tte2.setLon(170.5135830);
             tte2.setRoomCode("CNCAL");
 
-            date.add(Calendar.HOUR_OF_DAY, 2);
+            date.add(Calendar.HOUR_OF_DAY, -2);
 
-            tte3.setId("SENG301");
+            tte3.setId("SENG303");
             tte3.setRoomName("Central CAL");
             tte3.setBuildingName("Richardson");
             tte3.setLectureName("Lecture Name");
@@ -163,9 +171,9 @@ public class TimetableActivity extends AppCompatActivity {
             tte3.setLon(170.5135830);
             tte3.setRoomCode("CNCAL");
 
-            date.add(Calendar.HOUR_OF_DAY, 2);
+            date.add(Calendar.HOUR_OF_DAY, -1);
 
-            tte4.setId("SENG301");
+            tte4.setId("SENG304");
             tte4.setRoomName("Central CAL");
             tte4.setBuildingName("Richardson");
             tte4.setLectureName("Lecture Name");
@@ -175,10 +183,49 @@ public class TimetableActivity extends AppCompatActivity {
             tte4.setLon(170.5135830);
             tte4.setRoomCode("CNCAL");
 
+            date.add(Calendar.HOUR_OF_DAY, 0);
+
+            tte5.setId("SENG305");
+            tte5.setRoomName("Central CAL");
+            tte5.setBuildingName("Richardson");
+            tte5.setLectureName("Lecture Name");
+            tte5.setDate((GregorianCalendar)date.clone());
+            tte5.setPaperName("Software Project Management");
+            tte5.setLat(-45.8660731);
+            tte5.setLon(170.5135830);
+            tte5.setRoomCode("CNCAL");
+
+            date.add(Calendar.HOUR_OF_DAY, 1);
+
+            tte6.setId("SENG306");
+            tte6.setRoomName("Central CAL");
+            tte6.setBuildingName("Richardson");
+            tte6.setLectureName("Lecture Name");
+            tte6.setDate((GregorianCalendar)date.clone());
+            tte6.setPaperName("Software Project Management");
+            tte6.setLat(-45.8660731);
+            tte6.setLon(170.5135830);
+            tte6.setRoomCode("CNCAL");
+
+            date.add(Calendar.HOUR_OF_DAY, 2);
+
+            tte7.setId("SENG307");
+            tte7.setRoomName("Central CAL");
+            tte7.setBuildingName("Richardson");
+            tte7.setLectureName("Lecture Name");
+            tte7.setDate((GregorianCalendar)date.clone());
+            tte7.setPaperName("Software Project Management");
+            tte7.setLat(-45.8660731);
+            tte7.setLon(170.5135830);
+            tte7.setRoomCode("CNCAL");
+
             timetable.add(tte1);
             timetable.add(tte2);
             timetable.add(tte3);
             timetable.add(tte4);
+            timetable.add(tte5);
+            timetable.add(tte6);
+            timetable.add(tte7);
 
             return timetable;
         }
@@ -195,6 +242,7 @@ public class TimetableActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(ArrayList<TTEvent> timetable) {
+            Integer todayItemSize = 0, tomorowItemSize = 0;
 
             //get dummy timetable
                 timetable = getDummy();
@@ -202,6 +250,8 @@ public class TimetableActivity extends AppCompatActivity {
 
             final ListView listToday = (ListView) findViewById(R.id.list_tt_today);
             final ListView listTomorrow = (ListView) findViewById(R.id.list_tt_tomorrow);
+            final CardView cardToday = (CardView) findViewById(R.id.card_today);
+            final CardView cardTomorow= (CardView) findViewById(R.id.card_tomorrow);
 
             listToday.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
@@ -229,16 +279,31 @@ public class TimetableActivity extends AppCompatActivity {
 
                 if (daysAway == 0) {
                     todayItems.add(ttEvent);
+                    todayItemSize++;
                 } else if (daysAway == 1) {
-                    tomorrowItems.add(ttEvent);
+                    tomorowItems.add(ttEvent);
+                    tomorowItemSize++;
                 }
             }
 
+
+
             //Writes items to screen
             ArrayAdapter<TTEvent> adapterToday = new ArrayAdapter<>(context, android.R.layout.simple_list_item_1, todayItems);
-            ArrayAdapter<TTEvent> adapterTomorrow = new ArrayAdapter<>(context, android.R.layout.simple_list_item_1, tomorrowItems);
+            ArrayAdapter<TTEvent> adapterTomorrow = new ArrayAdapter<>(context, android.R.layout.simple_list_item_1, tomorowItems);
             listToday.setAdapter(adapterToday);
             listTomorrow.setAdapter(adapterTomorrow);
+
+            cardToday.setLayoutParams(new LinearLayout.LayoutParams(cardToday.getWidth(), cardToday.getHeight()+todayItemSize*PIXELS_PER_ROW));
+            LinearLayout linearToday = (LinearLayout)cardToday.getParent();
+            linearToday.setPadding(PADDING,PADDING,0,0);
+
+            cardTomorow.setLayoutParams(new LinearLayout.LayoutParams(cardTomorow.getWidth(), cardTomorow.getHeight()+tomorowItemSize*PIXELS_PER_ROW));
+            LinearLayout linearTomorow = (LinearLayout)cardTomorow.getParent();
+
+            linearTomorow.setPadding(PADDING,PADDING,0,0);
+
+
         }
     }
 
