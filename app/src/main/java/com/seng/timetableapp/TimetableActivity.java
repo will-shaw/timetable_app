@@ -39,6 +39,11 @@ public class TimetableActivity extends AppCompatActivity {
         setContentView(R.layout.activity_timetable);
         TextView lblTodayDate = (TextView) findViewById(R.id.lbl_day_1_date);
         TextView lblTomorrowDate = (TextView) findViewById(R.id.lbl_date_day_2);
+        TextView lblDateDayThree = (TextView) findViewById(R.id.lbl_date_day_3);
+        TextView lblDateDayFour = (TextView) findViewById(R.id.lbl_date_day_4);
+        TextView lblDateDayFive = (TextView) findViewById(R.id.lbl_date_day_5);
+        TextView lblDateDaySix = (TextView) findViewById(R.id.lbl_date_day_6);
+        TextView lblDateDaySeven = (TextView) findViewById(R.id.lbl_date_day_7);
 
         swipeRefresh = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh);
 
@@ -51,12 +56,23 @@ public class TimetableActivity extends AppCompatActivity {
         });
 
         dao = new TimetableDAO(context);
-        //loadTimetable();
+        //dao.saveTimeTable();
+        loadTimetable();
 
         Calendar c = Calendar.getInstance();
         lblTodayDate.setText(c.getTime().toString().substring(0, 10));
         c.add(Calendar.DATE, 1);
         lblTomorrowDate.setText(c.getTime().toString().substring(0, 10));
+        c.add(Calendar.DATE, 1);
+        lblDateDayThree.setText(c.getTime().toString().substring(0, 10));
+        c.add(Calendar.DATE, 1);
+        lblDateDayFour.setText(c.getTime().toString().substring(0, 10));
+        c.add(Calendar.DATE, 1);
+        lblDateDayFive.setText(c.getTime().toString().substring(0, 10));
+        c.add(Calendar.DATE, 1);
+        lblDateDaySix.setText(c.getTime().toString().substring(0, 10));
+        c.add(Calendar.DATE, 1);
+        lblDateDaySeven.setText(c.getTime().toString().substring(0, 10));
     }
 
     @Override
@@ -143,7 +159,7 @@ public class TimetableActivity extends AppCompatActivity {
     private class RefreshTimeTable extends AsyncTask<String, Integer, ArrayList<TTEvent>> {
         private ArrayList<ArrayList<TTEvent>> weekTT = new ArrayList<>();
 
-        private final Integer PADDING = 15;
+        private final Integer PADDING = 10;
 
         //get pixels from row
         private Integer getPixels(Integer rows){
@@ -170,12 +186,28 @@ public class TimetableActivity extends AppCompatActivity {
 
             final ListView listToday = (ListView) findViewById(R.id.list_tt_day_1);
             final ListView listTomorrow = (ListView) findViewById(R.id.list_tt_day_2);
-            final CardView cardToday = (CardView) findViewById(R.id.card__day_1);
+            final ListView listDayThree = (ListView) findViewById(R.id.list_tt_day_3);
+            final ListView listDayFour = (ListView) findViewById(R.id.list_tt_day_4);
+            final ListView listDayFive = (ListView) findViewById(R.id.list_tt_day_5);
+            final ListView listDaySix = (ListView) findViewById(R.id.list_tt_day_6);
+            final ListView listDaySeven = (ListView) findViewById(R.id.list_tt_day_7);
+
+            final CardView cardToday = (CardView) findViewById(R.id.card_day_1);
             final CardView cardTomorrow= (CardView) findViewById(R.id.card_day_2);
+            final CardView cardDayThree = (CardView) findViewById(R.id.card_day_3);
+            final CardView cardDayFour = (CardView) findViewById(R.id.card_day_4);
+            final CardView cardDayFive = (CardView) findViewById(R.id.card_day_5);
+            final CardView cardDaySix = (CardView) findViewById(R.id.card_day_6);
+            final CardView cardDaySeven = (CardView) findViewById(R.id.card_day_7);
 
             ArrayList<TTEvent> empty = new ArrayList<>();
             listToday.setAdapter(new ArrayAdapter<>(context, android.R.layout.simple_list_item_1, empty));
             listTomorrow.setAdapter(new ArrayAdapter<>(context, android.R.layout.simple_list_item_1, empty));
+            listDayThree.setAdapter(new ArrayAdapter<>(context, android.R.layout.simple_list_item_1, empty));
+            listDayFour.setAdapter(new ArrayAdapter<>(context, android.R.layout.simple_list_item_1, empty));
+            listDayFive.setAdapter(new ArrayAdapter<>(context, android.R.layout.simple_list_item_1, empty));
+            listDaySix.setAdapter(new ArrayAdapter<>(context, android.R.layout.simple_list_item_1, empty));
+            listDaySeven.setAdapter(new ArrayAdapter<>(context, android.R.layout.simple_list_item_1, empty));
 
             listToday.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
@@ -197,6 +229,56 @@ public class TimetableActivity extends AppCompatActivity {
                 }
             });
 
+            listDayThree.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    TTEvent event = (TTEvent) listDayThree.getItemAtPosition(position);
+                    Intent intent = new Intent(TimetableActivity.this, ViewEventActivity.class);
+                    intent.putExtra("ttEvent", event);
+                    startActivityForResult(intent, 1);
+                }
+            });
+
+            listDayFour.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    TTEvent event = (TTEvent) listDayFour.getItemAtPosition(position);
+                    Intent intent = new Intent(TimetableActivity.this, ViewEventActivity.class);
+                    intent.putExtra("ttEvent", event);
+                    startActivityForResult(intent, 1);
+                }
+            });
+
+            listDayFive.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    TTEvent event = (TTEvent) listDayFive.getItemAtPosition(position);
+                    Intent intent = new Intent(TimetableActivity.this, ViewEventActivity.class);
+                    intent.putExtra("ttEvent", event);
+                    startActivityForResult(intent, 1);
+                }
+            });
+
+            listDaySix.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    TTEvent event = (TTEvent) listDaySix.getItemAtPosition(position);
+                    Intent intent = new Intent(TimetableActivity.this, ViewEventActivity.class);
+                    intent.putExtra("ttEvent", event);
+                    startActivityForResult(intent, 1);
+                }
+            });
+
+            listDaySeven.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    TTEvent event = (TTEvent) listDaySeven.getItemAtPosition(position);
+                    Intent intent = new Intent(TimetableActivity.this, ViewEventActivity.class);
+                    intent.putExtra("ttEvent", event);
+                    startActivityForResult(intent, 1);
+                }
+            });
+
             //initialize weekTT
             if(weekTT.isEmpty()) {
                 int i = 0;
@@ -210,7 +292,14 @@ public class TimetableActivity extends AppCompatActivity {
             for (TTEvent ttEvent : timetable) {
                 //sees how far away ttEvent is
                 if (ttEvent != null && ttEvent.getDate() != null) {
-                    Integer day = ttEvent.getDate().get(DAY_OF_YEAR) - new GregorianCalendar().get(DAY_OF_YEAR);
+                    Integer day;
+                    if (ttEvent.getDay() > -1) {
+                        day = ttEvent.getDay();
+                    } else {
+                        day = ttEvent.getDate().get(DAY_OF_YEAR) - new GregorianCalendar().get(DAY_OF_YEAR);
+                    }
+                    System.out.println("DAY/INDEX = " + day);
+
                     //if dayTT isn't empty
                     if (!weekTT.get(day).isEmpty()) {
                         //and it doesn't contain the event, add it
@@ -242,9 +331,11 @@ public class TimetableActivity extends AppCompatActivity {
                         ArrayList<TTEvent> dayEvents = new ArrayList<>();
                         //try get string array for day if it exists
                         try {
-                            dayEvents = weekEvents.get(i);
+                            if (!weekEvents.isEmpty() && i < weekEvents.size()) {
+                                dayEvents = weekEvents.get(i);
+                            }
                         }catch(java.lang.IndexOutOfBoundsException e){
-                            System.err.println("Caught out of bounds in: TimetableActivity");
+                            e.printStackTrace();
                         }
 
                         //add event string to dayTTStrings array
@@ -262,23 +353,68 @@ public class TimetableActivity extends AppCompatActivity {
                 }
 
             if (weekEvents.size() > 0) {
-                ArrayAdapter<TTEvent> adapterToday = new ArrayAdapter<>(context, android.R.layout.simple_list_item_1, weekEvents.get(0));
-                listToday.setAdapter(adapterToday);
+                ArrayAdapter<TTEvent> adapterDayOne = new ArrayAdapter<>(context, android.R.layout.simple_list_item_1, weekEvents.get(0));
+                listToday.setAdapter(adapterDayOne);
             }
             if (weekEvents.size() > 1) {
-                ArrayAdapter<TTEvent> adapterTomorrow = new ArrayAdapter<>(context, android.R.layout.simple_list_item_1, weekEvents.get(1));
-                listTomorrow.setAdapter(adapterTomorrow);
+                ArrayAdapter<TTEvent> adapterDayTwo = new ArrayAdapter<>(context, android.R.layout.simple_list_item_1, weekEvents.get(1));
+                listTomorrow.setAdapter(adapterDayTwo);
+            }
+            if (weekEvents.size() > 2) {
+                ArrayAdapter<TTEvent> adapterDayThree = new ArrayAdapter<>(context, android.R.layout.simple_list_item_1, weekEvents.get(2));
+                listDayThree.setAdapter(adapterDayThree);
+            }
+            if (weekEvents.size() > 3) {
+                ArrayAdapter<TTEvent> adapterDayFour = new ArrayAdapter<>(context, android.R.layout.simple_list_item_1, weekEvents.get(3));
+                listDayFour.setAdapter(adapterDayFour);
+            }
+            if (weekEvents.size() > 4) {
+                ArrayAdapter<TTEvent> adapterDayFive = new ArrayAdapter<>(context, android.R.layout.simple_list_item_1, weekEvents.get(4));
+                listDayFive.setAdapter(adapterDayFive);
+            }
+            if (weekEvents.size() > 5) {
+                ArrayAdapter<TTEvent> adapterDaySix = new ArrayAdapter<>(context, android.R.layout.simple_list_item_1, weekEvents.get(5));
+                listDaySix.setAdapter(adapterDaySix);
+            }
+            if (weekEvents.size() > 6) {
+                ArrayAdapter<TTEvent> adapterDaySeven = new ArrayAdapter<>(context, android.R.layout.simple_list_item_1, weekEvents.get(6));
+                listDaySeven.setAdapter(adapterDaySeven);
             }
 
             Integer day = 0;
             cardToday.setLayoutParams(new LinearLayout.LayoutParams(cardToday.getWidth(), getPixels(weekTT.get(day).size())));
             LinearLayout linearToday = (LinearLayout)cardToday.getParent();
-            linearToday.setPadding(PADDING,PADDING,0,0);
+            linearToday.setPadding(0,PADDING,0,PADDING);
 
             day++;
             cardTomorrow.setLayoutParams(new LinearLayout.LayoutParams(cardTomorrow.getWidth(), getPixels(weekTT.get(day).size())));
             LinearLayout linearTomorrow = (LinearLayout)cardTomorrow.getParent();
-            linearTomorrow.setPadding(PADDING,PADDING,0,0);
+            linearTomorrow.setPadding(0,PADDING,0,PADDING);
+
+            day++;
+            cardDayThree.setLayoutParams(new LinearLayout.LayoutParams(cardDayThree.getWidth(), getPixels(weekTT.get(day).size())));
+            LinearLayout linearDayThree = (LinearLayout)cardDayThree.getParent();
+            linearDayThree.setPadding(0,PADDING,0,PADDING);
+
+            day++;
+            cardDayFour.setLayoutParams(new LinearLayout.LayoutParams(cardDayFour.getWidth(), getPixels(weekTT.get(day).size())));
+            LinearLayout linearDayFour = (LinearLayout)cardDayFour.getParent();
+            linearDayFour.setPadding(0,PADDING,0,PADDING);
+
+            day++;
+            cardDayFive.setLayoutParams(new LinearLayout.LayoutParams(cardDayFive.getWidth(), getPixels(weekTT.get(day).size())));
+            LinearLayout linearDayFive = (LinearLayout)cardDayFive.getParent();
+            linearDayFive.setPadding(0,PADDING,0,PADDING);
+
+            day++;
+            cardDaySix.setLayoutParams(new LinearLayout.LayoutParams(cardDaySix.getWidth(), getPixels(weekTT.get(day).size())));
+            LinearLayout linearDaySix = (LinearLayout)cardDaySix.getParent();
+            linearDaySix.setPadding(0,PADDING,0,PADDING);
+
+            day++;
+            cardDaySeven.setLayoutParams(new LinearLayout.LayoutParams(cardDaySeven.getWidth(), getPixels(weekTT.get(day).size())));
+            LinearLayout linearDaySeven = (LinearLayout)cardDaySeven.getParent();
+            linearDaySeven.setPadding(0,PADDING,0,PADDING);
 
             //TODO: should probably think up a cleverer way of doing it loop it up somehow idk but erm, yeah. like add more array adaptors
             //TODO: and lists view references and on click listeners to complete days 3-7. It should just work cause everything else is hunky-dory af

@@ -24,6 +24,8 @@ import java.util.TimeZone;
 
 import domain.TTEvent;
 
+import static java.util.Calendar.DAY_OF_YEAR;
+
 public class EditEventActivity extends AppCompatActivity  implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
 
     private TTEvent ttEvent;
@@ -93,6 +95,10 @@ public class EditEventActivity extends AppCompatActivity  implements DatePickerD
             cal.set(year, month, day, hour, minute);
             System.out.println("DATE: " + cal.getTime());
             ttEvent.setDate(cal);
+            Integer day = ttEvent.getDate().get(DAY_OF_YEAR) - new GregorianCalendar().get(DAY_OF_YEAR);
+            System.out.println("C=" + ttEvent.getDate().get(DAY_OF_YEAR));
+            System.out.println("GC=" + new GregorianCalendar().get(DAY_OF_YEAR));
+            ttEvent.setDay(day);
         }
     }
 
