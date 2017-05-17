@@ -33,6 +33,8 @@ public class EditEventActivity extends AppCompatActivity  implements DatePickerD
     private AutoCompleteTextView pBuilding;
     private EditText editText;
 
+    private int year = -1, month = -1, day = -1, hour = -1, minute = -1;
+
     Locale locale = new Locale("en-NZ", "NZL");
     TimeZone tz = TimeZone.getTimeZone("Pacific/Auckland");
 
@@ -81,15 +83,17 @@ public class EditEventActivity extends AppCompatActivity  implements DatePickerD
     }
 
     private void updateDetails() {
+        // TODO: Validation.
         ttEvent.setId(pPaper.getText().toString());
         ttEvent.setPaperName(pName.getText().toString());
         ttEvent.setRoomCode(pRoom.getText().toString());
         ttEvent.setBuildingName(pBuilding.getText().toString());
-        Date date = new Date(editText.getText().toString());
-        Calendar cal = GregorianCalendar.getInstance(tz, locale);
-        cal.setTime(date);
-        System.out.println("DATE: " + cal.getTime());
-        ttEvent.setDate(cal);
+        if (year != -1 && month != -1 && day != -1 && hour != -1 && minute != -1) {
+            Calendar cal = GregorianCalendar.getInstance(tz, locale);
+            cal.set(year, month, day, hour, minute);
+            System.out.println("DATE: " + cal.getTime());
+            ttEvent.setDate(cal);
+        }
     }
 
     @Override
@@ -130,12 +134,17 @@ public class EditEventActivity extends AppCompatActivity  implements DatePickerD
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
         editText.setText(dayOfMonth + "/" + month + "/" + year);
+        this.year = year;
+        this.month = month;
+        this.day = dayOfMonth;
         DialogFragment newFragment = new TimePickerFragment();
         newFragment.show(getSupportFragmentManager(), "timePicker");
     }
 
     @Override
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+        this.hour = hourOfDay;
+        this.minute = minute;
         editText.append(" " + hourOfDay + ":" + minute);
     }
 
