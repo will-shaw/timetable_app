@@ -1,6 +1,8 @@
-package com.seng.timetableapp;
+package parser;
 
 import java.util.Collection;
+
+import domain.TTEvent;
 
 public class Test {
    public static void main(String[] args) {
