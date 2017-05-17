@@ -51,7 +51,7 @@ public class TimetableActivity extends AppCompatActivity {
         });
 
         dao = new TimetableDAO(context);
-        loadTimetable();
+        //loadTimetable();
 
         Calendar c = Calendar.getInstance();
         lblTodayDate.setText(c.getTime().toString().substring(0, 10));

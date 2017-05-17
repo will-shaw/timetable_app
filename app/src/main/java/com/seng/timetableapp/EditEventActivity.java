@@ -1,24 +1,40 @@
 package com.seng.timetableapp;
 
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
+import android.widget.DatePicker;
+import android.widget.EditText;
+import android.widget.TimePicker;
+
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.Locale;
+import java.util.TimeZone;
 
 import domain.TTEvent;
 
-public class EditEventActivity extends AppCompatActivity {
+public class EditEventActivity extends AppCompatActivity  implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
 
     private TTEvent ttEvent;
     private AutoCompleteTextView pPaper;
     private AutoCompleteTextView pName;
     private AutoCompleteTextView pRoom;
     private AutoCompleteTextView pBuilding;
+    private EditText editText;
+
+    Locale locale = new Locale("en-NZ", "NZL");
+    TimeZone tz = TimeZone.getTimeZone("Pacific/Auckland");
 
     private final int RESULT_DELETE = 2;
 
@@ -31,6 +47,7 @@ public class EditEventActivity extends AppCompatActivity {
         pName = (AutoCompleteTextView) findViewById(R.id.edit_text_paperName);
         pRoom = (AutoCompleteTextView) findViewById(R.id.edit_text_room);
         pBuilding = (AutoCompleteTextView) findViewById(R.id.edit_text_building);
+        editText = (EditText) findViewById(R.id.edit_text_date);
 
         if (getIntent().hasExtra("ttEvent")) {
             ttEvent = (TTEvent) getIntent().getSerializableExtra("ttEvent");
@@ -60,6 +77,7 @@ public class EditEventActivity extends AppCompatActivity {
         pName.setText(ttEvent.getPaperName());
         pRoom.setText(ttEvent.getRoomCode());
         pBuilding.setText(ttEvent.getBuildingName());
+        editText.setText(ttEvent.getDate().getTime().toString());
     }
 
     private void updateDetails() {
@@ -67,6 +85,11 @@ public class EditEventActivity extends AppCompatActivity {
         ttEvent.setPaperName(pName.getText().toString());
         ttEvent.setRoomCode(pRoom.getText().toString());
         ttEvent.setBuildingName(pBuilding.getText().toString());
+        Date date = new Date(editText.getText().toString());
+        Calendar cal = GregorianCalendar.getInstance(tz, locale);
+        cal.setTime(date);
+        System.out.println("DATE: " + cal.getTime());
+        ttEvent.setDate(cal);
     }
 
     @Override
@@ -78,7 +101,7 @@ public class EditEventActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch(item.getItemId()) {
+        switch (item.getItemId()) {
 
             case R.id.save:
                 Intent data = new Intent();
@@ -102,6 +125,18 @@ public class EditEventActivity extends AppCompatActivity {
                 break;
         }
         return true;
+    }
+
+    @Override
+    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+        editText.setText(dayOfMonth + "/" + month + "/" + year);
+        DialogFragment newFragment = new TimePickerFragment();
+        newFragment.show(getSupportFragmentManager(), "timePicker");
+    }
+
+    @Override
+    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+        editText.append(" " + hourOfDay + ":" + minute);
     }
 
 }
