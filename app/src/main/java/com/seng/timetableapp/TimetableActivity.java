@@ -69,55 +69,51 @@ public class TimetableActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int request, int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
-            refreshTask = new RefreshTimeTable();
-            refreshTask.execute();
-        } else if (resultCode == RESULT_DELETE) {
-            TTEvent ttEvent = (TTEvent) data.getSerializableExtra("ttEvent");
-            boolean saved = dao.delete(ttEvent) && dao.saveTimeTable();
-            if (saved) {
-                Snackbar.make(getWindow()
-                        .getDecorView()
-                        .getRootView(), "Deleted", Snackbar.LENGTH_SHORT)
-                        .show();
-            } else {
-                Snackbar.make(getWindow()
-                        .getDecorView()
-                        .getRootView(), "Cannot delete :(", Snackbar.LENGTH_SHORT)
-                        .show();
+            if (data != null && data.hasExtra("returnEvent")) {
+                TTEvent returnedEvent = (TTEvent) data.getSerializableExtra("returnEvent");
+                boolean saved = dao.save(returnedEvent) && dao.saveTimeTable();
+                if (saved) {
+                    showSnack("Saved");
+                } else {
+                    showSnack("Couldn't save :(");
+                }
+                refreshTask = new RefreshTimeTable();
+                refreshTask.execute();
             }
-            refreshTask = new RefreshTimeTable();
-            refreshTask.execute();
+        } else if (resultCode == RESULT_DELETE) {
+            if (data != null && data.hasExtra("ttEvent")) {
+                TTEvent ttEvent = (TTEvent) data.getSerializableExtra("ttEvent");
+                boolean deleted = dao.delete(ttEvent) && dao.saveTimeTable();
+                if (deleted) {
+                    showSnack("Deleted");
+                } else {
+                    showSnack("Couldn't delete :(");
+                }
+                refreshTask = new RefreshTimeTable();
+                refreshTask.execute();
+            }
         }
     }
 
+    public void showSnack(String message) {
+        Snackbar.make(getWindow()
+                .getDecorView()
+                .getRootView(), message, Snackbar.LENGTH_SHORT)
+                .show();
+    }
+
     /**
-     * Attempts to load the timetable from the dao.
+     * Attempts to load the timetable from the dao on start up.
      */
     private void loadTimetable() {
         boolean loaded = dao.loadTimeTable();
         if (loaded) {
-            Snackbar.make(getWindow().getDecorView().getRootView(), "Loading timetable...", Snackbar.LENGTH_SHORT)
-                    .show();
+            showSnack("Loading timetable...");
         } else {
-            Snackbar.make(getWindow().getDecorView().getRootView(), "Error loading timetable :(", Snackbar.LENGTH_SHORT)
-                    .show();
+            showSnack("Error loading timetable :(");
         }
         refreshTask = new RefreshTimeTable();
         refreshTask.execute();
-    }
-
-    /**
-     * Attempts to save the timetable to disk using dao.
-     */
-    public void saveTimetable() {
-        boolean saved = dao.saveTimeTable();
-        if (saved) {
-            Snackbar.make(getWindow().getDecorView().getRootView(), "Saving timetable...", Snackbar.LENGTH_SHORT)
-                    .show();
-        } else {
-            Snackbar.make(getWindow().getDecorView().getRootView(), "Error saving timetable :(", Snackbar.LENGTH_SHORT)
-                    .show();
-        }
     }
 
     @Override
@@ -125,7 +121,10 @@ public class TimetableActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.menu:
                 break;
-            case R.id.search:
+            case R.id.add:
+                Intent intent = new Intent(TimetableActivity.this, EditEventActivity.class);
+                intent.putExtra("title", "New event");
+                startActivityForResult(intent, 1);
                 break;
             case R.id.refresh:
                 refreshTask = new RefreshTimeTable();
@@ -210,21 +209,23 @@ public class TimetableActivity extends AppCompatActivity {
             //adds ttEvents to correct day of weekTT
             for (TTEvent ttEvent : timetable) {
                 //sees how far away ttEvent is
-                Integer day = ttEvent.getDate().get(DAY_OF_YEAR) - new GregorianCalendar().get(DAY_OF_YEAR);
-                //if dayTT isn't empty
-                if(!weekTT.get(day).isEmpty()){
-                    //and it doesn't contain the event, add it
-                    if(!weekTT.get(day).contains(ttEvent)){
-                        ArrayList<TTEvent> dayTT = weekTT.get(day);
-                        dayTT.add(ttEvent);
-                        weekTT.set(day,dayTT);
-                    }
+                if (ttEvent != null && ttEvent.getDate() != null) {
+                    Integer day = ttEvent.getDate().get(DAY_OF_YEAR) - new GregorianCalendar().get(DAY_OF_YEAR);
+                    //if dayTT isn't empty
+                    if (!weekTT.get(day).isEmpty()) {
+                        //and it doesn't contain the event, add it
+                        if (!weekTT.get(day).contains(ttEvent)) {
+                            ArrayList<TTEvent> dayTT = weekTT.get(day);
+                            dayTT.add(ttEvent);
+                            weekTT.set(day, dayTT);
+                        }
 
-                    //if the dayTT is empty, make a new dayTT with event, and add it.
-                }else{
-                    ArrayList<TTEvent> dayTT = new ArrayList<>();
-                    dayTT.add(ttEvent);
-                    weekTT.set(day, dayTT);
+                        //if the dayTT is empty, make a new dayTT with event, and add it.
+                    } else {
+                        ArrayList<TTEvent> dayTT = new ArrayList<>();
+                        dayTT.add(ttEvent);
+                        weekTT.set(day, dayTT);
+                    }
                 }
             }
 

@@ -17,9 +17,9 @@
         app:showAsAction="ifRoom"
         />
 
-    <item android:id="@+id/search"
-        android:title="@string/mn_label_search"
-        android:icon="@drawable/ic_search"
+    <item android:id="@+id/add"
+        android:title="@string/mn_label_add"
+        android:icon="@drawable/ic_add"
         android:orderInCategory="100"
         app:showAsAction="ifRoom"
         />

@@ -68,7 +68,7 @@ public class ViewEventActivity extends AppCompatActivity implements OnMapReadyCa
         pTimeDate.setText(ttEvent.getDate().getTime().toString().substring(0, 10));
         pName.setText(ttEvent.getPaperName());
         pRoomCode.setText(ttEvent.getRoomCode());
-        pColour.setBackgroundColor(Color.RED); // TODO: Remove static assignment.
+        pColour.setTextColor(Color.RED); // TODO: Remove static assignment.
         pLocation.setText(ttEvent.getGmapsUrl());
     }
 
@@ -105,21 +105,10 @@ public class ViewEventActivity extends AppCompatActivity implements OnMapReadyCa
         if (resultCode == RESULT_OK) {
             if (data.hasExtra("returnEvent")) {
                 this.ttEvent = (TTEvent) data.getSerializableExtra("returnEvent");
-
-                fillDetails();
-                TimetableDAO dao = new TimetableDAO(this);
-                boolean saved = dao.save(ttEvent) && dao.saveTimeTable();
-                if (saved) {
-                    Snackbar.make(getWindow()
-                            .getDecorView()
-                            .getRootView(), "Saved", Snackbar.LENGTH_SHORT)
-                            .show();
-                } else {
-                    Snackbar.make(getWindow()
-                            .getDecorView()
-                            .getRootView(), "Cannot save :(", Snackbar.LENGTH_SHORT)
-                            .show();
-                }
+                Intent intent = new Intent();
+                intent.putExtra("returnEvent", ttEvent);
+                setResult(RESULT_OK, intent);
+                this.finish();
             }
         } else if (resultCode == RESULT_DELETE) {
             Intent intent = new Intent();
