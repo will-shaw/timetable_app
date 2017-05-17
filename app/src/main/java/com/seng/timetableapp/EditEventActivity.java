@@ -2,10 +2,12 @@ package com.seng.timetableapp;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.AutoCompleteTextView;
 
 import domain.TTEvent;
@@ -25,20 +27,32 @@ public class EditEventActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_event);
 
-        ttEvent = (TTEvent) getIntent().getSerializableExtra("ttEvent");
-
         pPaper = (AutoCompleteTextView) findViewById(R.id.edit_text_paper);
         pName = (AutoCompleteTextView) findViewById(R.id.edit_text_paperName);
         pRoom = (AutoCompleteTextView) findViewById(R.id.edit_text_room);
         pBuilding = (AutoCompleteTextView) findViewById(R.id.edit_text_building);
 
-        if (ttEvent != null) {
-            if (getSupportActionBar() != null) {
-                getSupportActionBar().setTitle("View " + ttEvent.getId());
-                getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            }
+        if (getIntent().hasExtra("ttEvent")) {
+            ttEvent = (TTEvent) getIntent().getSerializableExtra("ttEvent");
             fillDetails();
+        } else {
+            ttEvent = new TTEvent();
         }
+
+        if (getSupportActionBar() != null) {
+            if (getIntent().hasExtra("title")) {
+                getSupportActionBar().setTitle(getIntent().getStringExtra("title"));
+            } else {
+                getSupportActionBar().setTitle("Edit " + ttEvent.getId());
+            }
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+
+    }
+
+    public void showDatePickerDialog(View v) {
+        DialogFragment newFragment = new DatePickerFragment();
+        newFragment.show(getSupportFragmentManager(), "datePicker");
     }
 
     private void fillDetails() {
