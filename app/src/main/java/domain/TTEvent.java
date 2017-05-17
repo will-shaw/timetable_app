@@ -189,7 +189,7 @@ public class TTEvent implements Serializable {
 
     @Override
     public String toString() {
-        return this.id;
+        return this.lectureName;
     }
 
 }
