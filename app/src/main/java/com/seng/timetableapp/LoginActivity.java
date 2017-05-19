@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Handler;
 import android.support.annotation.RequiresApi;
@@ -22,6 +23,8 @@ import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.util.Date;
+
 import dao.TimetableDAO;
 import jsinterface.TimeTableScraper;
 
@@ -36,6 +39,7 @@ public class LoginActivity extends Activity {
     private EditText mPassword;
     private View mProgressView;
     private View mLoginFormView;
+    private final TimetableDAO dao = new TimetableDAO(this);
 
     private boolean debugging = false;
     private boolean timetableLoaded;
@@ -48,6 +52,23 @@ public class LoginActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        SharedPreferences sharedPref = LoginActivity.this.getPreferences(Context.MODE_PRIVATE);
+        Long lastDownloaded = sharedPref.getLong(getString(R.string.last_downloaded_key), -1);
+
+        if (lastDownloaded > 0 && !getIntent().hasExtra("type")) {
+            // If the latest data is 5 days old or more, then require the user to log in to re-download.
+            if (new Date().getTime() < lastDownloaded + (24 * 60 * 60 * 1000)) {
+                if (dao.loadTimeTable()) {
+                    switchToTimetable();
+                    timetableLoaded = true;
+                }
+            }
+        }
+        if (!timetableLoaded) continueLogin();
+    }
+
+    @SuppressLint("SetJavaScriptEnabled")
+    private void continueLogin() {
         webview = (WebView) findViewById(R.id.webScraper);
         webview.getSettings().setJavaScriptEnabled(true);
         webview.getSettings().setDomStorageEnabled(true);
@@ -96,6 +117,10 @@ public class LoginActivity extends Activity {
         }
         showProgress();
         stage = 1;
+    }
+
+    private void switchToTimetable() {
+        startActivity(new Intent(LoginActivity.this, TimetableActivity.class));
     }
 
     /**
@@ -147,8 +172,16 @@ public class LoginActivity extends Activity {
                             }
                             if (TimetableDAO.timetable != null) {
                                 if (!timetableLoaded) {
+
+                                    if (dao.saveTimeTable()) {
+                                        SharedPreferences sharedPref = LoginActivity.this.getPreferences(Context.MODE_PRIVATE);
+                                        SharedPreferences.Editor editor = sharedPref.edit();
+                                        editor.putLong(getString(R.string.last_downloaded_key), new Date().getTime());
+                                        editor.apply();
+                                    }
+
                                     if (debugging) Log.d("TT-ACTIVITY", "Created");
-                                    startActivity(new Intent(LoginActivity.this, TimetableActivity.class));
+                                    switchToTimetable();
                                     timetableLoaded = true;
                                     webview.destroy();
                                     timeTableScraper = null;

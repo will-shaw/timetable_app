@@ -5,7 +5,7 @@ import java.util.Calendar;
 import java.util.Objects;
 
 /**
- * Universal Event Class - Rich Domain Class
+ * Universal Event Class
  *    So that all parts of code have a consistent standard for data io.
  */
 public class TTEvent implements Serializable {
@@ -26,13 +26,7 @@ public class TTEvent implements Serializable {
     private String buildingName;
     private String stream;
 
-    //private TimetableDAO dao;
-
     public TTEvent() {}
-
-    //public TTEvent(Context context) {
-    //    dao = new TimetableDAO(context);
-    //}
 
     public Calendar getDate() {
         return date;
@@ -160,17 +154,6 @@ public class TTEvent implements Serializable {
 
     public void setStream(String stream) {
         this.stream = stream;
-    }
-
-    public boolean save() {
-        // TODO: Connect this to the dao (after fixing private member).
-        //return dao.save(this);
-        return false;
-    }
-
-    public boolean delete() {
-        //return dao.delete(this);
-        return false;
     }
 
     @Override

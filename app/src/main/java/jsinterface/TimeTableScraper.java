@@ -12,20 +12,20 @@ import parser.DataProcessor;
  */
 public class TimeTableScraper {
 
-    private WebView webView;
+    private final WebView webView;
     private String timeTableTwoDay;
     private String timeTableWeek;
     private String timeTableWeekOptions;
 
     private boolean debugging = false;
 
-    private String jsWeekFunction = "javascript:TimeTableJsInterface" +
+    private final String jsWeekFunction = "javascript:TimeTableJsInterface" +
             ".setGetTimeTableWeek(scraper.timeTableWeek('script'))";
 
-    private String jsWeekOptionsFunction = "javascript:TimeTableJsInterface" +
+    private final String jsWeekOptionsFunction = "javascript:TimeTableJsInterface" +
             ".setGetTimeTableWeekOptions(scraper.timeTableWeekOptions('script'))";
 
-    private String jsTwoDayFunction = "javascript:TimeTableJsInterface" +
+    private final String jsTwoDayFunction = "javascript:TimeTableJsInterface" +
             ".setGetTimeTableTwoDay(scraper.timeTableTwoDay('sv-list-group sv-portal-2-col'))";
     private boolean once = false;
 

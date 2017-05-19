@@ -114,7 +114,7 @@ public class TimetableActivity extends AppCompatActivity {
         }
     }
 
-    public void showSnack(String message) {
+    private void showSnack(String message) {
         Snackbar.make(getWindow()
                 .getDecorView()
                 .getRootView(), message, Snackbar.LENGTH_SHORT)
@@ -138,7 +138,11 @@ public class TimetableActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.menu:
+            case R.id.force_refresh:
+                Intent data = new Intent(TimetableActivity.this, LoginActivity.class);
+                data.putExtra("type", true);
+                startActivity(data);
+                this.finish();
                 break;
             case R.id.add:
                 Intent intent = new Intent(TimetableActivity.this, EditEventActivity.class);
@@ -161,7 +165,7 @@ public class TimetableActivity extends AppCompatActivity {
     * Gets timetable items then adds them to the list views for today and tomorrow
     */
     private class RefreshTimeTable extends AsyncTask<String, Integer, ArrayList<TTEvent>> {
-        private ArrayList<ArrayList<TTEvent>> weekTT = new ArrayList<>();
+        private final ArrayList<ArrayList<TTEvent>> weekTT = new ArrayList<>();
 
         private final Integer PADDING = 10;
 
