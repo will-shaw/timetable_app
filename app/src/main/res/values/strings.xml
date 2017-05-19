@@ -13,6 +13,7 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing username
         completions."
     </string>
+    <string name="evision_url">https://evision.otago.ac.nz/sitsvision/wrd/siw_lgn</string>
 
     <!-- Timetable Related -->
     <string name="tt_label_day_1">Day 1</string>
