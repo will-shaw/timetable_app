@@ -3,18 +3,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     >
 
-    <item
-        android:id="@+id/menu"
-        android:icon="@drawable/ic_menu"
-        android:orderInCategory="200"
-        android:title="@string/mn_label_settings"
-        app:showAsAction="always" />
-
     <item android:id="@+id/refresh"
         android:title="@string/mn_label_refresh"
         android:icon="@drawable/ic_refresh"
         android:orderInCategory="150"
         app:showAsAction="ifRoom"
+        />
+
+    <item android:id="@+id/force_refresh"
+        android:title="@string/mn_label_force_refresh"
+        android:icon="@drawable/ic_refresh"
+        android:orderInCategory="150"
+        app:showAsAction="never"
         />
 
     <item android:id="@+id/add"

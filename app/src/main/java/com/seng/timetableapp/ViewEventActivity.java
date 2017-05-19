@@ -3,7 +3,6 @@ package com.seng.timetableapp;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -18,7 +17,7 @@ import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import dao.TimetableDAO;
+
 import domain.TTEvent;
 
 public class ViewEventActivity extends AppCompatActivity implements OnMapReadyCallback {

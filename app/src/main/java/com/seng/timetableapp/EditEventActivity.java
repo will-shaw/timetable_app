@@ -5,7 +5,6 @@ import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -17,7 +16,6 @@ import android.widget.EditText;
 import android.widget.TimePicker;
 
 import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Locale;
 import java.util.TimeZone;
@@ -37,8 +35,8 @@ public class EditEventActivity extends AppCompatActivity  implements DatePickerD
 
     private int year = -1, month = -1, day = -1, hour = -1, minute = -1;
 
-    Locale locale = new Locale("en-NZ", "NZL");
-    TimeZone tz = TimeZone.getTimeZone("Pacific/Auckland");
+    private final Locale locale = new Locale("en-NZ", "NZL");
+    private final TimeZone tz = TimeZone.getTimeZone("Pacific/Auckland");
 
     private final int RESULT_DELETE = 2;
 

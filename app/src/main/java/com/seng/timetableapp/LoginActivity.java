@@ -1,82 +1,90 @@
 package com.seng.timetableapp;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.annotation.TargetApi;
+import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
-import android.app.LoaderManager.LoaderCallbacks;
-
-import android.content.CursorLoader;
-import android.content.Loader;
-import android.database.Cursor;
-import android.net.Uri;
-import android.os.AsyncTask;
-
+import android.content.SharedPreferences;
 import android.os.Build;
+import android.os.Handler;
+import android.support.annotation.RequiresApi;
+import android.support.design.widget.FloatingActionButton;
 import android.os.Bundle;
-import android.provider.ContactsContract;
-import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.EditorInfo;
-import android.widget.ArrayAdapter;
+import android.view.inputmethod.InputMethodManager;
+import android.webkit.WebResourceRequest;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Date;
 
-import static android.Manifest.permission.READ_CONTACTS;
+import dao.TimetableDAO;
+import jsinterface.TimeTableScraper;
 
 /**
- * A login screen that offers login via email/password.
+ * A login screen that offers login via username/password.
  */
-public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<Cursor> {
+public class LoginActivity extends Activity {
 
-    /**
-     * Id to identity READ_CONTACTS permission request.
-     */
-    private static final int REQUEST_READ_CONTACTS = 0;
-
-    /**
-     * A dummy authentication store containing known user names and passwords.
-     * TODO: remove after connecting to a real authentication system.
-     */
-    private static final String[] DUMMY_CREDENTIALS = new String[]{
-            "foo@example.com:hello", "bar@example.com:world"
-    };
-    /**
-     * Keep track of the login task to ensure we can cancel it if requested.
-     */
-    private UserLoginTask mAuthTask = null;
-
-    // UI references.
-    private AutoCompleteTextView mEmailView;
-    private EditText mPasswordView;
+    private WebView webview;
+    private TimeTableScraper timeTableScraper;
+    private AutoCompleteTextView mUsername;
+    private EditText mPassword;
     private View mProgressView;
     private View mLoginFormView;
+    private final TimetableDAO dao = new TimetableDAO(this);
 
+    private boolean debugging = false;
+    private boolean timetableLoaded;
+
+    private int stage = 0;
+
+    @SuppressLint("SetJavaScriptEnabled")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        // Set up the login form.
-        mEmailView = (AutoCompleteTextView) findViewById(R.id.txt_username);
-        populateAutoComplete();
 
-        mPasswordView = (EditText) findViewById(R.id.txt_password);
-        mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+        SharedPreferences sharedPref = LoginActivity.this.getPreferences(Context.MODE_PRIVATE);
+        Long lastDownloaded = sharedPref.getLong(getString(R.string.last_downloaded_key), -1);
+
+        if (lastDownloaded > 0 && !getIntent().hasExtra("type")) {
+            // If the latest data is 5 days old or more, then require the user to log in to re-download.
+            if (new Date().getTime() < lastDownloaded + (24 * 60 * 60 * 1000)) {
+                if (dao.loadTimeTable()) {
+                    switchToTimetable();
+                    timetableLoaded = true;
+                }
+            }
+        }
+        if (!timetableLoaded) continueLogin();
+    }
+
+    @SuppressLint("SetJavaScriptEnabled")
+    private void continueLogin() {
+        webview = (WebView) findViewById(R.id.webScraper);
+        webview.getSettings().setJavaScriptEnabled(true);
+        webview.getSettings().setDomStorageEnabled(true);
+        webview.getSettings().setLoadsImagesAutomatically(true);
+        webview.setWebViewClient(new MyBrowser());
+        timeTableScraper = new TimeTableScraper(webview);
+        webview.addJavascriptInterface(timeTableScraper, "TimeTableJsInterface");
+        webview.loadUrl(getString(R.string.evision_url));
+
+        mUsername = (AutoCompleteTextView) findViewById(R.id.txt_username);
+        mPassword = (EditText) findViewById(R.id.txt_password);
+        mPassword.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
                 if (id == R.id.login || id == EditorInfo.IME_NULL) {
-                    switchToTimetable(); // TODO: Replace with proper login logic.
+                    insertCredentials();
                     return true;
                 }
                 return false;
@@ -87,7 +95,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         mLoginButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                switchToTimetable(); // TODO: Replace with proper login logic.
+                insertCredentials();
             }
         });
 
@@ -95,257 +103,99 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         mProgressView = findViewById(R.id.login_progress);
     }
 
+    /**
+     * Runs first stage of the timetable scraper implementation.
+     */
+    private void insertCredentials() {
+        timeTableScraper.setUserName(mUsername.getText().toString());
+        timeTableScraper.setPassword(mPassword.getText().toString());
+        timeTableScraper.login();
+        View view = this.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+        showProgress();
+        stage = 1;
+    }
+
     private void switchToTimetable() {
-        if (attemptLogin()) {
-            Intent intent = new Intent(LoginActivity.this, TimetableActivity.class);
-            intent.putExtra("username", ((AutoCompleteTextView) findViewById(R.id.txt_username)).getText());
-            startActivity(intent);
-        }
-    }
-
-    private void populateAutoComplete() {
-        if (!mayRequestContacts()) {
-            return;
-        }
-
-        getLoaderManager().initLoader(0, null, this);
-    }
-
-    private boolean mayRequestContacts() {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
-            return true;
-        }
-        if (checkSelfPermission(READ_CONTACTS) == PackageManager.PERMISSION_GRANTED) {
-            return true;
-        }
-        if (shouldShowRequestPermissionRationale(READ_CONTACTS)) {
-            Snackbar.make(mEmailView, R.string.permission_rationale, Snackbar.LENGTH_INDEFINITE)
-                    .setAction(android.R.string.ok, new View.OnClickListener() {
-                        @Override
-                        @TargetApi(Build.VERSION_CODES.M)
-                        public void onClick(View v) {
-                            requestPermissions(new String[]{READ_CONTACTS}, REQUEST_READ_CONTACTS);
-                        }
-                    });
-        } else {
-            requestPermissions(new String[]{READ_CONTACTS}, REQUEST_READ_CONTACTS);
-        }
-        return false;
-    }
-
-    /**
-     * Callback received when a permissions request has been completed.
-     */
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
-                                           @NonNull int[] grantResults) {
-        if (requestCode == REQUEST_READ_CONTACTS) {
-            if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                populateAutoComplete();
-            }
-        }
-    }
-
-
-    /**
-     * Attempts to sign in or register the account specified by the login form.
-     * If there are form errors (invalid email, missing fields, etc.), the
-     * errors are presented and no actual login attempt is made.
-     */
-    private boolean attemptLogin() {
-        if (mAuthTask != null) {
-            return false;
-        }
-
-        // Reset errors.
-        mEmailView.setError(null);
-        mPasswordView.setError(null);
-
-        // Store values at the time of the login attempt.
-        String email = mEmailView.getText().toString();
-        String password = mPasswordView.getText().toString();
-
-        boolean cancel = false;
-        View focusView = null;
-
-        // Check for a valid password, if the user entered one.
-        if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
-            mPasswordView.setError(getString(R.string.error_invalid_password));
-            focusView = mPasswordView;
-            cancel = true;
-        }
-
-        // Check for a valid email address.
-        if (TextUtils.isEmpty(email)) {
-            mEmailView.setError(getString(R.string.error_field_required));
-            focusView = mEmailView;
-            cancel = true;
-        } else if (!isEmailValid(email)) {
-            mEmailView.setError(getString(R.string.error_invalid_email));
-            focusView = mEmailView;
-            cancel = true;
-        }
-
-        if (cancel) {
-            // There was an error; don't attempt login and focus the first
-            // form field with an error.
-            focusView.requestFocus();
-            return false;
-        } else {
-            // Show a progress spinner, and kick off a background task to
-            // perform the user login attempt.
-            showProgress(true);
-            mAuthTask = new UserLoginTask(email, password);
-            mAuthTask.execute((Void) null);
-            return true;
-        }
-    }
-
-    private boolean isEmailValid(String email) {
-        //TODO: Replace this with your own logic
-        return email.contains("@");
-    }
-
-    private boolean isPasswordValid(String password) {
-        //TODO: Replace this with your own logic
-        return password.length() > 4;
+        startActivity(new Intent(LoginActivity.this, TimetableActivity.class));
     }
 
     /**
      * Shows the progress UI and hides the login form.
      */
-    private void showProgress(final boolean show) {
-
-        int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
-
-        mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-        mLoginFormView.animate().setDuration(shortAnimTime).alpha(
-                show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-            }
-        });
-
-        mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-        mProgressView.animate().setDuration(shortAnimTime).alpha(
-                show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-            }
-        });
-    }
-
-    @Override
-    public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
-        return new CursorLoader(this,
-                // Retrieve data rows for the device user's 'profile' contact.
-                Uri.withAppendedPath(ContactsContract.Profile.CONTENT_URI,
-                        ContactsContract.Contacts.Data.CONTENT_DIRECTORY), ProfileQuery.PROJECTION,
-
-                // Select only email addresses.
-                ContactsContract.Contacts.Data.MIMETYPE +
-                        " = ?", new String[]{ContactsContract.CommonDataKinds.Email
-                .CONTENT_ITEM_TYPE},
-
-                // Show primary email addresses first. Note that there won't be
-                // a primary email address if the user hasn't specified one.
-                ContactsContract.Contacts.Data.IS_PRIMARY + " DESC");
-    }
-
-    @Override
-    public void onLoadFinished(Loader<Cursor> cursorLoader, Cursor cursor) {
-        List<String> emails = new ArrayList<>();
-        cursor.moveToFirst();
-        while (!cursor.isAfterLast()) {
-            emails.add(cursor.getString(ProfileQuery.ADDRESS));
-            cursor.moveToNext();
-        }
-
-        addEmailsToAutoComplete(emails);
-    }
-
-    @Override
-    public void onLoaderReset(Loader<Cursor> cursorLoader) {
-
-    }
-
-    private void addEmailsToAutoComplete(List<String> emailAddressCollection) {
-        //Create adapter to tell the AutoCompleteTextView what to show in its dropdown list.
-        ArrayAdapter<String> adapter =
-                new ArrayAdapter<>(LoginActivity.this,
-                        android.R.layout.simple_dropdown_item_1line, emailAddressCollection);
-
-        mEmailView.setAdapter(adapter);
-    }
-
-
-    private interface ProfileQuery {
-        String[] PROJECTION = {
-                ContactsContract.CommonDataKinds.Email.ADDRESS,
-                ContactsContract.CommonDataKinds.Email.IS_PRIMARY,
-        };
-
-        int ADDRESS = 0;
-        int IS_PRIMARY = 1;
+    private void showProgress() {
+        mProgressView.setVisibility(View.VISIBLE);
+        mLoginFormView.setVisibility(View.GONE);
+        findViewById(R.id.login_logo).setVisibility(View.GONE);
     }
 
     /**
-     * Represents an asynchronous login/registration task used to authenticate
-     * the user.
+     * Custom class to process eVision login.
+     * Controls injecting JS into the page, and handles
+     * the flow after the login button has been pushed.
      */
-    private class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
+    private class MyBrowser extends WebViewClient {
 
-        private final String mEmail;
-        private final String mPassword;
-
-        UserLoginTask(String email, String password) {
-            mEmail = email;
-            mPassword = password;
-        }
-
+        @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
         @Override
-        protected Boolean doInBackground(Void... params) {
-            // TODO: attempt authentication against a network service.
-
-            try {
-                // Simulate network access.
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                return false;
-            }
-
-            for (String credential : DUMMY_CREDENTIALS) {
-                String[] pieces = credential.split(":");
-                if (pieces[0].equals(mEmail)) {
-                    // Account exists, return true if the password matches.
-                    return pieces[1].equals(mPassword);
-                }
-            }
-
-            // TODO: register the new account here.
+        public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+            view.loadUrl(request.getUrl().toString());
             return true;
         }
 
         @Override
-        protected void onPostExecute(final Boolean success) {
-            mAuthTask = null;
-            showProgress(false);
+        public void onPageFinished(WebView view, String url) {
+            if (timeTableScraper != null) {
+                timeTableScraper.initJS();
+            }
 
-            if (success) {
-                finish();
-            } else {
-                mPasswordView.setError(getString(R.string.error_incorrect_password));
-                mPasswordView.requestFocus();
+            switch (stage) {
+                case 0:
+                    break;
+                case 1:
+                    if (debugging) Log.d("NAVIGATING", "navigating to week timetable");
+                    if (timeTableScraper != null) {
+                        timeTableScraper.gotToTimeTable();
+                    }
+                    if (debugging) Log.d("STAGE 1", "delaying stage one for JS");
+                    final Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (debugging) Log.d("STAGE 1", "stage delayed for 3 seconds");
+                            if (timeTableScraper != null) {
+                                timeTableScraper.scrapeWeekTimeTableOptions();
+                                timeTableScraper.scrapeWeekTimeTable();
+                            }
+                            if (TimetableDAO.timetable != null) {
+                                if (!timetableLoaded) {
+
+                                    if (dao.saveTimeTable()) {
+                                        SharedPreferences sharedPref = LoginActivity.this.getPreferences(Context.MODE_PRIVATE);
+                                        SharedPreferences.Editor editor = sharedPref.edit();
+                                        editor.putLong(getString(R.string.last_downloaded_key), new Date().getTime());
+                                        editor.apply();
+                                    }
+
+                                    if (debugging) Log.d("TT-ACTIVITY", "Created");
+                                    switchToTimetable();
+                                    timetableLoaded = true;
+                                    webview.destroy();
+                                    timeTableScraper = null;
+                                    webview = null;
+                                }
+                            }
+                        }
+                    }, 5000);
+                    break;
+                default:
+                    if (debugging) Log.d("STAGE 2", String.valueOf(stage));
+                    break;
             }
         }
-
-        @Override
-        protected void onCancelled() {
-            mAuthTask = null;
-            showProgress(false);
-        }
     }
-}
 
+}

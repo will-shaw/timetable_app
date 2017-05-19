@@ -112,8 +112,7 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintLeft_toLeftOf="@+id/txt_username"
             app:layout_constraintRight_toRightOf="@+id/txt_username"
-            app:layout_constraintTop_toBottomOf="@+id/txt_username"
-            tools:ignore="UnusedAttribute" />
+            app:layout_constraintTop_toBottomOf="@+id/txt_username" />
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/btn_login"

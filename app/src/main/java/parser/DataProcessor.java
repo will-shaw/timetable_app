@@ -2,9 +2,6 @@ package parser;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-
-import java.nio.channels.Pipe;
-import java.sql.SQLOutput;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -19,6 +16,8 @@ import domain.TTEvent;
  */
 
 public class DataProcessor {
+
+    public DataProcessor() {}
 
     /**
      * Helper function to trim unnecessary characters from the input string.
@@ -50,7 +49,7 @@ public class DataProcessor {
      */
     private String mulNextChar(char c, String s, int n) {
         for(int i = 0; i < n; i++) {
-            s = nextChar(c, s);
+            s = nextChar(c, s).substring(1);
         }
         return s;
     }
@@ -83,7 +82,7 @@ public class DataProcessor {
      * @param s String to work on
      * @return An array of strings, each being a block as defined by cS and cE, null if mismatched.
      */
-    public Collection<String> getBlocks(char cS, char cE, String s) {
+    private Collection<String> getBlocks(char cS, char cE, String s) {
         Collection<String> blocks = new ArrayList<>();
         String t = nextChar(cS, s);
         int nests = 0;
@@ -161,12 +160,16 @@ public class DataProcessor {
     }
 
     public Collection<TTEvent> parseWebData(String eventData, String options) {
-        options = nextChar('{', options);
-        options = options.substring(0,options.length()-2);
-        options = nextChar(',', mulNextChar(')', options, 3));
+        options = nextChar('{', options).trim();
+        options = options.substring(0,options.length()-1);
+        //System.out.println(">>>>>>>>>>>>>>>>>>>>>>>" + options);
+        options = nextChar('i', options);
+        options = mulNextChar(':', options, 3);
+        options = nextChar(',', options);
         options = "{" + options.substring(1);
         JsonParser jp = new JsonParser();
-        System.out.println(options);
+        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>" + options);
+        //System.out.printf(">>>>>>>>>>>>>>>>>>>>>>>" + eventData);
         JsonObject jo = jp.parse(options).getAsJsonObject();
         String beginDate = jo.get("title").getAsString();
         beginDate = beginDate.substring(34); //Skip "Timetable for (Now showing dates "
@@ -178,7 +181,8 @@ public class DataProcessor {
         } catch(ParseException e) {
             date = new Date(0);
         }
-        eventData = nextChar('{', eventData);
+        eventData = nextChar('{', eventData).trim();
+        eventData = eventData.substring(0, eventData.length()-1);
         Collection<String> blocks = getBlocks('{', '}', eventData);
         Collection<TTEvent> items = new ArrayList<>();
         for(String j : blocks) {
@@ -190,4 +194,5 @@ public class DataProcessor {
         }
         return items;
     }
+
 }

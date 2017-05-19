@@ -28,12 +28,11 @@ public class TimetableDAO implements Serializable, TimetableInterface {
     private final String FILE_NAME = "timetable-data";
 
     // Collection of events.
-    private static Collection<TTEvent> timetable = new ArrayList<>();
+    public static Collection<TTEvent> timetable;
 
     /** Constructor: receives context from Activity. */
     public TimetableDAO(Context context) {
         this.context = context;
-        timetable = getDummy(); // TODO: Remove once not needed
     }
 
     /** Constructor: receives context from Activity. Allows for pre-existing timetable data. */
@@ -159,116 +158,6 @@ public class TimetableDAO implements Serializable, TimetableInterface {
     @Override
     public String toString() {
         return "timetableDAO { ..." + timetable.size() + "... }";
-    }
-
-
-    // TODO: Remove this temporary event list when we're done using it.
-    private ArrayList<TTEvent> getDummy(){
-
-        ArrayList<TTEvent> timetable = new ArrayList<>();
-        TTEvent tte1 = new TTEvent();
-        TTEvent tte2 = new TTEvent();
-        TTEvent tte3 = new TTEvent();
-        TTEvent tte4 = new TTEvent();
-        TTEvent tte5 = new TTEvent();
-        TTEvent tte6 = new TTEvent();
-        TTEvent tte7 = new TTEvent();
-
-
-        GregorianCalendar date = new GregorianCalendar();
-
-        tte1.setId("SENG301");
-        tte1.setRoomName("Central CAL");
-        tte1.setBuildingName("Richardson");
-        tte1.setLectureName("Lecture Name");
-        tte1.setDate((GregorianCalendar)date.clone());
-        tte1.setPaperName("Software Project Management");
-        tte1.setLat(-45.8660731);
-        tte1.setLon(170.5135830);
-        tte1.setRoomCode("CNCAL");
-
-
-        date.add(Calendar.DAY_OF_MONTH, 1);
-
-        tte2.setId("SENG302");
-        tte2.setRoomName("Central CAL");
-        tte2.setBuildingName("Richardson");
-        tte2.setLectureName("Lecture Name");
-        tte2.setDate((GregorianCalendar)date.clone());
-        tte2.setPaperName("Software Project Management");
-        tte2.setLat(-45.8660731);
-        tte2.setLon(170.5135830);
-        tte2.setRoomCode("CNCAL");
-
-        date.add(Calendar.HOUR_OF_DAY, -2);
-
-        tte3.setId("SENG303");
-        tte3.setRoomName("Central CAL");
-        tte3.setBuildingName("Richardson");
-        tte3.setLectureName("Lecture Name");
-        tte3.setDate((GregorianCalendar)date.clone());
-        tte3.setPaperName("Software Project Management");
-        tte3.setLat(-45.8660731);
-        tte3.setLon(170.5135830);
-        tte3.setRoomCode("CNCAL");
-
-        date.add(Calendar.HOUR_OF_DAY, -1);
-
-        tte4.setId("SENG304");
-        tte4.setRoomName("Central CAL");
-        tte4.setBuildingName("Richardson");
-        tte4.setLectureName("Lecture Name");
-        tte4.setDate((GregorianCalendar)date.clone());
-        tte4.setPaperName("Software Project Management");
-        tte4.setLat(-45.8660731);
-        tte4.setLon(170.5135830);
-        tte4.setRoomCode("CNCAL");
-
-        date.add(Calendar.HOUR_OF_DAY, 0);
-
-        tte5.setId("SENG305");
-        tte5.setRoomName("Central CAL");
-        tte5.setBuildingName("Richardson");
-        tte5.setLectureName("Lecture Name");
-        tte5.setDate((GregorianCalendar)date.clone());
-        tte5.setPaperName("Software Project Management");
-        tte5.setLat(-45.8660731);
-        tte5.setLon(170.5135830);
-        tte5.setRoomCode("CNCAL");
-
-        date.add(Calendar.HOUR_OF_DAY, 1);
-
-        tte6.setId("SENG306");
-        tte6.setRoomName("Central CAL");
-        tte6.setBuildingName("Richardson");
-        tte6.setLectureName("Lecture Name");
-        tte6.setDate((GregorianCalendar)date.clone());
-        tte6.setPaperName("Software Project Management");
-        tte6.setLat(-45.8660731);
-        tte6.setLon(170.5135830);
-        tte6.setRoomCode("CNCAL");
-
-        date.add(Calendar.HOUR_OF_DAY, 2);
-
-        tte7.setId("SENG307");
-        tte7.setRoomName("Central CAL");
-        tte7.setBuildingName("Richardson");
-        tte7.setLectureName("Lecture Name");
-        tte7.setDate((GregorianCalendar)date.clone());
-        tte7.setPaperName("Software Project Management");
-        tte7.setLat(-45.8660731);
-        tte7.setLon(170.5135830);
-        tte7.setRoomCode("CNCAL");
-
-        timetable.add(tte1);
-        timetable.add(tte2);
-        timetable.add(tte3);
-        timetable.add(tte4);
-        timetable.add(tte5);
-        timetable.add(tte6);
-        timetable.add(tte7);
-
-        return timetable;
     }
 
 }
