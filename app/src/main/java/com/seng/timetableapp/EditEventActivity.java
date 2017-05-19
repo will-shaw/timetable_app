@@ -20,6 +20,7 @@ import java.util.GregorianCalendar;
 import java.util.Locale;
 import java.util.TimeZone;
 
+import dao.TimetableDAO;
 import domain.TTEvent;
 
 import static java.util.Calendar.DAY_OF_YEAR;
@@ -62,7 +63,7 @@ public class EditEventActivity extends AppCompatActivity  implements DatePickerD
             if (getIntent().hasExtra("title")) {
                 getSupportActionBar().setTitle(getIntent().getStringExtra("title"));
             } else {
-                getSupportActionBar().setTitle("Edit " + ttEvent.getId());
+                getSupportActionBar().setTitle("Edit " + ttEvent.getLectureName());
             }
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
@@ -75,7 +76,7 @@ public class EditEventActivity extends AppCompatActivity  implements DatePickerD
     }
 
     private void fillDetails() {
-        pPaper.setText(ttEvent.getId());
+        pPaper.setText(ttEvent.getLectureName());
         pName.setText(ttEvent.getPaperName());
         pRoom.setText(ttEvent.getRoomCode());
         pBuilding.setText(ttEvent.getBuildingName());
@@ -84,18 +85,18 @@ public class EditEventActivity extends AppCompatActivity  implements DatePickerD
 
     private void updateDetails() {
         // TODO: Validation.
-        ttEvent.setId(pPaper.getText().toString());
+        if (ttEvent.getId() == null) {
+            ttEvent.setId(TimetableDAO.genUniqueID());
+        }
+        ttEvent.setLectureName(pPaper.getText().toString());
         ttEvent.setPaperName(pName.getText().toString());
         ttEvent.setRoomCode(pRoom.getText().toString());
         ttEvent.setBuildingName(pBuilding.getText().toString());
         if (year != -1 && month != -1 && day != -1 && hour != -1 && minute != -1) {
             Calendar cal = GregorianCalendar.getInstance(tz, locale);
             cal.set(year, month, day, hour, minute);
-            System.out.println("DATE: " + cal.getTime());
             ttEvent.setDate(cal);
             Integer day = ttEvent.getDate().get(DAY_OF_YEAR) - new GregorianCalendar().get(DAY_OF_YEAR);
-            System.out.println("C=" + ttEvent.getDate().get(DAY_OF_YEAR));
-            System.out.println("GC=" + new GregorianCalendar().get(DAY_OF_YEAR));
             ttEvent.setDay(day);
         }
     }
