@@ -235,7 +235,6 @@ public class TimetableActivity extends AppCompatActivity {
                     } else {
                         day = ttEvent.getDate().get(DAY_OF_YEAR) - new GregorianCalendar().get(DAY_OF_YEAR);
                     }
-                    System.out.println("DAY/INDEX = " + day);
 
                     //if dayTT isn't empty
                     if (!weekTT.get(day).isEmpty()) {
