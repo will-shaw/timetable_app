@@ -241,12 +241,12 @@ public class TimetableActivity extends AppCompatActivity {
                     }
 
                     //if dayTT isn't empty
-                    if (!weekTT.get(day).isEmpty()) {
+                    if (!weekTT.get(Math.abs(day)).isEmpty()) {
                         //and it doesn't contain the event, add it
-                        if (!weekTT.get(day).contains(ttEvent)) {
-                            ArrayList<TTEvent> dayTT = weekTT.get(day);
+                        if (!weekTT.get(Math.abs(day)).contains(ttEvent)) {
+                            ArrayList<TTEvent> dayTT = weekTT.get(Math.abs(day));
                             dayTT.add(ttEvent);
-                            weekTT.set(day, dayTT);
+                            weekTT.set(Math.abs(day), dayTT);
                         }
 
                         //if the dayTT is empty, make a new dayTT with event, and add it.

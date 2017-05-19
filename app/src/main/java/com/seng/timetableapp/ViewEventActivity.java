@@ -38,7 +38,7 @@ public class ViewEventActivity extends AppCompatActivity implements OnMapReadyCa
 
         if (ttEvent != null) {
             if (getSupportActionBar() != null) {
-                getSupportActionBar().setTitle("View " + ttEvent.getId());
+                getSupportActionBar().setTitle("View " + ttEvent.getLectureName());
                 getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             }
 
@@ -63,12 +63,14 @@ public class ViewEventActivity extends AppCompatActivity implements OnMapReadyCa
         TextView pColour = (TextView) findViewById(R.id.viewColour);
         TextView pLocation = (TextView) findViewById(R.id.viewLocation);
 
-        pCode.setText(ttEvent.getId());
+        pCode.setText(ttEvent.getLectureName());
         pTimeDate.setText(ttEvent.getDate().getTime().toString().substring(0, 10));
         pName.setText(ttEvent.getPaperName());
         pRoomCode.setText(ttEvent.getRoomCode());
-        pColour.setTextColor(Color.RED); // TODO: Remove static assignment.
-        pLocation.setText(ttEvent.getGmapsUrl());
+        if (ttEvent.getBcol() != null) {
+            pColour.setBackgroundColor(Color.parseColor(ttEvent.getBcol()));
+        }
+        pLocation.setText(ttEvent.getLat() + " | " + ttEvent.getLon());
     }
 
     private void updateMap() {
