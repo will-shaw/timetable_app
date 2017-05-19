@@ -28,12 +28,11 @@ public class TimetableDAO implements Serializable, TimetableInterface {
     private final String FILE_NAME = "timetable-data";
 
     // Collection of events.
-    public static Collection<TTEvent> timetable = new ArrayList<>();
+    public static Collection<TTEvent> timetable;
 
     /** Constructor: receives context from Activity. */
     public TimetableDAO(Context context) {
         this.context = context;
-        timetable = getDummy(); // TODO: Remove once not needed
     }
 
     /** Constructor: receives context from Activity. Allows for pre-existing timetable data. */
