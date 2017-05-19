@@ -116,28 +116,35 @@ public class LoginActivity extends Activity {
 
         @Override
         public void onPageFinished(WebView view, String url) {
-            timeTableScraper.initJS();
+            if (timeTableScraper != null) {
+                timeTableScraper.initJS();
+            }
 
             switch (stage) {
                 case 0:
                     break;
                 case 1:
                     if (debugging) Log.d("NAVIGATING", "navigating to week timetable");
-                    timeTableScraper.gotToTimeTable();
+                    if (timeTableScraper != null) {
+                        timeTableScraper.gotToTimeTable();
+                    }
                     if (debugging) Log.d("STAGE 1", "delaying stage one for JS");
                     final Handler handler = new Handler();
                     handler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
                             if (debugging) Log.d("STAGE 1", "stage delayed for 3 seconds");
-                            timeTableScraper.scrapeWeekTimeTableOptions();
-                            timeTableScraper.scrapeWeekTimeTable();
+                            if (timeTableScraper != null) {
+                                timeTableScraper.scrapeWeekTimeTableOptions();
+                                timeTableScraper.scrapeWeekTimeTable();
+                            }
                             if (TimetableDAO.timetable != null) {
                                 if (!timetableLoaded) {
                                     if (debugging) Log.d("TT-ACTIVITY", "Created");
                                     startActivity(new Intent(LoginActivity.this, TimetableActivity.class));
                                     timetableLoaded = true;
                                     webview.destroy();
+                                    timeTableScraper = null;
                                     webview = null;
                                 }
                             }
