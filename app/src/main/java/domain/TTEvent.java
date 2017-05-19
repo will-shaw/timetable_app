@@ -1,7 +1,10 @@
 package domain;
 
+import android.text.Html;
+
 import java.io.Serializable;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Objects;
 
 /**
@@ -165,6 +168,13 @@ public class TTEvent implements Serializable {
                 Objects.equals(date, ttEvent.date);
     }
 
+    private String toDate(Integer val) {
+        Calendar date = Calendar.getInstance();
+        date.set(Calendar.HOUR_OF_DAY, val);
+        date.set(Calendar.MINUTE, 0);
+        return date.getTime().toString().substring(11, 16);
+    }
+
     @Override
     public int hashCode() {
         return Objects.hash(id, date);
@@ -172,7 +182,10 @@ public class TTEvent implements Serializable {
 
     @Override
     public String toString() {
-        return this.lectureName;
+        return toDate(this.getStart()) + " - "
+                + toDate(this.getEnd()) + "   |   "
+                + this.lectureName + " in "
+                + this.getRoomCode();
     }
 
 }
