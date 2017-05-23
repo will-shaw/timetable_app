@@ -161,8 +161,7 @@ public class TTEvent implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         TTEvent ttEvent = (TTEvent) o;
-        return Objects.equals(id, ttEvent.id) &&
-                Objects.equals(date, ttEvent.date);
+        return Objects.equals(id, ttEvent.id);
     }
 
     private String toDate(Integer val) {
@@ -174,7 +173,7 @@ public class TTEvent implements Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, date);
+        return Objects.hash(id);
     }
 
     @Override
