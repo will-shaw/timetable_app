@@ -44,8 +44,10 @@ public class ViewEventActivity extends AppCompatActivity implements OnMapReadyCa
 
             fillDetails();
 
-            mapView.onCreate(savedInstanceState);
-            mapView.getMapAsync(this);
+            if (ttEvent.getLat() != 0.0 && ttEvent.getLon() != 0.0) {
+                mapView.onCreate(savedInstanceState);
+                mapView.getMapAsync(this);
+            }
         }
     }
 
@@ -70,7 +72,11 @@ public class ViewEventActivity extends AppCompatActivity implements OnMapReadyCa
         if (ttEvent.getBcol() != null) {
             pColour.setBackgroundColor(Color.parseColor(ttEvent.getBcol()));
         }
-        pLocation.setText(ttEvent.getLat() + " | " + ttEvent.getLon());
+        if (ttEvent.getLat() != 0.0 && ttEvent.getLon() != 0.0) {
+            pLocation.setText(ttEvent.getLat() + " | " + ttEvent.getLon());
+        } else {
+            pLocation.setText(R.string.view_label_location_not_set);
+        }
     }
 
     private void updateMap() {
