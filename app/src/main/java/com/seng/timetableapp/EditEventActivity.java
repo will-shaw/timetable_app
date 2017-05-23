@@ -96,11 +96,13 @@ public class EditEventActivity extends AppCompatActivity  implements DatePickerD
         ttEvent.setRoomCode(pRoom.getText().toString());
         ttEvent.setBuildingName(pBuilding.getText().toString());
         if (year != -1 && month != -1 && day != -1 && hour != -1 && minute != -1) {
-            Calendar cal = GregorianCalendar.getInstance(tz, locale);
+            Calendar cal = Calendar.getInstance();
             cal.set(year, month, day, hour, minute);
             ttEvent.setDate(cal);
-            Integer day = ttEvent.getDate().get(DAY_OF_YEAR) - new GregorianCalendar().get(DAY_OF_YEAR);
+            Integer day = ttEvent.getDate().get(Calendar.DAY_OF_WEEK) - 1;
             ttEvent.setDay(day);
+            ttEvent.setStart(hour);
+            ttEvent.setEnd(hour+1);
         }
     }
 
