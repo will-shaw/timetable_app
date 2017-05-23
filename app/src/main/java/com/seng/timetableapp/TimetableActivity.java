@@ -161,6 +161,7 @@ public class TimetableActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.force_refresh:
+                TimetableDAO.timetable = null;
                 Intent data = new Intent(TimetableActivity.this, LoginActivity.class);
                 data.putExtra("type", true);
                 startActivity(data);

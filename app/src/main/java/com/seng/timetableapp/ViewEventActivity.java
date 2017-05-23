@@ -73,7 +73,7 @@ public class ViewEventActivity extends AppCompatActivity implements OnMapReadyCa
             pColour.setBackgroundColor(Color.parseColor(ttEvent.getBcol()));
         }
         if (ttEvent.getLat() != 0.0 && ttEvent.getLon() != 0.0) {
-            pLocation.setText(ttEvent.getLat() + " | " + ttEvent.getLon());
+            pLocation.setText(ttEvent.getLat() + "\u00b0 N\n" + ttEvent.getLon() + "\u00b0 E");
         } else {
             pLocation.setText(R.string.view_label_location_not_set);
         }
