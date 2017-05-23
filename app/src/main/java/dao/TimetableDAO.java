@@ -155,6 +155,16 @@ public class TimetableDAO implements Serializable, TimetableInterface {
         if (timetable.contains(ttEvent)) {
             timetable.remove(ttEvent);
         }
+
+        for (int i = 0; i < timetable.size(); i++) {
+            TTEvent tte = ((ArrayList<TTEvent>) timetable).get(i);
+            if ((tte.getDay() > ttEvent.getDay()) ||
+                    (tte.getDay() == ttEvent.getDay() && tte.getStart() > ttEvent.getStart())) {
+                ((ArrayList<TTEvent>) timetable).add(i, ttEvent);
+                return true;
+            }
+        }
+
         return timetable.add(ttEvent);
     }
 
