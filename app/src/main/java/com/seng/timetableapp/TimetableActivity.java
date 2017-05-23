@@ -21,9 +21,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
-
-import static java.util.Calendar.DAY_OF_YEAR;
+import java.util.Locale;
 
 import dao.TimetableDAO;
 import domain.TTEvent;
@@ -42,13 +40,24 @@ public class TimetableActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timetable);
-        TextView lblDateDayOne = (TextView) findViewById(R.id.lbl_day_1_date);
-        TextView lblDateDayTwo = (TextView) findViewById(R.id.lbl_date_day_2);
-        TextView lblDateDayThree = (TextView) findViewById(R.id.lbl_date_day_3);
-        TextView lblDateDayFour = (TextView) findViewById(R.id.lbl_date_day_4);
-        TextView lblDateDayFive = (TextView) findViewById(R.id.lbl_date_day_5);
-        TextView lblDateDaySix = (TextView) findViewById(R.id.lbl_date_day_6);
-        TextView lblDateDaySeven = (TextView) findViewById(R.id.lbl_date_day_7);
+
+        TextView[] dateLabels = {
+                (TextView) findViewById(R.id.lbl_day_1_date),
+                (TextView) findViewById(R.id.lbl_date_day_2),
+                (TextView) findViewById(R.id.lbl_date_day_3),
+                (TextView) findViewById(R.id.lbl_date_day_4),
+                (TextView) findViewById(R.id.lbl_date_day_5),
+                (TextView) findViewById(R.id.lbl_date_day_6),
+                (TextView) findViewById(R.id.lbl_date_day_7)
+        };
+
+        TextView[] dayLabels = {
+                (TextView) findViewById(R.id.lbl_day_3),
+                (TextView) findViewById(R.id.lbl_day_4),
+                (TextView) findViewById(R.id.lbl_day_5),
+                (TextView) findViewById(R.id.lbl_day_6),
+                (TextView) findViewById(R.id.lbl_day_7)
+        };
 
         swipeRefresh = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh);
 
@@ -64,19 +73,15 @@ public class TimetableActivity extends AppCompatActivity {
         loadTimetable();
 
         Calendar c = Calendar.getInstance();
-        lblDateDayOne.setText(c.getTime().toString().substring(0, 10));
-        c.add(Calendar.DATE, 1);
-        lblDateDayTwo.setText(c.getTime().toString().substring(0, 10));
-        c.add(Calendar.DATE, 1);
-        lblDateDayThree.setText(c.getTime().toString().substring(0, 10));
-        c.add(Calendar.DATE, 1);
-        lblDateDayFour.setText(c.getTime().toString().substring(0, 10));
-        c.add(Calendar.DATE, 1);
-        lblDateDayFive.setText(c.getTime().toString().substring(0, 10));
-        c.add(Calendar.DATE, 1);
-        lblDateDaySix.setText(c.getTime().toString().substring(0, 10));
-        c.add(Calendar.DATE, 1);
-        lblDateDaySeven.setText(c.getTime().toString().substring(0, 10));
+
+        for (int i = 0;  i < dateLabels.length; i++) {
+            dateLabels[i].setText(c.getTime().toString().substring(0, 10));
+            if (i > 1) {
+                dayLabels[i-2].setText(
+                        c.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.US));
+            }
+            c.add(Calendar.DATE, 1);
+        }
     }
 
     /**
@@ -235,6 +240,9 @@ public class TimetableActivity extends AppCompatActivity {
 
             timetable = (ArrayList<TTEvent>) dao.getTimeTable();
 
+            Calendar cal = Calendar.getInstance();
+            int offset = cal.get(Calendar.DAY_OF_WEEK) - 1;
+
             final ListView listToday = (ListView) findViewById(R.id.list_tt_day_1);
             final ListView listTomorrow = (ListView) findViewById(R.id.list_tt_day_2);
             final ListView listDayThree = (ListView) findViewById(R.id.list_tt_day_3);
@@ -273,11 +281,15 @@ public class TimetableActivity extends AppCompatActivity {
                 if (ttEvent != null && ttEvent.getDate() != null) {
                     Integer day;
                     if (ttEvent.getDay() > -1) {
-                        day = ttEvent.getDay();
+                        day = Math.abs(ttEvent.getDay());
                     } else {
-                        day = ttEvent.getDate().get(DAY_OF_YEAR) - new GregorianCalendar().get(DAY_OF_YEAR);
+                        day = Math.abs(ttEvent.getDate().get(Calendar.DAY_OF_WEEK));
                     }
-                    weekTT.get(day).add(ttEvent);
+                    if (day - offset < 0) {
+                        weekTT.get(day + 7 - offset).add(ttEvent);
+                    } else {
+                        weekTT.get(day - offset).add(ttEvent);
+                    }
                 }
             }
 
