@@ -41,6 +41,27 @@ public class TimetableActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timetable);
 
+        swipeRefresh = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh);
+
+        swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refreshTask = new RefreshTimeTable();
+                refreshTask.execute();
+            }
+        });
+
+        dao = new TimetableDAO(context);
+        loadTimetable();
+        updateTitles();
+    }
+
+    /**
+     * Used to update the Day and Date labels on each card.
+     * Can be called from refresh to update these when timezone changes or
+     * then the user has left the app running in background.
+     */
+    private void updateTitles() {
         TextView[] dateLabels = {
                 (TextView) findViewById(R.id.lbl_day_1_date),
                 (TextView) findViewById(R.id.lbl_date_day_2),
@@ -58,19 +79,6 @@ public class TimetableActivity extends AppCompatActivity {
                 (TextView) findViewById(R.id.lbl_day_6),
                 (TextView) findViewById(R.id.lbl_day_7)
         };
-
-        swipeRefresh = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh);
-
-        swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                refreshTask = new RefreshTimeTable();
-                refreshTask.execute();
-            }
-        });
-
-        dao = new TimetableDAO(context);
-        loadTimetable();
 
         Calendar c = Calendar.getInstance();
 
@@ -209,7 +217,7 @@ public class TimetableActivity extends AppCompatActivity {
     private class RefreshTimeTable extends AsyncTask<String, Integer, ArrayList<TTEvent>> {
         private final ArrayList<ArrayList<TTEvent>> weekTT = new ArrayList<>();
 
-        private final Integer PADDING = 10;
+        private final Integer PADDING = 12;
 
         /**
          * Gets the number of pixels in a row, times the number of items in the day.
@@ -302,9 +310,10 @@ public class TimetableActivity extends AppCompatActivity {
             for (int i = 0; i < cardViews.length; i++) {
                 cardViews[i].setLayoutParams(new LinearLayout.LayoutParams(cardDayOne.getWidth(), getPixels(weekTT.get(i).size())));
                 LinearLayout layout = (LinearLayout) cardViews[i].getParent();
-                layout.setPadding(0, PADDING, 0, PADDING);
+                layout.setPadding(PADDING, PADDING * 3, PADDING, 0);
             }
 
+            updateTitles();
             swipeRefresh.setRefreshing(false);
         }
     }
