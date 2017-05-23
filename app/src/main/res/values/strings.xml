@@ -7,7 +7,6 @@
     <string name="prompt_username">Username</string>
     <string name="prompt_password">Password</string>
     <string name="action_sign_in_short">Sign in</string>
-    <string name="error_field_required">This field is required</string>
     <string name="evision_url">https://evision.otago.ac.nz/sitsvision/wrd/siw_lgn</string>
 
     <!-- Timetable Related -->
@@ -56,8 +55,8 @@
     <string name="view_label_timeDate">Time/Date</string>
     <string name="view_label_paperName">Paper Name</string>
     <string name="view_label_roomCode">Room Code</string>
-    <string name="view_label_colour">Colour</string>
     <string name="view_label_location">Location</string>
+    <string name="view_label_location_not_set">Location not set</string>
 
     <!-- Intent Filter Titles -->
     <string name="filter_title_login">Login</string>

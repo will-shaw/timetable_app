@@ -155,6 +155,15 @@ public class DataProcessor {
         info = mulNextChar('<', info, 10);
         info = nextChar('>', info).substring(1); //Skip to start of room name
         t.setBuildingName(seqUntilChar('<', info));
+
+        String tUrl = t.getGmapsUrl();
+        tUrl = nextChar('=', tUrl).substring(1);
+        t.setLat(Double.parseDouble(seqUntilChar(',', tUrl)));
+        System.out.println(t.getLat());
+        tUrl = nextChar(',', tUrl).substring(1);
+        t.setLon(Double.parseDouble(seqUntilChar('&', tUrl)));
+        System.out.println(t.getLon());
+
         //End parsing
         return t;
     }

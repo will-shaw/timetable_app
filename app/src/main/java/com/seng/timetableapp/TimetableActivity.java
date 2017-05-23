@@ -20,6 +20,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 
 import static java.util.Calendar.DAY_OF_YEAR;
@@ -32,6 +33,7 @@ public class TimetableActivity extends AppCompatActivity {
     private RefreshTimeTable refreshTask;
     private final Context context = this;
     private SwipeRefreshLayout swipeRefresh;
+    private long backLastPressed = 0;
 
     private final int RESULT_DELETE = 2;
     private TimetableDAO dao;
@@ -40,8 +42,8 @@ public class TimetableActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timetable);
-        TextView lblTodayDate = (TextView) findViewById(R.id.lbl_day_1_date);
-        TextView lblTomorrowDate = (TextView) findViewById(R.id.lbl_date_day_2);
+        TextView lblDateDayOne = (TextView) findViewById(R.id.lbl_day_1_date);
+        TextView lblDateDayTwo = (TextView) findViewById(R.id.lbl_date_day_2);
         TextView lblDateDayThree = (TextView) findViewById(R.id.lbl_date_day_3);
         TextView lblDateDayFour = (TextView) findViewById(R.id.lbl_date_day_4);
         TextView lblDateDayFive = (TextView) findViewById(R.id.lbl_date_day_5);
@@ -59,13 +61,12 @@ public class TimetableActivity extends AppCompatActivity {
         });
 
         dao = new TimetableDAO(context);
-        //dao.saveTimeTable();
         loadTimetable();
 
         Calendar c = Calendar.getInstance();
-        lblTodayDate.setText(c.getTime().toString().substring(0, 10));
+        lblDateDayOne.setText(c.getTime().toString().substring(0, 10));
         c.add(Calendar.DATE, 1);
-        lblTomorrowDate.setText(c.getTime().toString().substring(0, 10));
+        lblDateDayTwo.setText(c.getTime().toString().substring(0, 10));
         c.add(Calendar.DATE, 1);
         lblDateDayThree.setText(c.getTime().toString().substring(0, 10));
         c.add(Calendar.DATE, 1);
@@ -78,6 +79,11 @@ public class TimetableActivity extends AppCompatActivity {
         lblDateDaySeven.setText(c.getTime().toString().substring(0, 10));
     }
 
+    /**
+     * When the options menu is instantiated, fill using appropriate menu layout.
+     * @param menu the menu being created.
+     * @return a boolean. Always true here.
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -85,6 +91,13 @@ public class TimetableActivity extends AppCompatActivity {
         return true;
     }
 
+    /**
+     * Deals with activities created here which have finished.
+     * Here we save any updated or new events which have been passed back.
+     * @param request the request.
+     * @param resultCode the state in which the activity ended. e.g. Success/Error.
+     * @param data the returned intent, which contains events or other data.
+     */
     @Override
     protected void onActivityResult(int request, int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
@@ -114,6 +127,10 @@ public class TimetableActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Shows the snack-bar on the current view.
+     * @param message the message to display.
+     */
     private void showSnack(String message) {
         Snackbar.make(getWindow()
                 .getDecorView()
@@ -135,10 +152,16 @@ public class TimetableActivity extends AppCompatActivity {
         refreshTask.execute();
     }
 
+    /**
+     * Responds to actions related to clicking app bar options.
+     * @param item the option what was clicked.
+     * @return a boolean. Always true here.
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.force_refresh:
+                TimetableDAO.timetable = null;
                 Intent data = new Intent(TimetableActivity.this, LoginActivity.class);
                 data.putExtra("type", true);
                 startActivity(data);
@@ -161,7 +184,21 @@ public class TimetableActivity extends AppCompatActivity {
         return true;
     }
 
-    /*
+    /**
+     * On back button pressed, will show snack to inform the user to press again to quit.
+     * If the user presses back twice within 2 seconds, the app will exit.
+     */
+    @Override
+    public void onBackPressed() {
+        if (backLastPressed == 0 || backLastPressed < (new Date().getTime() - 2000)) {
+            backLastPressed = new Date().getTime();
+            showSnack("Press back again to exit.");
+        } else {
+            this.finishAffinity();
+        }
+    }
+
+    /**
     * Gets timetable items then adds them to the list views for today and tomorrow
     */
     private class RefreshTimeTable extends AsyncTask<String, Integer, ArrayList<TTEvent>> {
@@ -169,27 +206,33 @@ public class TimetableActivity extends AppCompatActivity {
 
         private final Integer PADDING = 10;
 
-        //get pixels from row
+        /**
+         * Gets the number of pixels in a row, times the number of items in the day.
+         * @param rows the number of items in the day.
+         * @return the number of pixels to set the card height.
+         */
         private Integer getPixels(Integer rows) {
             rows += 1;
-            return rows * 100;
+            return rows * 148;
         }
 
+        /**
+         * Gets the timetable from the DAO.
+         * @param urls inputs.
+         * @return An array of events.
+         */
         @Override
         protected ArrayList<TTEvent> doInBackground(String... urls) {
             return (ArrayList<TTEvent>) dao.getTimeTable();
         }
 
-        @Override
-        protected void onProgressUpdate(Integer... progress) {
-
-        }
-
+        /**
+         * Called when setting up the timetable view.
+         * @param timetable the list of events.
+         */
         @Override
         protected void onPostExecute(ArrayList<TTEvent> timetable) {
-            //Integer todayItemSize = 1, tomorrowItemSize = 1;
 
-            // I added the dummy timetable to the DAO for now, just use:
             timetable = (ArrayList<TTEvent>) dao.getTimeTable();
 
             final ListView listToday = (ListView) findViewById(R.id.list_tt_day_1);
@@ -220,18 +263,13 @@ public class TimetableActivity extends AppCompatActivity {
                 list.setOnItemClickListener(clickHandler);
             }
 
-            //initialize weekTT
             if (weekTT.isEmpty()) {
-                int i = 0;
-                while (i < 7) {
+                for (int i = 0; i < 7; i++) {
                     weekTT.add(new ArrayList<TTEvent>());
-                    i++;
                 }
             }
 
-            //adds ttEvents to correct day of weekTT
             for (TTEvent ttEvent : timetable) {
-                //sees how far away ttEvent is
                 if (ttEvent != null && ttEvent.getDate() != null) {
                     Integer day;
                     if (ttEvent.getDay() > -1) {
@@ -239,62 +277,13 @@ public class TimetableActivity extends AppCompatActivity {
                     } else {
                         day = ttEvent.getDate().get(DAY_OF_YEAR) - new GregorianCalendar().get(DAY_OF_YEAR);
                     }
-
-                    //if dayTT isn't empty
-                    if (!weekTT.get(Math.abs(day)).isEmpty()) {
-                        //and it doesn't contain the event, add it
-                        if (!weekTT.get(Math.abs(day)).contains(ttEvent)) {
-                            ArrayList<TTEvent> dayTT = weekTT.get(Math.abs(day));
-                            dayTT.add(ttEvent);
-                            weekTT.set(Math.abs(day), dayTT);
-                        }
-
-                        //if the dayTT is empty, make a new dayTT with event, and add it.
-                    } else {
-                        ArrayList<TTEvent> dayTT = new ArrayList<>();
-                        dayTT.add(ttEvent);
-                        weekTT.set(day, dayTT);
-                    }
-                }
-            }
-
-            TTEvent event;
-            ArrayList<ArrayList<TTEvent>> weekEvents = new ArrayList<>();
-
-            //for each day of the week
-            for (int i = 0; i < weekTT.size(); i++) {
-                //for each ttEvent in the day
-                for (int j = 0; j < weekTT.get(i).size(); j++) {
-                    //get ttEvent string
-                    event = weekTT.get(i).get(j);
-
-                    ArrayList<TTEvent> dayEvents = new ArrayList<>();
-                    //try get string array for day if it exists
-                    try {
-                        if (!weekEvents.isEmpty() && i < weekEvents.size()) {
-                            dayEvents = weekEvents.get(i);
-                        }
-                    } catch (java.lang.IndexOutOfBoundsException e) {
-                        e.printStackTrace();
-                    }
-
-                    //add event string to dayTTStrings array
-                    if (!dayEvents.contains(event)) {
-                        dayEvents.add(event);
-                    }
-                    //set dayTTStrings array back into weekTTStrings array
-                    try {
-                        weekEvents.set(i, dayEvents);
-                    } catch (java.lang.IndexOutOfBoundsException e) {
-                        weekEvents.add(dayEvents);
-                    }
-
+                    weekTT.get(day).add(ttEvent);
                 }
             }
 
             for (int i = 0; i < listViews.length; i++) {
-                if (weekEvents.size() > i) {
-                    listViews[i].setAdapter(new ArrayAdapter<>(context, android.R.layout.simple_list_item_1, weekEvents.get(i)));
+                if (weekTT.size() > i) {
+                    listViews[i].setAdapter(new ArrayAdapter<>(context, android.R.layout.simple_list_item_1, weekTT.get(i)));
                 }
             }
 
@@ -308,6 +297,10 @@ public class TimetableActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Handles what happens when you click an event in the list.
+     * Created and switched to a new intent, passing through the event data.
+     */
     private class ItemClickHandler implements AdapterView.OnItemClickListener {
 
         @Override
@@ -321,5 +314,3 @@ public class TimetableActivity extends AppCompatActivity {
     }
 
 }
-
-
