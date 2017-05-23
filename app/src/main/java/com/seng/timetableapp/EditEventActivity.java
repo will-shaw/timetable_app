@@ -2,14 +2,17 @@ package com.seng.timetableapp;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AutoCompleteTextView;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -33,6 +36,8 @@ public class EditEventActivity extends AppCompatActivity  implements DatePickerD
     private AutoCompleteTextView pRoom;
     private AutoCompleteTextView pBuilding;
     private EditText editText;
+
+    private String message = "Cannot save :(";
 
     private int year = -1, month = -1, day = -1, hour = -1, minute = -1;
 
@@ -67,7 +72,6 @@ public class EditEventActivity extends AppCompatActivity  implements DatePickerD
             }
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
-
     }
 
     public void showDatePickerDialog(View v) {
@@ -84,7 +88,6 @@ public class EditEventActivity extends AppCompatActivity  implements DatePickerD
     }
 
     private void updateDetails() {
-        // TODO: Validation.
         if (ttEvent.getId() == null) {
             ttEvent.setId(TimetableDAO.genUniqueID());
         }
@@ -101,6 +104,18 @@ public class EditEventActivity extends AppCompatActivity  implements DatePickerD
         }
     }
 
+    private boolean validate() {
+        if(ttEvent.getLectureName() == null || ttEvent.getLectureName().length() < 1) {
+            message = "Paper code required.";
+            return false;
+        }
+        if (ttEvent.getDate() == null) {
+            message = "A date is required.";
+            return false;
+        }
+        return true;
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -113,11 +128,23 @@ public class EditEventActivity extends AppCompatActivity  implements DatePickerD
         switch (item.getItemId()) {
 
             case R.id.save:
-                Intent data = new Intent();
                 updateDetails();
-                data.putExtra("returnEvent", ttEvent);
-                setResult(RESULT_OK, data);
-                this.finish();
+                View view = this.getCurrentFocus();
+                if (view != null) {
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+                }
+                if (validate()) {
+                    Intent data = new Intent();
+                    data.putExtra("returnEvent", ttEvent);
+                    setResult(RESULT_OK, data);
+                    this.finish();
+                } else {
+                    Snackbar.make(getWindow()
+                            .getDecorView()
+                            .getRootView(), message, Snackbar.LENGTH_SHORT)
+                            .show();
+                }
                 break;
 
             case R.id.delete:
