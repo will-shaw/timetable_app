@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.GregorianCalendar;
+import java.util.Random;
 
 import domain.TTEvent;
 
@@ -39,6 +40,27 @@ public class TimetableDAO implements Serializable, TimetableInterface {
     public TimetableDAO(Context context, Collection<TTEvent> collect) {
         this.context = context;
         timetable = collect;
+    }
+
+    /**
+     * Generated a 5 character ID which doesn't exist already in this collection.
+     * @return
+     */
+    public static String genUniqueID() {
+        StringBuilder sb = new StringBuilder();
+        Random rand = new Random();
+        boolean unique = true;
+        do {
+            for (int i = 0; i < 5; i++) {
+                sb.append((char) (rand.nextInt(26) + 65));
+            }
+            for (TTEvent event : timetable) {
+                if (event.getId() != null && event.getId().equals(sb.toString())) {
+                    unique = false;
+                }
+            }
+        } while (!unique);
+        return sb.toString();
     }
 
     /**
