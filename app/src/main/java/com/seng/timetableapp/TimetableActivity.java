@@ -235,6 +235,9 @@ public class TimetableActivity extends AppCompatActivity {
 
             timetable = (ArrayList<TTEvent>) dao.getTimeTable();
 
+            Calendar cal = Calendar.getInstance();
+            int offset = cal.get(Calendar.DAY_OF_WEEK) - 1;
+
             final ListView listToday = (ListView) findViewById(R.id.list_tt_day_1);
             final ListView listTomorrow = (ListView) findViewById(R.id.list_tt_day_2);
             final ListView listDayThree = (ListView) findViewById(R.id.list_tt_day_3);
@@ -269,15 +272,21 @@ public class TimetableActivity extends AppCompatActivity {
                 }
             }
 
+            Calendar firstDate = timetable.get(0).getDate();
+
             for (TTEvent ttEvent : timetable) {
                 if (ttEvent != null && ttEvent.getDate() != null) {
                     Integer day;
                     if (ttEvent.getDay() > -1) {
-                        day = ttEvent.getDay();
+                        day = Math.abs(ttEvent.getDay());
                     } else {
-                        day = ttEvent.getDate().get(DAY_OF_YEAR) - new GregorianCalendar().get(DAY_OF_YEAR);
+                        day = Math.abs(ttEvent.getDate().get(Calendar.DAY_OF_WEEK));
                     }
-                    weekTT.get(day).add(ttEvent);
+                    if (day - offset < 0) {
+                        weekTT.get(day + 7 - offset).add(ttEvent);
+                    } else {
+                        weekTT.get(day - offset).add(ttEvent);
+                    }
                 }
             }
 
