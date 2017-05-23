@@ -17,7 +17,7 @@ public class TimeTableScraper {
     private String timeTableWeek;
     private String timeTableWeekOptions;
 
-    private boolean debugging = false;
+    private boolean debugging = true;
 
     private final String jsWeekFunction = "javascript:TimeTableJsInterface" +
             ".setGetTimeTableWeek(scraper.timeTableWeek('script'))";
@@ -27,7 +27,8 @@ public class TimeTableScraper {
 
     private final String jsTwoDayFunction = "javascript:TimeTableJsInterface" +
             ".setGetTimeTableTwoDay(scraper.timeTableTwoDay('sv-list-group sv-portal-2-col'))";
-    private boolean once = false;
+
+    private static boolean once = false;
 
     public TimeTableScraper(WebView webView) {
         this.webView = webView;
@@ -62,7 +63,7 @@ public class TimeTableScraper {
             Log.d("WEEK-LENGTH:", " " + timeTableWeek.length());
             Log.d("WEEK-LENGTH:", " Set -> " + timeTableWeek);
         }
-        if (timeTableWeekOptions != null && !once) {
+        if (timeTableWeekOptions != null && timeTableWeekOptions.length() > 0 && this.timeTableWeek != null && timeTableWeek.length() > 0 && !once) {
             DataProcessor parser = new DataProcessor();
             TimetableDAO.timetable = parser.parseWebData(timeTableWeek, timeTableWeekOptions);
             once = true;
