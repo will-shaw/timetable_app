@@ -8,6 +8,7 @@ import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.text.SimpleDateFormat;
+import java.util.Locale;
 
 import domain.TTEvent;
 
@@ -127,7 +128,6 @@ public class DataProcessor {
         String info;
         TTEvent t = new TTEvent();
         JsonParser jp = new JsonParser();
-        //System.out.println(s);
         JsonObject jo = jp.parse(s).getAsJsonObject();
         t.setId(jo.get("id").getAsString());
         t.setDay(jo.get("day").getAsInt());
@@ -159,10 +159,8 @@ public class DataProcessor {
         String tUrl = t.getGmapsUrl();
         tUrl = nextChar('=', tUrl).substring(1);
         t.setLat(Double.parseDouble(seqUntilChar(',', tUrl)));
-        System.out.println(t.getLat());
         tUrl = nextChar(',', tUrl).substring(1);
         t.setLon(Double.parseDouble(seqUntilChar('&', tUrl)));
-        System.out.println(t.getLon());
 
         //End parsing
         return t;
@@ -171,19 +169,16 @@ public class DataProcessor {
     public Collection<TTEvent> parseWebData(String eventData, String options) {
         options = nextChar('{', options).trim();
         options = options.substring(0,options.length()-1);
-        //System.out.println(">>>>>>>>>>>>>>>>>>>>>>>" + options);
         options = nextChar('i', options);
         options = mulNextChar(':', options, 3);
         options = nextChar(',', options);
         options = "{" + options.substring(1);
         JsonParser jp = new JsonParser();
-        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>" + options);
-        //System.out.printf(">>>>>>>>>>>>>>>>>>>>>>>" + eventData);
         JsonObject jo = jp.parse(options).getAsJsonObject();
         String beginDate = jo.get("title").getAsString();
         beginDate = beginDate.substring(34); //Skip "Timetable for (Now showing dates "
         beginDate = seqUntilChar(' ', beginDate);
-        SimpleDateFormat sdf = new SimpleDateFormat("d/m/Y");
+        SimpleDateFormat sdf = new SimpleDateFormat("d/m/Y", new Locale("en-NZ"));
         Date date;
         try {
             date = sdf.parse(beginDate);
@@ -194,12 +189,14 @@ public class DataProcessor {
         eventData = eventData.substring(0, eventData.length()-1);
         Collection<String> blocks = getBlocks('{', '}', eventData);
         Collection<TTEvent> items = new ArrayList<>();
-        for(String j : blocks) {
-            TTEvent t = parseEventString(j);
-            Calendar cal = Calendar.getInstance();
-            cal.setTime(date);
-            t.setDate(cal);
-            items.add(t);
+        if (blocks != null) {
+            for (String j : blocks) {
+                TTEvent t = parseEventString(j);
+                Calendar cal = Calendar.getInstance();
+                cal.setTime(date);
+                t.setDate(cal);
+                items.add(t);
+            }
         }
         return items;
     }
