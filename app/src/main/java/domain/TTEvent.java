@@ -1,10 +1,7 @@
 package domain;
 
-import android.text.Html;
-
 import java.io.Serializable;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Objects;
 
 /**

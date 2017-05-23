@@ -10,7 +10,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
-import java.util.GregorianCalendar;
 import java.util.Random;
 
 import domain.TTEvent;
@@ -36,15 +35,9 @@ public class TimetableDAO implements Serializable, TimetableInterface {
         this.context = context;
     }
 
-    /** Constructor: receives context from Activity. Allows for pre-existing timetable data. */
-    public TimetableDAO(Context context, Collection<TTEvent> collect) {
-        this.context = context;
-        timetable = collect;
-    }
-
     /**
      * Generated a 5 character ID which doesn't exist already in this collection.
-     * @return
+     * @return a 5 character unique id.
      */
     public static String genUniqueID() {
         StringBuilder sb = new StringBuilder();
