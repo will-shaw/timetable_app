@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import java.util.SimpleTimeZone;
 
 import dao.TimetableDAO;
 import domain.TTEvent;
@@ -288,6 +289,14 @@ public class TimetableActivity extends AppCompatActivity {
             for (TTEvent ttEvent : timetable) {
                 if (ttEvent != null && ttEvent.getDate() != null) {
                     Integer day;
+                    Calendar c = Calendar.getInstance();
+                    c.set(Calendar.HOUR_OF_DAY, ttEvent.getStart());
+                    c.set(Calendar.MINUTE, 0);
+                    c.set(Calendar.SECOND, 0);
+                    c.set(Calendar.DAY_OF_WEEK, ttEvent.getDay());
+                    c.add(Calendar.DATE, -(7 - Calendar.DAY_OF_WEEK));
+                    c.add(Calendar.DATE, 1);
+                    ttEvent.setDate(c);
                     if (ttEvent.getDay() > -1) {
                         day = Math.abs(ttEvent.getDay());
                     } else {
