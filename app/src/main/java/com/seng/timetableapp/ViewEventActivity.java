@@ -26,8 +26,6 @@ public class ViewEventActivity extends AppCompatActivity implements OnMapReadyCa
     private GoogleMap map;
     private TTEvent ttEvent;
 
-    private final int RESULT_DELETE = 2;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -109,6 +107,7 @@ public class ViewEventActivity extends AppCompatActivity implements OnMapReadyCa
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        int RESULT_DELETE = 2;
         if (resultCode == RESULT_OK) {
             if (data.hasExtra("returnEvent")) {
                 this.ttEvent = (TTEvent) data.getSerializableExtra("returnEvent");

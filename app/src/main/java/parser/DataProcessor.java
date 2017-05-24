@@ -83,7 +83,9 @@ public class DataProcessor {
      * @param s String to work on
      * @return An array of strings, each being a block as defined by cS and cE, null if mismatched.
      */
-    private Collection<String> getBlocks(char cS, char cE, String s) {
+    private Collection<String> getBlocks(@SuppressWarnings("SameParameterValue") char cS,
+                                         @SuppressWarnings("SameParameterValue") char cE,
+                                         String s) {
         Collection<String> blocks = new ArrayList<>();
         String t = nextChar(cS, s);
         int nests = 0;

@@ -19,14 +19,9 @@ import android.widget.EditText;
 import android.widget.TimePicker;
 
 import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.Locale;
-import java.util.TimeZone;
 
 import dao.TimetableDAO;
 import domain.TTEvent;
-
-import static java.util.Calendar.DAY_OF_YEAR;
 
 public class EditEventActivity extends AppCompatActivity  implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
 
@@ -40,11 +35,6 @@ public class EditEventActivity extends AppCompatActivity  implements DatePickerD
     private String message = "Cannot save :(";
 
     private int year = -1, month = -1, day = -1, hour = -1, minute = -1;
-
-    private final Locale locale = new Locale("en-NZ", "NZL");
-    private final TimeZone tz = TimeZone.getTimeZone("Pacific/Auckland");
-
-    private final int RESULT_DELETE = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +64,7 @@ public class EditEventActivity extends AppCompatActivity  implements DatePickerD
         }
     }
 
-    public void showDatePickerDialog(View v) {
+    public void showDatePickerDialog(@SuppressWarnings("UnusedParameters") View v) {
         DialogFragment newFragment = new DatePickerFragment();
         newFragment.show(getSupportFragmentManager(), "datePicker");
     }
@@ -150,6 +140,7 @@ public class EditEventActivity extends AppCompatActivity  implements DatePickerD
                 break;
 
             case R.id.delete:
+                int RESULT_DELETE = 2;
                 setResult(RESULT_DELETE);
                 this.finish();
                 break;

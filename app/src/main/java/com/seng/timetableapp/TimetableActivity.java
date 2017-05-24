@@ -22,7 +22,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
-import java.util.SimpleTimeZone;
 
 import dao.TimetableDAO;
 import domain.TTEvent;
@@ -34,7 +33,6 @@ public class TimetableActivity extends AppCompatActivity {
     private SwipeRefreshLayout swipeRefresh;
     private long backLastPressed = 0;
 
-    private final int RESULT_DELETE = 2;
     private TimetableDAO dao;
 
     @Override
@@ -52,7 +50,7 @@ public class TimetableActivity extends AppCompatActivity {
             }
         });
 
-        dao = new TimetableDAO(context);
+        dao = new TimetableDAO(this);
         loadTimetable();
         updateTitles();
     }
@@ -114,6 +112,7 @@ public class TimetableActivity extends AppCompatActivity {
      */
     @Override
     protected void onActivityResult(int request, int resultCode, Intent data) {
+        int RESULT_DELETE = 2;
         if (resultCode == RESULT_OK) {
             if (data != null && data.hasExtra("returnEvent")) {
                 TTEvent returnedEvent = (TTEvent) data.getSerializableExtra("returnEvent");
@@ -187,7 +186,7 @@ public class TimetableActivity extends AppCompatActivity {
                 startActivityForResult(intent, 1);
                 break;
             case R.id.refresh:
-                swipeRefresh.setRefreshing(false);
+                swipeRefresh.setRefreshing(true);
                 refreshTask = new RefreshTimeTable();
                 refreshTask.execute();
                 break;
@@ -218,7 +217,7 @@ public class TimetableActivity extends AppCompatActivity {
     private class RefreshTimeTable extends AsyncTask<String, Integer, ArrayList<TTEvent>> {
         private final ArrayList<ArrayList<TTEvent>> weekTT = new ArrayList<>();
 
-        private final Integer PADDING = 12;
+        private final Integer PADDING = 20;
 
         /**
          * Gets the number of pixels in a row, times the number of items in the day.
@@ -319,7 +318,7 @@ public class TimetableActivity extends AppCompatActivity {
             for (int i = 0; i < cardViews.length; i++) {
                 cardViews[i].setLayoutParams(new LinearLayout.LayoutParams(cardDayOne.getWidth(), getPixels(weekTT.get(i).size())));
                 LinearLayout layout = (LinearLayout) cardViews[i].getParent();
-                layout.setPadding(PADDING, PADDING * 3, PADDING, 0);
+                layout.setPadding(PADDING, PADDING * 2, PADDING, PADDING);
             }
 
             updateTitles();
