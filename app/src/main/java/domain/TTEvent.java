@@ -76,7 +76,7 @@ public class TTEvent implements Serializable {
         this.start = start;
     }
 
-    public int getEnd() {
+    private int getEnd() {
         return end;
     }
 
