@@ -210,11 +210,10 @@ public class LoginActivity extends Activity {
     private class TimeTableScraper {
 
         private final WebView webView;
-        private String timeTableTwoDay;
         private String timeTableWeek;
         private String timeTableWeekOptions;
 
-        private boolean debugging = true;
+        private boolean debugging = false;
 
         private final String jsWeekFunction = "javascript:TimeTableJsInterface" +
                 ".setGetTimeTableWeek(scraper.timeTableWeek('script'))";
@@ -222,26 +221,12 @@ public class LoginActivity extends Activity {
         private final String jsWeekOptionsFunction = "javascript:TimeTableJsInterface" +
                 ".setGetTimeTableWeekOptions(scraper.timeTableWeekOptions('script'))";
 
-        private final String jsTwoDayFunction = "javascript:TimeTableJsInterface" +
-                ".setGetTimeTableTwoDay(scraper.timeTableTwoDay('sv-list-group sv-portal-2-col'))";
-
         private boolean once = false;
 
         private final DataProcessor parser = new DataProcessor();
 
         private TimeTableScraper(WebView webView) {
             this.webView = webView;
-        }
-
-        /**
-         * called in javascript context store result into Java
-         *
-         * @param timeTableTwoDay two day timetable data
-         */
-        @JavascriptInterface
-        public void setTimeTableTwoDay(String timeTableTwoDay) {
-            this.timeTableTwoDay = timeTableTwoDay;
-            if (debugging) Log.d("TWO-DAY:", " Set -> " + timeTableTwoDay);
         }
 
         /**
@@ -278,7 +263,7 @@ public class LoginActivity extends Activity {
 
         @JavascriptInterface
         public void Log() {
-            Log.d("DELAY", "Delaying Navigation with setTimeout");
+            if (debugging) Log.d("DELAY", "Delaying Navigation with setTimeout");
         }
 
         private void setUserName(final String userName) {
@@ -350,18 +335,12 @@ public class LoginActivity extends Activity {
                 "    var pass = document.getElementById(\"PASSWORD.DUMMY.MENSYS\");\n" +
                 "    var submit = document.getElementsByClassName(\"sv-btn sv-btn-block sv-btn-primary\")[0];\n" +
                 "\n" +
-                "    function _timeTableTwoDay(selector) {\n" +
-                "\n" +
-                "        return document.getElementsByClassName(selector)[8].getElementsByTagName(\"table\")[0];\n" +
-                "    }\n" +
-                "\n" +
                 "     function _timeTableWeek(selector) {\n" +
                 "        var timeTableScript = document.getElementsByTagName(selector);\n" +
                 "        var rawText = _scrapeTimeTableWeek(selector);\n" +
                 "        var timetable = rawText.substring(\n" +
                 "          rawText.indexOf('var eventdata = '),\n" +
                 "          rawText.indexOf('sits_timetable_widget(\"#newtimetable\", \"CREATE\", options, eventdata);'));\n" +
-                "          console.log(timetable);" +
                 "          return timetable;\n" +
                 "    }\n" +
                 "\n" +
@@ -369,7 +348,6 @@ public class LoginActivity extends Activity {
                 "      var timeTableScript = document.getElementsByTagName(selector);\n" +
                 "      var rawText = _scrapeTimeTableWeek(selector);\n" +
                 "      var dates = rawText.substring(rawText.indexOf(\"var options\"), rawText.indexOf('var eventdata = '));\n" +
-                "      console.log('Dates: '+dates);" +
                 "       return dates;\n" +
                 "    }\n" +
                 "\n" +
@@ -408,7 +386,6 @@ public class LoginActivity extends Activity {
                 "\t\t}, 2000)\n" +
                 "    };\n" +
                 "\n" +
-                "    scraper_module.timeTableTwoDay = _timeTableTwoDay;\n" +
                 "    scraper_module.timeTableWeek = _timeTableWeek;\n" +
                 "    scraper_module.timeTableWeekOptions = _timeTableWeekStart;\n" +
                 "    return scraper_module;\n" +
