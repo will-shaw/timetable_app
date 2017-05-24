@@ -43,6 +43,7 @@ public class LoginActivity extends Activity {
     private View mLoginFormView;
     private final TimetableDAO dao = new TimetableDAO(this);
 
+    @SuppressWarnings("CanBeFinal")
     private boolean debugging = false;
     private boolean timetableLoaded;
 
@@ -234,6 +235,7 @@ public class LoginActivity extends Activity {
          *
          * @param timeTableWeekOptions weekly timetable data
          */
+        @SuppressWarnings("unused")
         @JavascriptInterface
         public void setGetTimeTableWeekOptions(String timeTableWeekOptions) {
             this.timeTableWeekOptions = timeTableWeekOptions;
@@ -246,6 +248,7 @@ public class LoginActivity extends Activity {
             }
         }
 
+        @SuppressWarnings("unused")
         @JavascriptInterface
         public void setGetTimeTableWeek(String timeTableWeek) {
             this.timeTableWeek = timeTableWeek;
@@ -261,6 +264,7 @@ public class LoginActivity extends Activity {
             }
         }
 
+        @SuppressWarnings("unused")
         @JavascriptInterface
         public void Log() {
             if (debugging) Log.d("DELAY", "Delaying Navigation with setTimeout");

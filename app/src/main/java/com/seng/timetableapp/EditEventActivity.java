@@ -64,7 +64,7 @@ public class EditEventActivity extends AppCompatActivity  implements DatePickerD
         }
     }
 
-    public void showDatePickerDialog(View v) {
+    public void showDatePickerDialog(@SuppressWarnings("UnusedParameters") View v) {
         DialogFragment newFragment = new DatePickerFragment();
         newFragment.show(getSupportFragmentManager(), "datePicker");
     }
